@@ -1,0 +1,56 @@
+/* =========================================================
+   THE ARCHIVE / INDEX — "C" direction (Swiss, systematic)
+   layers over home.css tokens · Space Grotesk + mono
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap');
+
+:root{ --grotesk:'Space Grotesk','Archivo',sans-serif; }
+
+.arcbody{ background:var(--paper); color:var(--ink); }
+
+/* header */
+.arc-head{ padding-top:clamp(122px,15vh,180px); padding-bottom:40px; }
+.arc-head .top{ display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; }
+.arc-head .eyebrow{ margin-bottom:20px; }
+.arc-head h1{ font-family:var(--grotesk); font-weight:500; font-size:clamp(40px,6.5vw,92px); line-height:.98; letter-spacing:-.025em; max-width:15ch; margin:0; }
+.arc-head .meta{ font-family:var(--mono); font-size:12.5px; color:var(--ink-soft); text-align:right; line-height:1.9; flex:0 0 auto; }
+.arc-head .meta b{ color:var(--ink); font-weight:500; }
+
+/* controls */
+.controls{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; padding:26px 0 14px; border-top:1px solid var(--line-strong); margin-top:34px; }
+.filters{ display:flex; gap:8px; flex-wrap:wrap; }
+.fchip{ font-family:var(--sans); font-size:12px; font-weight:500; letter-spacing:.04em; padding:8px 15px; border:1px solid var(--line-strong); border-radius:100px; color:var(--ink-2); cursor:pointer; transition:background .2s,color .2s,border-color .2s; user-select:none; }
+.fchip:hover{ border-color:var(--ink); }
+.fchip.on{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+.tools{ display:flex; align-items:center; gap:18px; }
+.count{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); white-space:nowrap; }
+.sortbtn{ font-family:var(--mono); font-size:12px; color:var(--sage); cursor:pointer; border:1px solid var(--line-strong); border-radius:100px; padding:8px 14px; background:none; transition:background .2s,color .2s; }
+.sortbtn:hover{ background:var(--sage); color:var(--paper); border-color:var(--sage); }
+
+/* index table */
+.index{ margin-top:6px; padding-bottom:60px; }
+.ihead{ display:grid; grid-template-columns:72px 1fr 200px 1fr 70px; gap:24px; padding:14px 6px; border-bottom:1px solid var(--line-strong); }
+.ihead span{ font-family:var(--sans); font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--sage); }
+.ihead .r-yr{ text-align:right; }
+.irow{ display:grid; grid-template-columns:72px 1fr 200px 1fr 70px; gap:24px; align-items:baseline; padding:18px 6px; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; transition:background .25s, padding .25s; }
+.irow:hover{ background:var(--sage-pale); padding-left:16px; padding-right:16px; }
+.irow .r-ref{ font-family:var(--mono); font-size:12px; color:var(--sage); }
+.irow .r-title{ font-family:var(--grotesk); font-weight:500; font-size:20px; letter-spacing:-.01em; line-height:1.15; }
+.irow .r-disc{ font-family:var(--sans); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); align-self:center; }
+.irow .r-detail{ font-family:var(--serif); font-size:15px; color:var(--ink-2); line-height:1.3; }
+.irow .r-yr{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); text-align:right; }
+.irow.hide{ display:none; }
+.irow .r-title .ar{ opacity:0; color:var(--sage); transition:opacity .25s, transform .25s; display:inline-block; }
+.irow:hover .r-title .ar{ opacity:1; transform:translateX(4px); }
+.noresult{ padding:60px 6px; font-family:var(--serif); font-style:italic; color:var(--ink-soft); }
+
+@media (max-width:900px){
+  .ihead{ display:none; }
+  .irow{ grid-template-columns:54px 1fr; gap:6px 16px; padding:18px 6px; }
+  .irow:hover{ padding-left:6px; padding-right:6px; }
+  .irow .r-disc{ grid-column:2; align-self:auto; margin-top:4px; }
+  .irow .r-detail{ grid-column:2; font-size:14px; }
+  .irow .r-yr{ grid-column:1; grid-row:1; text-align:left; color:var(--sage); }
+  .irow .r-ref{ grid-column:1; }
+  .controls{ align-items:flex-start; flex-direction:column; }
+}

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anirudh Kapoor — Strategic Blueprint</title>
+<link rel="stylesheet" href="assets/blueprint.css">
+<style>
+/* ============ scoped mockup styles for the 3 directions ============ */
+.mk{ aspect-ratio:16/10; position:relative; overflow:hidden; }
+
+/* — A · The Archive — */
+.mk-a{ background:var(--paper); color:var(--ink); padding:30px 34px; display:flex; flex-direction:column; }
+.mk-a .topline{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--line); padding-bottom:14px; font-family:var(--sans); font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); }
+.mk-a .topline b{ color:var(--ink); font-weight:600; letter-spacing:.2em; }
+.mk-a .statement{ font-family:var(--serif); font-weight:300; font-size:33px; line-height:1.16; letter-spacing:-.005em; margin:26px 0 auto; max-width:17ch; }
+.mk-a .statement em{ font-style:italic; color:var(--sage); }
+.mk-a .idxrow{ display:flex; gap:0; border-top:1px solid var(--line); margin-top:18px; }
+.mk-a .idxrow div{ flex:1; padding:12px 0 0; border-right:1px solid var(--line); }
+.mk-a .idxrow div:last-child{ border-right:0; }
+.mk-a .idxrow .n{ font-family:var(--mono); font-size:9.5px; color:var(--sage); display:block; margin-bottom:5px; }
+.mk-a .idxrow .t{ font-family:var(--serif); font-size:13px; }
+
+/* — B · The Maison — */
+.mk-b{ background:#1a1d18; color:#ece9e3; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:34px; }
+.mk-b .kicker{ font-family:var(--sans); font-size:10px; letter-spacing:.38em; text-transform:uppercase; color:#9aa392; margin-bottom:30px; }
+.mk-b .grand{ font-family:var(--display); font-weight:300; font-size:58px; line-height:.92; letter-spacing:-.01em; }
+.mk-b .grand em{ font-style:italic; }
+.mk-b .sub{ font-family:var(--serif); font-weight:300; font-size:14px; color:#b7bcae; margin-top:24px; letter-spacing:.02em; }
+.mk-b .corner{ position:absolute; bottom:24px; font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:#6f7568; }
+.mk-b .corner.l{ left:30px; } .mk-b .corner.r{ right:30px; }
+
+/* — C · The Index — */
+.mk-c{ background:var(--paper); color:var(--ink); padding:28px 32px; display:grid; grid-template-rows:auto 1fr; gap:18px; }
+.mk-c .head{ display:flex; justify-content:space-between; align-items:flex-start; }
+.mk-c .head .wm{ font-family:var(--grotesk); font-weight:600; font-size:18px; letter-spacing:-.01em; }
+.mk-c .head .big{ font-family:var(--grotesk); font-weight:500; font-size:30px; line-height:1.0; letter-spacing:-.02em; max-width:15ch; margin-top:14px; }
+.mk-c .head .meta{ font-family:var(--mono); font-size:10px; color:var(--ink-soft); text-align:right; line-height:1.7; }
+.mk-c .index{ align-self:end; }
+.mk-c .ir{ display:grid; grid-template-columns:34px 1fr auto; gap:14px; padding:8px 0; border-top:1px solid var(--line); align-items:center; font-size:13px; }
+.mk-c .ir .num{ font-family:var(--mono); font-size:10px; color:var(--sage); }
+.mk-c .ir .nm{ font-family:var(--grotesk); font-weight:500; }
+.mk-c .ir .yr{ font-family:var(--mono); font-size:10px; color:var(--ink-soft); }
+.mk-c .ir:hover{ background:var(--sage-pale); }
+
+/* type specimen */
+.spec-row{ display:grid; grid-template-columns:120px 1fr; gap:24px; padding:22px 0; border-top:1px solid var(--line); align-items:baseline; }
+.swatch-row{ display:grid; grid-template-columns:repeat(6,1fr); gap:0; border:1px solid var(--line); }
+.sw{ aspect-ratio:1/1.15; display:flex; flex-direction:column; justify-content:flex-end; padding:12px; border-right:1px solid var(--line); }
+.sw:last-child{ border-right:0; }
+.sw .hex{ font-family:var(--mono); font-size:10.5px; }
+.sw .nm{ font-family:var(--sans); font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; margin-bottom:2px; }
+
+/* IA tree */
+.ia{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+.ia .node{ background:var(--paper); padding:22px 22px 24px; }
+.ia .node .pl{ font-family:var(--mono); font-size:11px; color:var(--sage); }
+.ia .node h4{ font-family:var(--serif); font-weight:500; font-size:19px; margin:6px 0 10px; }
+.ia .node ul{ list-style:none; margin:0; padding:0; }
+.ia .node li{ font-family:var(--sans); font-size:13px; color:var(--ink-soft); padding:4px 0; border-top:1px dotted var(--line); }
+
+/* template anatomy */
+.anat{ display:grid; grid-template-columns:repeat(12,1fr); gap:10px; }
+.anat .blk{ border:1px solid var(--line); background:var(--panel); padding:14px; min-height:64px; display:flex; flex-direction:column; justify-content:center; }
+.anat .blk .t{ font-family:var(--sans); font-size:12px; font-weight:600; letter-spacing:.06em; }
+.anat .blk .d{ font-family:var(--mono); font-size:10px; color:var(--ink-soft); margin-top:3px; }
+
+/* flow pipeline */
+.flow{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.flow .node{ border:1px solid var(--line-strong); background:var(--panel); padding:18px 16px; position:relative; }
+.flow .node .n{ font-family:var(--mono); font-size:11px; color:var(--sage); }
+.flow .node h5{ font-family:var(--serif); font-weight:500; font-size:16px; margin:8px 0 6px; }
+.flow .node p{ font-family:var(--sans); font-size:11.5px; color:var(--ink-soft); margin:0; line-height:1.45; }
+.flow .node .tool{ font-family:var(--mono); font-size:10px; color:var(--sage-2); margin-top:9px; display:block; }
+
+/* stack table */
+.stack{ width:100%; border-collapse:collapse; }
+.stack th{ font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--sage); text-align:left; padding:0 0 14px; border-bottom:1px solid var(--line-strong); }
+.stack td{ padding:16px 18px 16px 0; border-bottom:1px solid var(--line); vertical-align:top; font-size:16px; color:var(--ink-2); }
+.stack td .k{ font-family:var(--sans); font-weight:600; color:var(--ink); font-size:15px; }
+.stack td .free{ font-family:var(--mono); font-size:11px; color:var(--sage); }
+
+/* social formats */
+.fmt{ display:flex; flex-direction:column; gap:12px; }
+.fmt .cap{ font-family:var(--mono); font-size:11px; color:var(--ink-soft); }
+.fmt .nm{ font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:.04em; }
+
+/* the witness */
+.witness{ margin:0; border:1px solid var(--line-strong); background:var(--panel); }
+.witness-bar{ display:flex; justify-content:space-between; gap:16px; padding:13px 22px; border-bottom:1px solid var(--line); font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--sage); flex-wrap:wrap; }
+.witness-q{ margin:0; padding:48px 56px; font-family:var(--serif); font-weight:300; font-size:clamp(22px,2.7vw,33px); line-height:1.38; letter-spacing:-.005em; color:var(--ink); max-width:30ch; }
+.witness-q em{ font-style:italic; color:var(--sage); }
+.witness-prov{ display:flex; justify-content:space-between; gap:24px; padding:18px 22px; border-top:1px solid var(--line); font-family:var(--mono); font-size:11px; color:var(--ink-soft); flex-wrap:wrap; }
+
+/* roadmap */
+.road{ display:grid; gap:0; }
+.phase{ display:grid; grid-template-columns:200px 1fr; gap:40px; padding:34px 0; border-top:1px solid var(--line-strong); }
+.phase .ph{ font-family:var(--mono); font-size:12px; color:var(--sage); }
+.phase .ttl{ font-family:var(--display); font-weight:400; font-size:30px; line-height:1; margin:8px 0 0; }
+.phase .when{ font-family:var(--sans); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-top:14px; }
+.phase ul{ list-style:none; margin:0; padding:0; columns:2; column-gap:40px; }
+.phase li{ font-size:16px; color:var(--ink-2); padding:7px 0; border-top:1px solid var(--line); break-inside:avoid; }
+
+@media (max-width:900px){
+  .ia{ grid-template-columns:1fr; }
+  .anat{ grid-template-columns:repeat(2,1fr); }
+  .flow{ grid-template-columns:1fr 1fr; }
+  .phase{ grid-template-columns:1fr; gap:16px; }
+  .phase ul{ columns:1; }
+  .swatch-row{ grid-template-columns:repeat(3,1fr); }
+  .sw:nth-child(3){ border-right:0; }
+  .spec-row{ grid-template-columns:1fr; gap:6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="wm">Anirudh&nbsp;Kapoor</span>
+  <span class="pg" id="pageind">Strategic Blueprint · 2026</span>
+</div>
+
+<!-- ============================ COVER ============================ -->
+<header class="bleed" style="min-height:100vh; display:flex; flex-direction:column; justify-content:space-between; padding-top:120px;">
+  <div class="wrap" style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="eyebrow rv">A Strategic Blueprint &nbsp;·&nbsp; Prepared June 2026</div>
+    <h1 class="display rv" style="font-size:clamp(54px,11vw,150px); margin:.16em 0 0; max-width:14ch; line-height:1.0;">
+      One mind,<br>many <em style="font-style:italic;">disciplines.</em>
+    </h1>
+    <p class="lede rv" style="margin-top:clamp(40px,6vh,76px); max-width:46ch; font-size:24px;">
+      The complete plan to migrate, rebuild, and systematise the public identity of
+      Anirudh Kapoor — designer, builder, writer, and researcher — as a single coherent body of work.
+    </p>
+  </div>
+  <div class="wrap rv">
+    <hr class="rule-strong">
+    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; padding:22px 0 40px;">
+      <span class="mono">Contents · 12 sections</span>
+      <span class="mono">Audit → Direction → Brand → Architecture → Automation → Roadmap</span>
+      <span class="mono">Confidential working document</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ 00 · ABSTRACT ============================ -->
+<section class="sec-pad bleed" style="background:var(--ink); color:var(--paper);">
+  <div class="wrap">
+    <div class="split">
+      <div class="rv">
+        <div class="eyebrow" style="color:var(--sage-2);"><span class="n">00</span>The Premise</div>
+      </div>
+      <div class="rv">
+        <p class="display" style="font-weight:300; font-size:clamp(28px,3.6vw,46px); line-height:1.2; color:var(--paper); max-width:24ch;">
+          A practice organised around one conviction: that
+          <em style="color:var(--sage-2); font-style:italic;">objective logic</em> and
+          <em style="color:var(--sage-2); font-style:italic;">subjective taste</em>
+          are not opposites, but instruments of the same intelligence.
+        </p>
+        <p class="body" style="color:#b7bcae; margin-top:34px; max-width:58ch;">
+          Anirudh Kapoor works across interiors, construction, product, signage, furniture, artwork
+          consultancy, real estate, branding, automotive writing, AI systems, linguistics, and a
+          podcast. Today that breadth is invisible — scattered across a Wix template, iCloud, Drive,
+          and hard drives. This document defines a single home for it: part museum, part archive,
+          part laboratory. Every section that follows is built, not described.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 01 · AUDIT ============================ -->
+<section class="sec-pad bleed">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">01</span>
+      <div>
+        <div class="eyebrow">The Audit</div>
+        <h2 class="sec">Where the work lives today, and why that is the problem.</h2>
+      </div>
+    </div>
+
+    <div class="grid g2 rv" style="margin-bottom:54px;">
+      <div>
+        <p class="body">
+          The current site — <span class="mono">anirudh-kapoor.com</span>, built on Wix — presents three
+          project categories (Product, Graphic, Interiors) and a booking link. It is competent and
+          empty. It reads as a freelancer's template, not the record of a polymath. The breadth that is
+          the entire point of your practice is the one thing a visitor cannot see.
+        </p>
+        <p class="body">
+          Meanwhile the actual work sits in folders nobody will ever open. The asset and the audience
+          never meet. That is the gap this blueprint closes.
+        </p>
+      </div>
+      <div class="card">
+        <span class="label">Findings</span>
+        <div class="dl" style="--_:0;">
+          <div><dt>Platform</dt><dd>Wix — closed system, template ceiling, recurring cost, poor portability.</dd></div>
+          <div><dt>Visible scope</dt><dd>3 of ~18 disciplines surfaced. No archive, no writing, no verticals.</dd></div>
+          <div><dt>SEO</dt><dd>Generic titles, no structured data, no per-project pages to rank.</dd></div>
+          <div><dt>Content ops</dt><dd>Manual, ad-hoc. No pipeline from raw project → published case study.</dd></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rv">
+      <hr class="rule">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:18px 0 22px; flex-wrap:wrap; gap:12px;">
+        <span class="label" style="color:var(--sage);">The disciplines, in full</span>
+        <span class="mono">18 fields · one identity</span>
+      </div>
+      <div class="tags">
+        <span class="tag">Interior Design</span><span class="tag">Exhibition Design</span>
+        <span class="tag">Construction</span><span class="tag">Product Design</span>
+        <span class="tag">Furniture &amp; Decor</span><span class="tag">Artwork Consultancy</span>
+        <span class="tag">Signage</span><span class="tag">Real Estate</span>
+        <span class="tag">Automotive Journalism</span><span class="tag">Product Reviews</span>
+        <span class="tag sage">AI Generalist</span><span class="tag">AI Consulting &amp; Workflows</span><span class="tag">Linguistics</span>
+        <span class="tag">Branding</span><span class="tag">Creative Direction</span>
+        <span class="tag">Design Research</span><span class="tag">Jewellery Trading</span>
+        <span class="tag">Anomalogy (Podcast)</span><span class="tag">Entrepreneurship</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 02 · THESIS ============================ -->
+<section class="sec-pad-sm bleed" style="background:var(--paper-deep);">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">02</span>
+      <div><div class="eyebrow">Positioning</div>
+      <h2 class="sec">The connective thesis.</h2></div>
+    </div>
+    <div class="split">
+      <div class="rv">
+        <p class="lede" style="max-width:24ch;">"This person operates across an unusually wide range of disciplines — yet everything feels connected."</p>
+        <p class="mono" style="margin-top:16px;">— the intended first impression</p>
+      </div>
+      <div class="rv">
+        <p class="body" style="font-size:20px; color:var(--ink-2);">
+          The breadth is not a list of services; it is evidence of a method. We frame the entire
+          presence around a single editorial idea — <em>design intelligence</em> — and let each
+          discipline read as one application of it. Spaces, objects, language, and ideas, approached
+          with the same curiosity and the same standard of taste.
+        </p>
+        <div class="grid g3" style="margin-top:40px; gap:0;">
+          <div style="border-top:1px solid var(--line-strong); padding-top:14px;"><div class="display" style="font-size:40px;">Logic</div><p class="small muted" style="margin-top:6px;">Research, constraint, system, proof.</p></div>
+          <div style="border-top:1px solid var(--line-strong); padding-top:14px;"><div class="display" style="font-size:40px;">Taste</div><p class="small muted" style="margin-top:6px;">Proportion, material, restraint, wit.</p></div>
+          <div style="border-top:1px solid var(--line-strong); padding-top:14px;"><div class="display" style="font-size:40px;">Range</div><p class="small muted" style="margin-top:6px;">From buildings to grammar to code.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 03 · DESIGN DIRECTIONS ============================ -->
+<section class="sec-pad bleed">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">03</span>
+      <div><div class="eyebrow">Design Direction · Three options to compare</div>
+      <h2 class="sec">One palette, three temperaments.</h2></div>
+    </div>
+    <p class="body rv col" style="margin-bottom:64px;">
+      All three share the foundation you chose — a stone-and-sage palette and a serif paired with a
+      grotesque. What changes is posture. Choose the one that feels most like you; I'll build the
+      full homepage from it next.
+    </p>
+
+    <!-- Direction A -->
+    <div class="dir rv">
+      <div class="dir-meta">
+        <span class="no">A</span>
+        <span class="nm">The Archive</span>
+        <span class="desc">Research-institute editorial. Hairlines, indices, wall-text. Quiet, dense, intellectual — the work catalogued like a collection.</span>
+      </div>
+      <div class="frame">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:10px;">anirudh-kapoor.com</span></div>
+        <div class="mk mk-a">
+          <div class="topline"><b>ANIRUDH&nbsp;KAPOOR</b><span>Work · Archive · About · Writing · Contact</span></div>
+          <div class="statement">A working record of spaces, objects, and <em>ideas</em> — catalogued.</div>
+          <div class="idxrow">
+            <div><span class="n">01 / Interiors</span><span class="t">Residence, Mumbai</span></div>
+            <div><span class="n">02 / Product</span><span class="t">Cast brass series</span></div>
+            <div><span class="n">03 / Exhibition</span><span class="t">Pavilion, 2025</span></div>
+            <div><span class="n">04 / Writing</span><span class="t">On the automobile</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid g3" style="margin-top:22px; gap:24px;">
+        <div><span class="label" style="color:var(--sage);">Type</span><p class="small muted" style="margin-top:6px;">Spectral serif throughout · Archivo + mono for data.</p></div>
+        <div><span class="label" style="color:var(--sage);">Best for</span><p class="small muted" style="margin-top:6px;">Showcasing volume and rigour; a deep, browsable archive.</p></div>
+        <div><span class="label" style="color:var(--sage);">Feeling</span><p class="small muted" style="margin-top:6px;">A scholarly foundation. Calm, credible, endlessly extensible.</p></div>
+      </div>
+    </div>
+
+    <!-- Direction B -->
+    <div class="dir rv" style="margin-top:88px;">
+      <div class="dir-meta">
+        <span class="no">B</span>
+        <span class="nm">The Maison</span>
+        <span class="desc">Luxury house. Vast negative space, a single cinematic statement, high-contrast display serif. Confidence through restraint.</span>
+      </div>
+      <div class="frame">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:10px;">anirudh-kapoor.com</span></div>
+        <div class="mk mk-b">
+          <div class="kicker">Anirudh Kapoor · Est. work since 2012</div>
+          <div class="grand">Design<br><em>intelligence.</em></div>
+          <div class="sub">Interiors · Objects · Exhibitions · Writing · AI</div>
+          <span class="corner l">↓ Enter the archive</span>
+          <span class="corner r">Mumbai / Worldwide</span>
+        </div>
+      </div>
+      <div class="grid g3" style="margin-top:22px; gap:24px;">
+        <div><span class="label" style="color:var(--sage);">Type</span><p class="small muted" style="margin-top:6px;">Cormorant Garamond display, light · Archivo micro-labels.</p></div>
+        <div><span class="label" style="color:var(--sage);">Best for</span><p class="small muted" style="margin-top:6px;">A premium first impression; fewer, larger, curated moments.</p></div>
+        <div><span class="label" style="color:var(--sage);">Feeling</span><p class="small muted" style="margin-top:6px;">A maison. Expensive, cinematic, unhurried.</p></div>
+      </div>
+    </div>
+
+    <!-- Direction C -->
+    <div class="dir rv" style="margin-top:88px;">
+      <div class="dir-meta">
+        <span class="no">C</span>
+        <span class="nm">The Index</span>
+        <span class="desc">Design-laboratory systematics. A grotesque-led, numbered index of everything — Swiss, tabular, a little technical. Built to scale to hundreds of entries.</span>
+      </div>
+      <div class="frame">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:10px;">anirudh-kapoor.com</span></div>
+        <div class="mk mk-c">
+          <div class="head">
+            <div>
+              <div class="wm">Anirudh Kapoor</div>
+              <div class="big">An index of applied design intelligence.</div>
+            </div>
+            <div class="meta">18 fields<br>240+ entries<br>Est. 2012<br>—<br>Mumbai</div>
+          </div>
+          <div class="index">
+            <div class="ir"><span class="num">A·01</span><span class="nm">Cast Brass Object Series</span><span class="yr">Product · 2025</span></div>
+            <div class="ir"><span class="num">A·02</span><span class="nm">Residence in Three Greys</span><span class="yr">Interior · 2024</span></div>
+            <div class="ir"><span class="num">A·03</span><span class="nm">Pavilion / Exhibition Build</span><span class="yr">Exhibition · 2024</span></div>
+            <div class="ir"><span class="num">A·04</span><span class="nm">On the Driven Object</span><span class="yr">Writing · 2023</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid g3" style="margin-top:22px; gap:24px;">
+        <div><span class="label" style="color:var(--sage);">Type</span><p class="small muted" style="margin-top:6px;">Space Grotesk display · IBM Plex Mono for the index.</p></div>
+        <div><span class="label" style="color:var(--sage);">Best for</span><p class="small muted" style="margin-top:6px;">Sheer breadth made navigable; filtering across 18 fields.</p></div>
+        <div><span class="label" style="color:var(--sage);">Feeling</span><p class="small muted" style="margin-top:6px;">A laboratory. Precise, contemporary, systems-minded.</p></div>
+      </div>
+    </div>
+
+    <div class="card rv" style="margin-top:64px;">
+      <span class="label">My recommendation</span>
+      <p class="body" style="margin:0; max-width:70ch; font-size:18px;">
+        Lead with <strong>A · The Archive</strong> as the architecture and adopt <strong>B · The Maison</strong>'s
+        restraint for the homepage and section openers. It gives you the gravity of an institution
+        with the polish of a house — and it scales to hundreds of entries without ever feeling like a
+        template. <strong>C</strong> becomes the engine behind the "Archive" view. They are not mutually
+        exclusive; they are a system.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 04 · BRAND SYSTEM ============================ -->
+<section class="sec-pad bleed" style="background:var(--paper-deep);">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">04</span>
+      <div><div class="eyebrow">Brand System</div>
+      <h2 class="sec">The foundation, defined once.</h2></div>
+    </div>
+
+    <!-- color -->
+    <div class="rv" style="margin-bottom:60px;">
+      <span class="label" style="color:var(--sage); display:block; margin-bottom:18px;">Colour · Stone &amp; Sage</span>
+      <div class="swatch-row">
+        <div class="sw" style="background:var(--paper);"><span class="nm" style="color:var(--ink);">Paper</span><span class="hex" style="color:var(--ink-soft);">#ECE9E3</span></div>
+        <div class="sw" style="background:var(--paper-deep);"><span class="nm" style="color:var(--ink);">Stone</span><span class="hex" style="color:var(--ink-soft);">#E3E0D8</span></div>
+        <div class="sw" style="background:var(--sage-pale);"><span class="nm" style="color:var(--sage);">Sage&nbsp;pale</span><span class="hex" style="color:var(--sage);">#D7DDD2</span></div>
+        <div class="sw" style="background:var(--sage);"><span class="nm" style="color:var(--paper);">Sage</span><span class="hex" style="color:var(--sage-pale);">#3F4F3F</span></div>
+        <div class="sw" style="background:var(--ink-2);"><span class="nm" style="color:var(--paper);">Ink&nbsp;soft</span><span class="hex" style="color:var(--sage-pale);">#3B3F38</span></div>
+        <div class="sw" style="background:var(--ink);"><span class="nm" style="color:var(--paper);">Ink</span><span class="hex" style="color:var(--sage-pale);">#20231E</span></div>
+      </div>
+      <p class="small muted" style="margin-top:14px; max-width:70ch;">Saturation kept below 4% across the system. Sage is the only accent — used sparingly, never decoratively.</p>
+    </div>
+
+    <!-- type -->
+    <div class="rv split">
+      <div>
+        <span class="label" style="color:var(--sage); display:block; margin-bottom:8px;">Typography</span>
+        <p class="small muted" style="max-width:34ch;">A high-contrast serif for voice and a neutral grotesque for system. A monospace carries all data, labels, and indices.</p>
+      </div>
+      <div>
+        <div class="spec-row"><span class="mono">Display · Cormorant</span><span class="display" style="font-size:54px; font-weight:300;">Intelligence &amp; taste</span></div>
+        <div class="spec-row"><span class="mono">Headline · Spectral</span><span style="font-family:var(--serif); font-weight:500; font-size:30px;">A working record of ideas</span></div>
+        <div class="spec-row"><span class="mono">Body · Spectral</span><span style="font-family:var(--serif); font-size:18px; max-width:40ch;">Each discipline reads as one application of a single method — logic and taste, applied with curiosity.</span></div>
+        <div class="spec-row"><span class="mono">System · Space Grotesk</span><span style="font-family:var(--grotesk); font-weight:500; font-size:20px; letter-spacing:.02em;">Work · Archive · About · Writing</span></div>
+        <div class="spec-row"><span class="mono">Data · IBM Plex Mono</span><span class="mono" style="font-size:15px; color:var(--ink-2);">A·01 / INTERIOR / MUMBAI / 2024</span></div>
+      </div>
+    </div>
+
+    <!-- layout principles -->
+    <div class="grid g4 rv" style="margin-top:64px; gap:0;">
+      <div style="border-top:1px solid var(--line-strong); padding:18px 22px 0 0;"><div class="display" style="font-size:34px;">Grid</div><p class="small muted" style="margin-top:8px;">12-column, generous gutters, hairline rules instead of boxes.</p></div>
+      <div style="border-top:1px solid var(--line-strong); padding:18px 22px 0;"><div class="display" style="font-size:34px;">Space</div><p class="small muted" style="margin-top:8px;">Whitespace is the primary material. Nothing crowds.</p></div>
+      <div style="border-top:1px solid var(--line-strong); padding:18px 22px 0;"><div class="display" style="font-size:34px;">Motion</div><p class="small muted" style="margin-top:8px;">Restrained reveals on scroll; never decorative. Level 4 / 10.</p></div>
+      <div style="border-top:1px solid var(--line-strong); padding:18px 0 0 22px;"><div class="display" style="font-size:34px;">Image</div><p class="small muted" style="margin-top:8px;">Full-bleed, desaturated, captioned in mono. One hero per project.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 05 · ARCHITECTURE ============================ -->
+<section class="sec-pad bleed">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">05</span>
+      <div><div class="eyebrow">Information Architecture</div>
+      <h2 class="sec">Sixteen sections, reorganised into six.</h2></div>
+    </div>
+    <p class="body rv col" style="margin-bottom:46px;">
+      The brief lists sixteen top-level sections. A sixteen-item menu is the opposite of museum-like.
+      I recommend a primary navigation of <strong>six</strong>, with the disciplines and verticals
+      living as <em>facets</em> and <em>fields</em> beneath them — so breadth is filterable, not
+      flattened into a wall of tabs.
+    </p>
+
+    <div class="ia rv">
+      <div class="node"><span class="pl">01</span><h4>Work</h4><ul>
+        <li>Selected projects</li><li>Filter by discipline (18 facets)</li><li>Filter by year / type / material</li></ul></div>
+      <div class="node"><span class="pl">02</span><h4>Archive</h4><ul>
+        <li>The complete index (C · The Index)</li><li>Every documented project</li><li>Downloads &amp; PDFs</li></ul></div>
+      <div class="node"><span class="pl">03</span><h4>Fields</h4><ul>
+        <li>Anomalogy (podcast)</li><li>Automotive</li><li>AI &amp; workflows</li><li>Real estate · Linguistics</li></ul></div>
+      <div class="node"><span class="pl">04</span><h4>Writing</h4><ul>
+        <li>Insights &amp; essays</li><li>Reviews</li><li>Design research</li></ul></div>
+      <div class="node"><span class="pl">05</span><h4>Studio</h4><ul>
+        <li>About</li><li>Services</li><li>Certificates &amp; recognition</li><li>References (see §11)</li></ul></div>
+      <div class="node"><span class="pl">06</span><h4>Contact</h4><ul>
+        <li>Enquiries &amp; commissions</li><li>Press / media kit</li><li>Booking</li></ul></div>
+    </div>
+    <p class="mono rv" style="margin-top:18px;">Media, testimonials, certificates → folded into Studio. Insights + Reviews → unified under Writing. Verticals → Fields.</p>
+  </div>
+</section>
+
+<!-- ============================ 06 · PROJECT TEMPLATE ============================ -->
+<section class="sec-pad bleed" style="background:var(--ink); color:var(--paper);">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx" style="color:var(--sage-2);">06</span>
+      <div><div class="eyebrow" style="color:var(--sage-2);">The Project Page</div>
+      <h2 class="sec" style="color:var(--paper);">One template, every discipline.</h2></div>
+    </div>
+    <p class="body rv col" style="color:#b7bcae; margin-bottom:46px;">
+      A single reusable anatomy that holds an interior, a product, a building, or a research paper
+      equally well. Fields that don't apply simply collapse — the structure never breaks.
+    </p>
+    <div class="anat rv">
+      <div class="blk" style="grid-column:span 12; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Hero — full-bleed image + title + metadata strip</span><span class="d" style="color:#9aa392;">discipline · year · location · role</span></div>
+      <div class="blk" style="grid-column:span 7; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Overview</span><span class="d" style="color:#9aa392;">200-word wall-text</span></div>
+      <div class="blk" style="grid-column:span 5; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Metadata + Timeline</span><span class="d" style="color:#9aa392;">structured, machine-readable</span></div>
+      <div class="blk" style="grid-column:span 4; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Challenge</span></div>
+      <div class="blk" style="grid-column:span 4; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Constraints</span></div>
+      <div class="blk" style="grid-column:span 4; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Process</span></div>
+      <div class="blk" style="grid-column:span 12; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Gallery — adaptive grid (images · drawings · video)</span></div>
+      <div class="blk" style="grid-column:span 7; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Solution</span></div>
+      <div class="blk" style="grid-column:span 5; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Outcome</span></div>
+      <div class="blk" style="grid-column:span 6; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Downloads — PDF case study · drawings</span></div>
+      <div class="blk" style="grid-column:span 6; background:#22251f; border-color:rgba(255,255,255,.12);"><span class="t" style="color:var(--paper);">Related projects</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 07 · AUTOMATION ============================ -->
+<section class="sec-pad bleed">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">07</span>
+      <div><div class="eyebrow">Content Ingestion &amp; Automation</div>
+      <h2 class="sec">Drop a folder in. Get a published project out.</h2></div>
+    </div>
+
+    <p class="body rv col" style="margin-bottom:40px;">
+      Two connected systems. The <strong>ingestion pipeline</strong> turns a raw project folder into a
+      structured archive entry. The <strong>publishing engine</strong> ships one entry per day to the
+      website and Instagram — with a human approval gate before anything goes live.
+    </p>
+
+    <span class="label rv" style="color:var(--sage); display:block; margin-bottom:20px;">A · Ingestion — raw → structured</span>
+    <div class="flow rv" style="margin-bottom:54px;">
+      <div class="node"><span class="n">I·01</span><h5>Discover</h5><p>Watch a "Dropzone" folder; detect a new project bundle.</p><span class="tool">Drive / iCloud + watcher</span></div>
+      <div class="node"><span class="n">I·02</span><h5>Classify &amp; extract</h5><p>Identify discipline, dates, location; OCR PDFs, read EXIF.</p><span class="tool">Claude API + vision</span></div>
+      <div class="node"><span class="n">I·03</span><h5>Summarise &amp; tag</h5><p>Generate overview, challenge/solution, tags, alt-text.</p><span class="tool">Claude API</span></div>
+      <div class="node"><span class="n">I·04</span><h5>Stage entry</h5><p>Write a draft record + optimised images to the database.</p><span class="tool">Airtable / Supabase</span></div>
+    </div>
+
+    <span class="label rv" style="color:var(--sage); display:block; margin-bottom:20px;">B · Publishing — one per day</span>
+    <div class="flow rv" style="grid-template-columns:repeat(4,1fr); margin-bottom:30px;">
+      <div class="node"><span class="n">P·01</span><h5>Select next</h5><p>Pick the next approved, unpublished entry in the queue.</p><span class="tool">scheduled job</span></div>
+      <div class="node"><span class="n">P·02</span><h5>Generate assets</h5><p>Case-study page, carousel copy, reel script, captions, hashtags.</p><span class="tool">Claude API</span></div>
+      <div class="node"><span class="n">P·03</span><h5>Approve ✓</h5><p>You receive a preview on Telegram; tap to approve or hold.</p><span class="tool">Telegram bot · human gate</span></div>
+      <div class="node"><span class="n">P·04</span><h5>Publish &amp; notify</h5><p>Deploy to site, post to Instagram, confirm on Telegram.</p><span class="tool">Git deploy + Meta Graph API</span></div>
+    </div>
+    <div class="card rv">
+      <span class="label">Backup &amp; safety</span>
+      <p class="body small" style="margin:0; max-width:74ch;">
+        Every record is versioned in Git; original assets mirror to object storage
+        (<span class="mono">Cloudflare R2 / Backblaze B2</span>, free tiers). Nothing auto-posts without
+        your tap. A weekly digest summarises what shipped and what's queued.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 08 · MIGRATION / STACK ============================ -->
+<section class="sec-pad bleed" style="background:var(--paper-deep);">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">08</span>
+      <div><div class="eyebrow">Migration · Off Wix</div>
+      <h2 class="sec">A free, fast, permanent stack.</h2></div>
+    </div>
+    <p class="body rv col" style="margin-bottom:40px;">
+      The brief asks for cost-efficiency, ideally free. This stack costs <strong>~₹0/month</strong> at
+      your scale — only the domain renews — while beating Wix on speed, SEO, and longevity. You own
+      every file.
+    </p>
+    <div class="rv">
+      <table class="stack">
+        <thead><tr><th>Layer</th><th>Recommendation</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td><span class="k">Framework</span></td><td>Astro <span class="free">free / OSS</span></td><td>Ships static HTML — fastest possible loads, perfect SEO, content-first.</td></tr>
+          <tr><td><span class="k">Content</span></td><td>Markdown / MDX + Keystatic <span class="free">free</span></td><td>Projects as files you own; a visual editor on top. No lock-in.</td></tr>
+          <tr><td><span class="k">Hosting</span></td><td>Cloudflare Pages <span class="free">free</span></td><td>Global CDN, unlimited bandwidth, instant rollbacks.</td></tr>
+          <tr><td><span class="k">Images</span></td><td>Astro Image + R2 <span class="free">free tier</span></td><td>Auto AVIF/WebP, responsive, lazy. Originals archived.</td></tr>
+          <tr><td><span class="k">Database / queue</span></td><td>Airtable or Supabase <span class="free">free tier</span></td><td>The project archive + publishing queue, with status fields.</td></tr>
+          <tr><td><span class="k">Automation</span></td><td>n8n (self-host) or Make <span class="free">free / low</span></td><td>Wires ingestion + publishing without writing servers.</td></tr>
+          <tr><td><span class="k">Intelligence</span></td><td>Claude API <span class="free">usage-based</span></td><td>Summaries, captions, scripts, classification, alt-text.</td></tr>
+          <tr><td><span class="k">Publishing</span></td><td>Meta Graph + Telegram Bot <span class="free">free</span></td><td>Instagram posting + your approval/notify channel.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="steps rv" style="margin-top:54px;">
+      <div class="step"><div><h4>Reserve the canon</h4><p>Lock the domain, export all Wix content, inventory existing pages and redirects.</p></div></div>
+      <div class="step"><div><h4>Stand up the shell</h4><p>Astro project, brand system, six-section IA, one real project as proof.</p></div></div>
+      <div class="step"><div><h4>Migrate &amp; redirect</h4><p>Port content, set 301s from old Wix URLs, submit new sitemap.</p></div></div>
+      <div class="step"><div><h4>Cut over</h4><p>Point DNS to Cloudflare. Wix becomes a backup, then retires.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 09 · SOCIAL SYSTEM ============================ -->
+<section class="sec-pad bleed">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">09</span>
+      <div><div class="eyebrow">Social Media System</div>
+      <h2 class="sec">One visual language, every surface.</h2></div>
+    </div>
+    <p class="body rv col" style="margin-bottom:48px;">
+      Templates that are unmistakably the same brand as the site — stone &amp; sage, the serif voice,
+      mono captions, numbered like archive entries. Each project auto-fills these.
+    </p>
+    <div class="grid g4 rv" style="gap:24px;">
+      <div class="fmt"><div class="plate dark ar-45"><span class="cap">CAROUSEL · 1080×1350</span></div><span class="nm">Instagram Carousel</span><span class="cap">6–8 slides · title, process, outcome</span></div>
+      <div class="fmt"><div class="plate dark ar-916"><span class="cap">REEL · 1080×1920</span></div><span class="nm">Instagram Reel</span><span class="cap">15–30s · script + captions auto-drafted</span></div>
+      <div class="fmt"><div class="plate ar-916"><span class="cap">STORY · 1080×1920</span></div><span class="nm">Story</span><span class="cap">single frame · "new in the archive"</span></div>
+      <div class="fmt"><div class="plate ar-11"><span class="cap">POST · 1200×1200</span></div><span class="nm">LinkedIn · X</span><span class="cap">square card + thread template</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 10 · CV ============================ -->
+<section class="sec-pad-sm bleed" style="background:var(--paper-deep);">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">10</span>
+      <div><div class="eyebrow">The CV Programme</div>
+      <h2 class="sec">Three documents, one ecosystem.</h2></div>
+    </div>
+    <div class="grid g3 rv" style="gap:30px;">
+      <div class="fmt"><div class="plate ar-45"><span class="cap">A4 · 1 page</span></div><span class="nm">Executive</span><span class="cap">One page. Positioning, headline work, range — for fast decisions.</span></div>
+      <div class="fmt"><div class="plate ar-45"><span class="cap">A4 · multi-page</span></div><span class="nm">Detailed</span><span class="cap">Full record: projects, AI skills, certifications, consulting.</span></div>
+      <div class="fmt"><div class="plate ar-45"><span class="cap">A4 · visual</span></div><span class="nm">Portfolio</span><span class="cap">Image-led, case-study excerpts — the work, not just the words.</span></div>
+    </div>
+    <p class="body rv" style="margin-top:36px; max-width:64ch;">
+      All three render from one source so they never drift, and share the site's type and palette
+      exactly. I'll audit your latest CV and rebuild from it once you share it.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 11 · THE WITNESS ============================ -->
+<section class="sec-pad bleed">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx">11</span>
+      <div><div class="eyebrow">Testimonials · Reconsidered</div>
+      <h2 class="sec">The Witness.</h2></div>
+    </div>
+    <p class="body rv col" style="margin-bottom:54px;">
+      Fabricated client quotes are beneath this brand. But your instinct is the better one: rather than
+      pretend, let an AI testify <em>openly</em> — read the entire body of work and state, on the record
+      and clearly labelled, what it observes through a non-human eye. Honest by construction, and
+      uniquely fitting for someone who works in AI. One assessment, with full provenance, says more than
+      a wall of praise.
+    </p>
+
+    <!-- the assessment, as an archival record -->
+    <figure class="witness rv">
+      <div class="witness-bar">
+        <span>MACHINE&nbsp;ASSESSMENT&nbsp;·&nbsp;001</span>
+        <span>NON-HUMAN&nbsp;·&nbsp;UNPAID&nbsp;·&nbsp;ON&nbsp;THE&nbsp;RECORD</span>
+      </div>
+      <blockquote class="witness-q">
+        “Across eighteen fields — from cast-brass objects to exhibition builds to questions of grammar —
+        the same hand is visible. There is a consistent preference for <em>constraint over decoration</em>,
+        and a refusal to treat any discipline as beneath rigour. This does not read as a portfolio of
+        services. It reads as one person's sustained argument that taste and logic are a single faculty,
+        observed from different angles.”
+      </blockquote>
+      <figcaption class="witness-prov">
+        <span>Generated by a large language model from the complete project archive.</span>
+        <span>An assessment, not a client endorsement. Method &amp; prompt published in full.</span>
+      </figcaption>
+    </figure>
+
+    <p class="body rv col" style="margin-top:54px;">
+      The Witness sits <em>alongside</em> the human record, never instead of it:
+    </p>
+    <div class="grid g2 rv" style="margin-top:8px;">
+      <div class="dl">
+        <div><dt>References</dt><dd>Real collaborators, named on request. Quality over quantity.</dd></div>
+        <div><dt>Recognition</dt><dd>Press, features, certificates, talks — verifiable third-party proof.</dd></div>
+      </div>
+      <div class="card">
+        <span class="label">Why this is ethical</span>
+        <p class="small" style="margin:0; color:var(--ink-2);">It never impersonates a human client. The source, method,
+        and prompt are published. The reader knows exactly what they are reading — a transparent,
+        repeatable machine reading of the work itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 12 · ROADMAP ============================ -->
+<section class="sec-pad bleed" style="background:var(--ink); color:var(--paper);">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="idx" style="color:var(--sage-2);">12</span>
+      <div><div class="eyebrow" style="color:var(--sage-2);">Execution Roadmap</div>
+      <h2 class="sec" style="color:var(--paper);">From blueprint to living archive.</h2></div>
+    </div>
+    <div class="road rv">
+      <div class="phase" style="border-color:var(--sage-2);">
+        <div><span class="ph">Phase 00 — now</span><div class="ttl">Foundation</div><div class="when">You are here</div></div>
+        <ul>
+          <li>This strategic blueprint</li><li>Choose a design direction</li>
+          <li>Lock the brand system</li><li>Confirm the domain &amp; logo</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div><span class="ph">Phase 01</span><div class="ttl">The Core Site</div><div class="when">Weeks 1–3</div></div>
+        <ul>
+          <li>Homepage in chosen direction</li><li>Project template, built</li>
+          <li>Work · About · Studio · Contact</li><li>3–5 flagship projects live</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div><span class="ph">Phase 02</span><div class="ttl">Archive &amp; Ingestion</div><div class="when">Weeks 3–6</div></div>
+        <ul>
+          <li>The Index view (full archive)</li><li>Dropzone → structured entry pipeline</li>
+          <li>Backfill the back catalogue</li><li>PDF case-study generator</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div><span class="ph">Phase 03</span><div class="ttl">Automation &amp; Social</div><div class="when">Weeks 6–9</div></div>
+        <ul>
+          <li>Daily publishing engine</li><li>Instagram + Telegram approval loop</li>
+          <li>Carousel · reel · story templates</li><li>Backups &amp; monitoring</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div><span class="ph">Phase 04</span><div class="ttl">Fields &amp; CV</div><div class="when">Ongoing</div></div>
+        <ul>
+          <li>Anomalogy · Automotive · AI · Linguistics</li><li>Writing &amp; reviews engine</li>
+          <li>Three-format CV programme</li><li>References &amp; recognition</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="foot bleed sec-pad-sm">
+  <div class="wrap">
+    <hr class="rule" style="background:rgba(255,255,255,.16); margin-bottom:40px;">
+    <div class="split" style="align-items:end;">
+      <div>
+        <div class="display" style="font-size:clamp(40px,7vw,86px); color:var(--paper); line-height:.95;">Shall we<br><em style="font-style:italic;">begin?</em></div>
+      </div>
+      <div>
+        <p class="body" style="color:#b7bcae; max-width:44ch;">
+          Tell me which direction speaks to you — <strong style="color:var(--paper);">A, B, or C</strong> —
+          and I'll build the full homepage next. Share your logo, latest CV, and a first project folder
+          whenever you're ready, and the archive starts filling itself.
+        </p>
+        <div class="tags" style="margin-top:24px;">
+          <span class="tag" style="border-color:rgba(255,255,255,.3); color:var(--paper);">Next · Homepage</span>
+          <span class="tag" style="border-color:rgba(255,255,255,.3); color:var(--paper);">Then · CV</span>
+          <span class="tag" style="border-color:rgba(255,255,255,.3); color:var(--paper);">Then · Automation</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-top:64px;">
+      <span class="mono" style="color:#8a8f82;">Anirudh Kapoor · Strategic Blueprint · June 2026</span>
+      <span class="mono" style="color:#8a8f82;">Stone &amp; Sage · Serif + Grotesque · v1</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* reveal on scroll — with immediate above-the-fold reveal + hard safety net */
+const rvs = [...document.querySelectorAll('.rv')];
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { rootMargin:'0px 0px -6% 0px', threshold:0.04 });
+rvs.forEach((el)=>{ io.observe(el); });
+/* reveal whatever is already in/above the viewport right away */
+function revealVisible(){
+  rvs.forEach(el=>{ if(el.getBoundingClientRect().top < window.innerHeight*0.96){ el.classList.add('in'); io.unobserve(el); } });
+}
+requestAnimationFrame(revealVisible);
+window.addEventListener('load', revealVisible);
+/* safety net: content must never stay hidden if the observer misbehaves */
+setTimeout(()=>rvs.forEach(el=>el.classList.add('in')), 2000);
+
+/* section page indicator */
+const ind = document.getElementById('pageind');
+const secs = [...document.querySelectorAll('section[class*=sec-pad], header, footer')];
+const labels = ['Cover','00 · Premise','01 · Audit','02 · Positioning','03 · Direction','04 · Brand','05 · Architecture','06 · Project','07 · Automation','08 · Migration','09 · Social','10 · CV','11 · The Witness','12 · Roadmap','Begin'];
+const io2 = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){
+    const i = secs.indexOf(e.target);
+    if(i>=0 && labels[i]) ind.textContent = labels[i];
+  }});
+}, { threshold:0.5 });
+secs.forEach(s=>io2.observe(s));
+</script>
+</body>
+</html>

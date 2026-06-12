@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anirudh Kapoor — Design Directions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Archivo:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#ece9e3; --paper-deep:#e3e0d8; --panel:#f3f1ec;
+  --ink:#20231e; --ink-2:#3b3f38; --ink-soft:#5d615a;
+  --sage:#3f4f3f; --sage-2:#566656; --sage-pale:#d7ddd2;
+  --line:color-mix(in oklch, var(--ink) 13%, transparent);
+  --line-strong:color-mix(in oklch, var(--ink) 28%, transparent);
+  --serif:'Spectral',Georgia,serif; --display:'Cormorant Garamond',Georgia,serif;
+  --grotesk:'Space Grotesk',sans-serif; --sans:'Archivo',Helvetica,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{ box-sizing:border-box; }
+body{ margin:0; font-family:var(--sans); }
+
+/* shared plate */
+.pl{ position:relative; background:
+   repeating-linear-gradient(135deg, color-mix(in oklch, var(--ink) 6%, transparent) 0 1px, transparent 1px 11px), var(--paper-deep);
+   border:1px solid var(--line); display:flex; align-items:flex-end; overflow:hidden; }
+.pl .c{ font-family:var(--mono); font-size:11px; color:var(--ink-soft); padding:9px 11px;
+   background:color-mix(in oklch, var(--paper) 78%, transparent); border-top:1px solid var(--line); border-right:1px solid var(--line); }
+.pl.dk{ background:repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 1px, transparent 1px 11px), #23261f; border-color:rgba(255,255,255,.12); }
+.pl.dk .c{ color:#a7ab9f; background:rgba(20,22,18,.55); border-color:rgba(255,255,255,.1); }
+
+/* =================== A · THE ARCHIVE =================== */
+.ax{ width:100%; height:100%; background:var(--paper); color:var(--ink); padding:46px 52px; display:flex; flex-direction:column; }
+.ax-nav{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--line-strong); padding-bottom:18px; }
+.ax-nav .wm{ font-family:var(--sans); font-weight:600; font-size:14px; letter-spacing:.22em; }
+.ax-nav nav{ font-family:var(--sans); font-size:12.5px; letter-spacing:.1em; color:var(--ink-soft); }
+.ax-hero{ padding:54px 0 40px; }
+.ax-eyebrow{ font-family:var(--sans); font-weight:600; font-size:11.5px; letter-spacing:.24em; color:var(--sage); margin-bottom:24px; }
+.ax-hero h1{ font-family:var(--serif); font-weight:300; font-size:52px; line-height:1.12; letter-spacing:-.01em; margin:0; max-width:21ch; }
+.ax-hero h1 em{ font-style:italic; color:var(--sage); }
+.ax-meta{ display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.ax-meta div{ padding:20px 22px 22px 0; border-right:1px solid var(--line); }
+.ax-meta div:last-child{ border-right:0; }
+.ax-meta .n{ font-family:var(--serif); font-size:34px; font-weight:300; }
+.ax-meta .l{ font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); margin-top:6px; }
+.ax-idxhead{ display:flex; justify-content:space-between; align-items:baseline; padding:30px 0 16px; }
+.ax-idxhead .t{ font-family:var(--sans); font-weight:600; font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--sage); }
+.ax-idxhead .a{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); }
+.ax-row{ display:grid; grid-template-columns:54px 150px 1fr auto; gap:26px; align-items:center; padding:18px 0; border-top:1px solid var(--line); }
+.ax-row .num{ font-family:var(--mono); font-size:12px; color:var(--sage); }
+.ax-row .th{ height:84px; }
+.ax-row .ti{ font-family:var(--serif); font-size:22px; }
+.ax-row .di{ font-family:var(--sans); font-size:12px; letter-spacing:.06em; color:var(--ink-soft); margin-top:3px; }
+.ax-row .yr{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); }
+
+/* =================== B · THE MAISON =================== */
+.mz{ width:100%; height:100%; background:#1a1d18; color:#ece9e3; display:flex; flex-direction:column; }
+.mz-top{ text-align:center; padding:34px 0 0; font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:.34em; color:#cfd3c8; }
+.mz-center{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px 40px; }
+.mz-kicker{ font-family:var(--sans); font-size:11px; letter-spacing:.4em; text-transform:uppercase; color:#9aa392; margin-bottom:40px; }
+.mz-center h1{ font-family:var(--display); font-weight:300; font-size:118px; line-height:.9; letter-spacing:-.015em; margin:0; }
+.mz-center h1 em{ font-style:italic; }
+.mz-sub{ font-family:var(--serif); font-weight:300; font-size:21px; color:#b7bcae; margin-top:34px; max-width:34ch; line-height:1.5; }
+.mz-enter{ font-family:var(--mono); font-size:12px; letter-spacing:.12em; color:#8a9080; margin-top:48px; }
+.mz-band{ height:430px; border-top:1px solid rgba(255,255,255,.12); }
+
+/* =================== C · THE INDEX =================== */
+.ix{ width:100%; height:100%; background:var(--paper); color:var(--ink); padding:46px 52px; display:flex; flex-direction:column; }
+.ix-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:40px; }
+.ix-head .wm{ font-family:var(--grotesk); font-weight:600; font-size:22px; letter-spacing:-.01em; }
+.ix-head h1{ font-family:var(--grotesk); font-weight:500; font-size:46px; line-height:1.02; letter-spacing:-.02em; margin:22px 0 0; max-width:17ch; }
+.ix-head .meta{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); text-align:right; line-height:1.9; flex:0 0 auto; }
+.ix-filters{ display:flex; gap:8px; flex-wrap:wrap; margin:44px 0 8px; }
+.ix-chip{ font-family:var(--sans); font-size:12px; font-weight:500; letter-spacing:.04em; padding:7px 14px; border:1px solid var(--line-strong); border-radius:100px; color:var(--ink-2); }
+.ix-chip.on{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+.ix-tbl{ margin-top:14px; }
+.ix-r{ display:grid; grid-template-columns:70px 1fr 200px 80px; gap:20px; align-items:center; padding:15px 8px; border-top:1px solid var(--line); }
+.ix-r:hover{ background:var(--sage-pale); }
+.ix-r .nm{ font-family:var(--mono); font-size:12px; color:var(--sage); }
+.ix-r .ti{ font-family:var(--grotesk); font-weight:500; font-size:18px; }
+.ix-r .di{ font-family:var(--sans); font-size:13px; color:var(--ink-soft); letter-spacing:.04em; }
+.ix-r .yr{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); text-align:right; }
+.ix-foot{ margin-top:auto; display:flex; justify-content:space-between; padding:22px 8px 0; border-top:1px solid var(--line-strong); font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--sage); }
+
+@media (max-width:700px){ }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard } = window;
+
+function Archive(){
+  const rows = [
+    ['A·01','Cast Brass Object Series','Product Design','2025'],
+    ['A·02','Residence in Three Greys','Interior Design','2024'],
+    ['A·03','Pavilion / Exhibition Build','Exhibition Design','2024'],
+    ['A·04','On the Driven Object','Automotive Writing','2023'],
+  ];
+  return (
+    <div className="ax">
+      <div className="ax-nav">
+        <span className="wm">ANIRUDH&nbsp;KAPOOR</span>
+        <nav>Work&nbsp;&nbsp;·&nbsp;&nbsp;Archive&nbsp;&nbsp;·&nbsp;&nbsp;Fields&nbsp;&nbsp;·&nbsp;&nbsp;Writing&nbsp;&nbsp;·&nbsp;&nbsp;Studio&nbsp;&nbsp;·&nbsp;&nbsp;Contact</nav>
+      </div>
+      <div className="ax-hero">
+        <div className="ax-eyebrow">A WORKING ARCHIVE · EST. 2012 · MUMBAI / WORLDWIDE</div>
+        <h1>A working record of spaces, objects, and <em>ideas</em> — catalogued with equal care.</h1>
+      </div>
+      <div className="ax-meta">
+        <div><div className="n">18</div><div className="l">Disciplines</div></div>
+        <div><div className="n">240+</div><div className="l">Documented works</div></div>
+        <div><div className="n">12</div><div className="l">Years in practice</div></div>
+        <div><div className="n">1</div><div className="l">Connective method</div></div>
+      </div>
+      <div className="ax-idxhead">
+        <span className="t">Selected · 01–04</span>
+        <span className="a">View the full archive →</span>
+      </div>
+      {rows.map((r,i)=>(
+        <div className="ax-row" key={i}>
+          <span className="num">{r[0]}</span>
+          <div className="pl th"><span className="c">{r[2].split(' ')[0].toUpperCase()}</span></div>
+          <div><div className="ti">{r[1]}</div><div className="di">{r[2]}</div></div>
+          <span className="yr">{r[3]}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Maison(){
+  return (
+    <div className="mz">
+      <div className="mz-top">ANIRUDH&nbsp;KAPOOR</div>
+      <div className="mz-center">
+        <div className="mz-kicker">Interiors · Objects · Exhibitions · Writing · AI</div>
+        <h1>Design<br/><em>intelligence.</em></h1>
+        <div className="mz-sub">A practice where objective logic and subjective taste are treated as the same instrument.</div>
+        <div className="mz-enter">↓ &nbsp;ENTER THE ARCHIVE</div>
+      </div>
+      <div className="pl dk mz-band"><span className="c">FULL-BLEED HERO — PAVILION, 2024</span></div>
+    </div>
+  );
+}
+
+function Index(){
+  const rows = [
+    ['A·01','Cast Brass Object Series','Product Design','2025'],
+    ['A·02','Residence in Three Greys','Interior Design','2024'],
+    ['A·03','Pavilion / Exhibition Build','Exhibition Design','2024'],
+    ['A·04','On the Driven Object','Automotive Writing','2023'],
+    ['A·05','Wayfinding / Signage System','Signage Design','2023'],
+    ['A·06','A Grammar of Materials','Design Research','2023'],
+    ['A·07','Workflow Automation Suite','AI Generalist','2025'],
+    ['A·08','Anomalogy — Season One','Podcasting','2024'],
+    ['A·09','Estate Repositioning','Real Estate','2022'],
+  ];
+  return (
+    <div className="ix">
+      <div className="ix-head">
+        <div>
+          <div className="wm">Anirudh Kapoor</div>
+          <h1>An index of applied design intelligence.</h1>
+        </div>
+        <div className="meta">18 FIELDS<br/>240+ ENTRIES<br/>EST. 2012<br/>—<br/>MUMBAI</div>
+      </div>
+      <div className="ix-filters">
+        <span className="ix-chip on">All</span>
+        <span className="ix-chip">Interiors</span>
+        <span className="ix-chip">Product</span>
+        <span className="ix-chip">Exhibition</span>
+        <span className="ix-chip">Signage</span>
+        <span className="ix-chip">Writing</span>
+        <span className="ix-chip">AI</span>
+        <span className="ix-chip">Real Estate</span>
+        <span className="ix-chip">Research</span>
+      </div>
+      <div className="ix-tbl">
+        {rows.map((r,i)=>(
+          <div className="ix-r" key={i}>
+            <span className="nm">{r[0]}</span>
+            <span className="ti">{r[1]}</span>
+            <span className="di">{r[2]}</span>
+            <span className="yr">{r[3]}</span>
+          </div>
+        ))}
+      </div>
+      <div className="ix-foot">
+        <span>SHOWING 09 / 240+</span>
+        <span>VIEW THE COMPLETE INDEX →</span>
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  return (
+    <DesignCanvas>
+      <DCSection id="dirs" title="Homepage — Three Directions" subtitle="One palette · three temperaments. Open any board fullscreen (click ⤢) to judge it at scale.">
+        <DCArtboard id="a" label="A · The Archive — research-institute editorial" width={1180} height={1340}><Archive/></DCArtboard>
+        <DCArtboard id="b" label="B · The Maison — luxury house, cinematic restraint" width={1180} height={1340}><Maison/></DCArtboard>
+        <DCArtboard id="c" label="C · The Index — Swiss systematic, scales to hundreds" width={1180} height={1340}><Index/></DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

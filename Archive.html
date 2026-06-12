@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Archive — Anirudh Kapoor</title>
+<meta name="description" content="The complete index of Anirudh Kapoor's work — interiors, products, exhibitions, branding, AI systems, writing and more.">
+<link rel="stylesheet" href="assets/home.css">
+<link rel="stylesheet" href="assets/archive.css">
+<link rel="icon" type="image/png" href="assets/logo-ink.png">
+</head>
+<body class="arcbody">
+
+<!-- ====================== NAV ====================== -->
+<nav class="nav scrolled" id="nav">
+  <a class="wm" href="Homepage.html"><img src="assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
+  <div class="links">
+    <a href="Homepage.html#work">Work</a>
+    <a href="Archive.html">Archive</a>
+    <a href="About.html">Studio</a>
+    <a href="Homepage.html#witness">Writing</a>
+    <a href="CV.html">CV</a>
+    <a href="Homepage.html#contact">Contact</a>
+  </div>
+  <span class="menu">Menu</span>
+</nav>
+
+<!-- ====================== HEADER ====================== -->
+<header class="arc-head wrap">
+  <div class="top">
+    <div>
+      <div class="eyebrow">The Archive</div>
+      <h1>An index of applied design intelligence.</h1>
+    </div>
+    <div class="meta"><b>18</b> fields<br><b id="total">—</b> entries<br>Est. <b>2013</b><br>—<br>Gurgaon</div>
+  </div>
+
+  <div class="controls">
+    <div class="filters" id="filters"></div>
+    <div class="tools">
+      <span class="count" id="count"></span>
+      <button class="sortbtn" id="sortbtn">Year ↓</button>
+    </div>
+  </div>
+</header>
+
+<!-- ====================== INDEX ====================== -->
+<section class="index wrap">
+  <div class="ihead">
+    <span>Ref</span><span>Project</span><span>Discipline</span><span>Detail</span><span class="r-yr">Year</span>
+  </div>
+  <div id="rows"></div>
+  <div class="noresult" id="noresult" style="display:none;">No entries in this field yet.</div>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="foot sec wrap">
+  <div class="legal" style="margin-top:0;">
+    <img class="foot-mark" src="assets/logo-ink.png" alt="Anirudh Kapoor monogram">
+    <span class="mono">Anirudh Kapoor · The Archive · Updated continuously</span>
+    <span class="mono">Gurgaon / Worldwide · Est. 2013</span>
+  </div>
+</footer>
+
+<script>
+/* ---------- the record (drawn from real history) ---------- */
+const ENTRIES = [
+  { ref:'A·01', title:'House of Ming — Taj Mansingh', cat:'Interiors', detail:'Artwork &amp; installation concepts for the restaurant entrance &amp; side wall — New Delhi', yr:2018, href:'Project Template.html' },
+  { ref:'A·02', title:'Emperor’s Lounge — Taj Mansingh', cat:'Interiors', detail:'Design-update concepts — parapet, windows &amp; displays, New Delhi', yr:2018, href:'Project — Emperor\'s Lounge.html' },
+  { ref:'A·03', title:'Taj Lands End — Décor Direction', cat:'Interiors', detail:'Art & interior direction, Mumbai', yr:2018 },
+  { ref:'A·04', title:'The Cast Brass Series', cat:'Product', detail:'A family of objects from a single rule', yr:2025 },
+  { ref:'A·05', title:'AI Trading System', cat:'AI & Systems', detail:'Signal, risk & execution — built solo', yr:2025 },
+  { ref:'A·06', title:'Agentic Workflows & Automation', cat:'AI & Systems', detail:'Multi-step automation for studio & clients', yr:2025 },
+  { ref:'A·07', title:'Creative & Jewellery Websites', cat:'Web', detail:'Design & build for creative & jewellery brands', yr:2024 },
+  { ref:'A·08', title:'Dulhanama — Jewellery Identity', cat:'Branding', detail:'Brand identity for an alternative jewellery house', yr:2023 },
+  { ref:'A·09', title:'M Moser — Facebook Office', cat:'Interiors', detail:'Architecture & interior design, Gurgaon', yr:2016 },
+  { ref:'A·10', title:'M Moser — Google Office', cat:'Interiors', detail:'Architecture & interior design, Gurgaon', yr:2016 },
+  { ref:'A·11', title:'M Moser — Cadence & BirlaSoft', cat:'Interiors', detail:'Workplace interiors, Gurgaon', yr:2016 },
+  { ref:'A·12', title:'DLF — Wayfinding Systems', cat:'Signage', detail:'Signage across six developments, India', yr:2017 },
+  { ref:'A·13', title:'DLF — Marketing Pavilion', cat:'Exhibition', detail:'“30 Days” pavilion design', yr:2017 },
+  { ref:'A·14', title:'Comic Con India — Signage', cat:'Signage', detail:'Directional signage & execution, Delhi', yr:2018 },
+  { ref:'A·15', title:'Express Towers — Signage', cat:'Signage', detail:'Directional signage & execution, Mumbai', yr:2017 },
+  { ref:'A·16', title:'Hyatt Regency Amritsar — Identity', cat:'Branding', detail:'Brand identity, compendium & marketing', yr:2017 },
+  { ref:'A·17', title:'Hyatt Regency Lucknow — Bar', cat:'Interiors', detail:'Bar identity + interior design', yr:2017 },
+  { ref:'A·18', title:'Diageo — Bar', cat:'Interiors', detail:'Concept, interior & identity design', yr:2018 },
+  { ref:'A·19', title:'ITC Maurya — Christmas Décor', cat:'Exhibition', detail:'Concept design & décor, Delhi', yr:2018 },
+  { ref:'A·20', title:'Bo-Tai, Mehrauli', cat:'Interiors', detail:'Artwork, interiors, signage & identity — consultant', yr:2019 },
+  { ref:'A·21', title:'Delhi Golf Club — Café', cat:'Interiors', detail:'Café interior design', yr:2019 },
+  { ref:'A·22', title:'Falcon Exhibitions — Pavilion', cat:'Exhibition', detail:'Pavilion design & brand merchandising', yr:2019 },
+  { ref:'A·23', title:'Residences — Delhi & Gurgaon', cat:'Interiors', detail:'GK1 · Nirvana Country · Kailash Colony · Saket', yr:2017 },
+  { ref:'A·24', title:'iOS App — Solo Startup', cat:'AI & Systems', detail:'Built & shipped in Swift / Xcode', yr:2022 },
+  { ref:'A·25', title:'IRCTC — Website Redesign', cat:'Web', detail:'Concept redesign & interaction study', yr:2017 },
+  { ref:'A·26', title:'Kia Motors — Experimental Projects', cat:'Research', detail:'Real-world product design experiments', yr:2017 },
+  { ref:'A·27', title:'Roncato & Kone — Studies', cat:'Research', detail:'Experimental product & systems projects', yr:2016 },
+  { ref:'A·28', title:'High-End Stone Products — Brand', cat:'Branding', detail:'Identity for a premium stone start-up', yr:2018 },
+  { ref:'A·29', title:'Marriott, Bilaspur — Campaigns', cat:'Branding', detail:'Graphic design, copy & marketing', yr:2018 },
+  { ref:'A·30', title:'Tappa Aerocity — Packaging', cat:'Product', detail:'Packaging design', yr:2018 },
+  { ref:'A·31', title:'Seven Start-up Identities', cat:'Branding', detail:'Logo & identity systems', yr:2019 },
+  { ref:'A·32', title:'CarHP — Automotive Journalism', cat:'Writing', detail:'Reviews, features & editorial, USA', yr:2020 },
+  { ref:'A·33', title:'Product Reviews', cat:'Writing', detail:'Multi-disciplinary product breakdowns', yr:2025 },
+  { ref:'A·34', title:'Anomalogy — Podcast', cat:'Writing', detail:'Conversations on design & ideas', yr:2024 },
+  { ref:'A·35', title:'Real Estate — Investment & Advisory', cat:'Real Estate', detail:'Acquisition, repositioning & consultancy', yr:2022 },
+];
+
+const CATS = ['All','Interiors','Product','Exhibition','Signage','Branding','AI & Systems','Web','Writing','Research','Real Estate'];
+
+const rowsEl = document.getElementById('rows');
+const filtersEl = document.getElementById('filters');
+const countEl = document.getElementById('count');
+const noresultEl = document.getElementById('noresult');
+const sortBtn = document.getElementById('sortbtn');
+let active = 'All';
+let sortDesc = true;
+
+document.getElementById('total').textContent = ENTRIES.length;
+
+CATS.forEach(c=>{
+  const b = document.createElement('span');
+  b.className = 'fchip' + (c==='All'?' on':'');
+  b.textContent = c; b.dataset.cat = c;
+  b.addEventListener('click', ()=>{ active=c; document.querySelectorAll('.fchip').forEach(x=>x.classList.toggle('on', x.dataset.cat===c)); render(); });
+  filtersEl.appendChild(b);
+});
+
+function render(){
+  const list = ENTRIES
+    .filter(e => active==='All' || e.cat===active)
+    .sort((a,b)=> sortDesc ? b.yr-a.yr : a.yr-b.yr);
+  rowsEl.innerHTML = list.map(e=>{
+    const tag = e.href ? 'a' : 'div';
+    const hrefAttr = e.href ? ` href="${e.href}"` : '';
+    return `<${tag} class="irow"${hrefAttr}>
+      <span class="r-ref">${e.ref}</span>
+      <span class="r-title">${e.title}<span class="ar"> →</span></span>
+      <span class="r-disc">${e.cat}</span>
+      <span class="r-detail">${e.detail}</span>
+      <span class="r-yr">${e.yr}</span>
+    </${tag}>`;
+  }).join('');
+  countEl.textContent = list.length + (active==='All'?' entries':' in '+active);
+  noresultEl.style.display = list.length ? 'none' : 'block';
+}
+
+sortBtn.addEventListener('click', ()=>{ sortDesc=!sortDesc; sortBtn.textContent = 'Year ' + (sortDesc?'↓':'↑'); render(); });
+
+render();
+</script>
+</body>
+</html>
