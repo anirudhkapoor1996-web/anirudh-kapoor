@@ -108,7 +108,7 @@ const ENTRIES = [
       { ref:'A·41', title:'Rambagh Palace — Afternoon Tea', cat:'Editorial', detail:'Menu booklet design, Jaipur', yr:2018, href:'Project — Taj Rambagh.html' },
       { ref:'A·42', title:'Mynt — Sunday Brunch Campaign', cat:'Editorial', detail:'F&amp;B campaign &amp; poster design, Bengaluru', yr:2018, href:'Project — Taj West End.html' },
       { ref:'A·43', title:'Hyatt Regency Lucknow — F&amp;B Campaigns', cat:'Editorial', detail:'Poster &amp; promo design across the hotel outlets', yr:2018, href:'Project — Hyatt Lucknow.html' },
-      { ref:'A·44', title:'Ducati — Power-Tool Concept', cat:'Product', detail:'Industrial-design study, cordless drill', yr:2016, href:'Project — Ducati.html' }
+      { ref:'A·44', title:'Ducati — Power-Tool Concept', cat:'Product', detail:'Industrial-design study, cordless drill', yr:null, href:'Project — Ducati.html' }
     ];
 
 const CATS = ['All','Interiors','Product','Exhibition','Signage','Branding','AI & Systems','Web','Writing','Research','Real Estate'];
@@ -134,7 +134,7 @@ CATS.forEach(c=>{
 function render(){
   const list = ENTRIES
     .filter(e => active==='All' || e.cat===active)
-    .sort((a,b)=> sortDesc ? b.yr-a.yr : a.yr-b.yr);
+    .sort((a,b)=>{ const ay=a.yr??-Infinity, by=b.yr??-Infinity; return sortDesc ? by-ay : ay-by; });
   rowsEl.innerHTML = list.map(e=>{
     const tag = e.href ? 'a' : 'div';
     const hrefAttr = e.href ? ` href="${e.href}"` : '';
@@ -143,7 +143,7 @@ function render(){
       <span class="r-title">${e.title}<span class="ar"> →</span></span>
       <span class="r-disc">${e.cat}</span>
       <span class="r-detail">${e.detail}</span>
-      <span class="r-yr">${e.yr}</span>
+      <span class="r-yr">${e.yr ?? '—'}</span>
     </${tag}>`;
   }).join('');
   countEl.textContent = list.length + (active==='All'?' entries':' in '+active);
