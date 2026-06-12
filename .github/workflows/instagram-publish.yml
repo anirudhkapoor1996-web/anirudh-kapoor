@@ -8,6 +8,8 @@ on:
     branches: [main]
     paths:
       - 'social/**'
+  schedule:
+    - cron: '17 */2 * * *'   # retry transient-blocked posts every 2h
   workflow_dispatch: {}
 
 permissions:
