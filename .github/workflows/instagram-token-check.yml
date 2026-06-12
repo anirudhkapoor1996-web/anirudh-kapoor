@@ -1,0 +1,27 @@
+name: Instagram Token Check
+
+# Monthly safety check. If the Page token ever stops working, this job fails and
+# GitHub emails the repo owner so the token can be regenerated.
+
+on:
+  schedule:
+    - cron: '0 6 1 * *'      # 06:00 UTC on the 1st of each month
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install requests
+
+      - name: Check token
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
+        run: python scripts/ig_token_check.py

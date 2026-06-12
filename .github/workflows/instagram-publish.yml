@@ -1,0 +1,47 @@
+name: Instagram Publish
+
+# Posts any ready, un-posted project in social/<ref>/ to @anirudh_kapoor_designs.
+# Fires when you add/update a post under social/, or on the manual "Run workflow" button.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'social/**'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write          # so it can commit the .posted marker back
+
+concurrency:
+  group: ig-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install requests
+
+      - name: Publish ready posts
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://anirudh-kapoor.com' }}
+        run: python scripts/ig_publish.py
+
+      - name: Commit posted markers
+        run: |
+          if [ -n "$(git status --porcelain social)" ]; then
+            git config user.name "akd-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add social
+            git commit -m "Mark posted [skip ci]"
+            git push
+          fi
