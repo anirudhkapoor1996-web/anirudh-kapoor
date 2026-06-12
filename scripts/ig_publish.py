@@ -1,42 +1,65 @@
 #!/usr/bin/env python3
-"""AKD Instagram publisher (self-healing). Transient Meta errors are retried on
-the next scheduled run without failing the job; only hard errors fail + alert.
-One project's failure never blocks the others."""
+"""AKD Instagram publisher - ONE post per day.
+
+Why one-per-day: Instagram's Content Publishing API caps how many media
+containers an account may create per rolling 24h. A carousel = (N slides + 1)
+containers. Attempting many projects, with retries, on every push blew that cap
+(error code 9 / subcode 2207069 "Media creation limit exceeded") and locked the
+account out. So publish AT MOST ONE project per run, once a day.
+
+A 20h guard means even if the workflow fires more than once a day we still post
+at most once per ~day. Rate-limit (code 9) and transient (5xx / is_transient)
+errors are NOT failures - we stop and try again next daily run. Only genuine
+config/manifest problems fail the job (and alert).
+"""
 import os, sys, json, time, glob, pathlib, datetime
 import requests
+
 GRAPH = os.environ.get("GRAPH_API_VERSION", "v23.0")
 BASE = "https://graph.facebook.com/" + GRAPH
 SITE = os.environ.get("SITE_BASE_URL", "https://anirudh-kapoor.com").rstrip("/")
 UID = os.environ.get("IG_USER_ID", "").strip()
 TOKEN = os.environ.get("IG_PAGE_TOKEN", "").strip()
+MIN_HOURS = float(os.environ.get("MIN_HOURS_BETWEEN_POSTS", "20"))
 
 class TransientError(Exception): pass
+class RateLimited(Exception): pass
 class HardError(Exception): pass
 
 if not UID or not TOKEN:
     print("ERROR: IG_USER_ID and IG_PAGE_TOKEN must be set", file=sys.stderr); sys.exit(1)
 
-def _transient(status, j):
-    if status >= 500: return True
+def _classify(status, j):
     e = j.get("error") if isinstance(j, dict) else None
-    return bool(e and (e.get("is_transient") or e.get("code") in (1, 2)))
+    if e:
+        if e.get("code") in (4, 9) or e.get("error_subcode") in (2207042, 2207051, 2207069):
+            return "rate"
+        if e.get("is_transient"):
+            return "transient"
+    if status >= 500:
+        return "transient"
+    return "hard"
 
 def _req(method, path, **kw):
     last = None
-    for attempt in range(4):
+    for attempt in range(2):
         try:
             r = requests.request(method, BASE + "/" + path, timeout=90, **kw)
         except Exception as ex:
-            last = str(ex); time.sleep(min(2 ** (attempt + 1), 20)); continue
+            last = str(ex); time.sleep(5); continue
         j = {}
         try: j = r.json()
         except Exception: pass
-        if r.ok and not (isinstance(j, dict) and "error" in j): return j
+        if r.ok and not (isinstance(j, dict) and "error" in j):
+            return j
+        kind = _classify(r.status_code, j)
         last = (r.status_code, j or r.text)
-        if _transient(r.status_code, j) and attempt < 3:
-            time.sleep(min(2 ** (attempt + 1), 20)); continue
-        raise (TransientError if _transient(r.status_code, j) else HardError)("%s %s: %s" % (method, path, last))
-    raise TransientError("%s %s after retries: %s" % (method, path, last))
+        if kind == "rate":
+            raise RateLimited("%s %s: %s" % (method, path, last))
+        if kind == "transient" and attempt == 0:
+            time.sleep(6); continue
+        raise (TransientError if kind == "transient" else HardError)("%s %s: %s" % (method, path, last))
+    raise TransientError("%s %s after retry: %s" % (method, path, last))
 
 def api_post(path, data):
     d = dict(data); d["access_token"] = TOKEN; return _req("POST", path, data=d)
@@ -66,29 +89,61 @@ def publish_reel(ref, m):
     return api_post("%s/media_publish" % UID, {"creation_id": c})["id"]
 PUB = {"image": publish_image, "carousel": publish_carousel, "reel": publish_reel}
 
-def main():
-    root = pathlib.Path(__file__).resolve().parent.parent
-    hard = transient = False; did = 0
+def hours_since_last_post(root):
+    newest = None
+    for p in glob.glob(str(root / "social" / "*" / ".posted")):
+        try:
+            ts = json.loads(pathlib.Path(p).read_text(encoding="utf-8")).get("posted_at", "")
+            dt = datetime.datetime.fromisoformat(ts.replace("Z", "+00:00"))
+            if newest is None or dt > newest: newest = dt
+        except Exception:
+            continue
+    if newest is None: return None
+    now = datetime.datetime.now(datetime.timezone.utc)
+    return (now - newest).total_seconds() / 3600.0
+
+def next_project(root):
     for path in sorted(glob.glob(str(root / "social" / "*" / "post.json"))):
         folder = pathlib.Path(path).parent; ref = folder.name
-        if ref.startswith("_") or (folder / ".posted").exists(): continue
+        if ref.startswith("_") or (folder / ".posted").exists():
+            continue
         m = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
-        if not m.get("ready"): print("skip %s: not ready" % ref); continue
+        if not m.get("ready"):
+            continue
         if m.get("type", "carousel") not in PUB or not m.get("media"):
-            print("skip %s: bad manifest" % ref); hard = True; continue
-        try:
-            print("Publishing %s (%s) -> %d item(s)..." % (ref, m.get("type","carousel"), len(m["media"])))
-            mid = PUB[m.get("type", "carousel")](ref, m)
-            (folder / ".posted").write_text(json.dumps(
-                {"ig_media_id": mid, "posted_at": datetime.datetime.utcnow().isoformat() + "Z",
-                 "ref": ref, "type": m.get("type", "carousel")}, indent=2), encoding="utf-8")
-            print("PUBLISHED %s -> %s" % (ref, mid)); did += 1
-        except TransientError as e:
-            print("TRANSIENT (Meta busy; will retry next scheduled run): %s" % e); transient = True
-        except HardError as e:
-            print("HARD ERROR: %s" % e, file=sys.stderr); hard = True
-    if did: print("Posted %d project(s)." % did)
-    sys.exit(1 if hard else 0)
+            print("skip %s: bad manifest" % ref, file=sys.stderr); continue
+        return folder, ref, m
+    return None
+
+def main():
+    root = pathlib.Path(__file__).resolve().parent.parent
+    h = hours_since_last_post(root)
+    if h is not None and h < MIN_HOURS:
+        print("Last post was %.1fh ago (< %.0fh). Already posted today; nothing to do." % (h, MIN_HOURS))
+        return 0
+    nxt = next_project(root)
+    if not nxt:
+        print("No ready, un-posted projects in the queue. Nothing to do.")
+        return 0
+    folder, ref, m = nxt
+    typ = m.get("type", "carousel")
+    try:
+        print("Publishing %s (%s) -> %d item(s)..." % (ref, typ, len(m["media"])))
+        mid = PUB[typ](ref, m)
+        (folder / ".posted").write_text(json.dumps(
+            {"ig_media_id": mid, "posted_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+             "ref": ref, "type": typ}, indent=2), encoding="utf-8")
+        print("PUBLISHED %s -> %s  (next project goes out on the next daily run)" % (ref, mid))
+        return 0
+    except RateLimited as e:
+        print("RATE LIMITED by Instagram's 24h creation cap - will try again next daily run.\n  %s" % e)
+        return 0
+    except TransientError as e:
+        print("TRANSIENT (Meta busy) - will try again next daily run.\n  %s" % e)
+        return 0
+    except HardError as e:
+        print("HARD ERROR publishing %s: %s" % (ref, e), file=sys.stderr)
+        return 1
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

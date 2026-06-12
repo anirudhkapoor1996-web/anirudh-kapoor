@@ -1,19 +1,18 @@
 name: Instagram Publish
 
-# Posts any ready, un-posted project in social/<ref>/ to @anirudh_kapoor_designs.
-# Fires when you add/update a post under social/, or on the manual "Run workflow" button.
+# Posts ONE queued project per day to @anirudh_kapoor_designs.
+# Deliberately NOT triggered on push: queuing many projects and letting each
+# push attempt to publish them all blew Instagram's 24h media-creation cap.
+# Instead this runs once a day and publishes the single oldest un-posted project
+# (scripts/ig_publish.py enforces a 20h guard, so a manual run won't double-post).
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'social/**'
   schedule:
-    - cron: '17 */2 * * *'   # retry transient-blocked posts every 2h
-  workflow_dispatch: {}
+    - cron: '30 13 * * *'   # ~19:00 IST daily (GitHub cron is UTC, may drift a few min)
+  workflow_dispatch: {}     # manual "Run workflow" button for an on-demand post
 
 permissions:
-  contents: write          # so it can commit the .posted marker back
+  contents: write           # to commit the .posted marker back
 
 concurrency:
   group: ig-publish
@@ -24,21 +23,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - run: pip install requests
-
-      - name: Publish ready posts
+      - name: Publish the next queued post (one per day)
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
           SITE_BASE_URL: https://anirudh-kapoor.com
         run: python scripts/ig_publish.py
-
-      - name: Commit posted markers
+      - name: Commit posted marker
         run: |
           if [ -n "$(git status --porcelain social)" ]; then
             git config user.name "akd-bot"
