@@ -1,39 +1,56 @@
-name: Instagram Publish
+name: Social Publish (IG / FB / LinkedIn)
 
-# Posts ONE queued project per day to @anirudh_kapoor_designs.
-# Deliberately NOT triggered on push: queuing many projects and letting each
-# push attempt to publish them all blew Instagram's 24h media-creation cap.
-# Instead this runs once a day and publishes the single oldest un-posted project
-# (scripts/ig_publish.py enforces a 20h guard, so a manual run won't double-post).
+# Posts ONE queued project per day to Instagram, the Facebook Page, and LinkedIn.
+# Each platform is independent: its own per-platform .posted marker and its own
+# 20h guard inside the script, so one platform's rate-limit never blocks another.
+# Not triggered on push (that blew Instagram's 24h creation cap); runs daily.
 
 on:
   schedule:
-    - cron: '30 13 * * *'   # ~19:00 IST daily (GitHub cron is UTC, may drift a few min)
-  workflow_dispatch: {}     # manual "Run workflow" button for an on-demand post
+    - cron: '30 13 * * *'   # ~19:00 IST daily (GitHub cron is UTC; may drift a few min)
+  workflow_dispatch: {}
 
 permissions:
-  contents: write           # to commit the .posted marker back
+  contents: write
 
 concurrency:
-  group: ig-publish
+  group: social-publish
   cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      SITE_BASE_URL: https://anirudh-kapoor.com
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install requests
-      - name: Publish the next queued post (one per day)
+
+      - name: Instagram (one per day)
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
-          SITE_BASE_URL: https://anirudh-kapoor.com
         run: python scripts/ig_publish.py
-      - name: Commit posted marker
+
+      - name: Facebook Page (one per day)
+        if: ${{ always() }}
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        run: python scripts/fb_publish.py
+
+      - name: LinkedIn (one per day)
+        if: ${{ always() }}
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_VERSION: ${{ secrets.LINKEDIN_VERSION }}
+        run: python scripts/li_publish.py
+
+      - name: Commit posted markers
+        if: ${{ always() }}
         run: |
           if [ -n "$(git status --porcelain social)" ]; then
             git config user.name "akd-bot"
