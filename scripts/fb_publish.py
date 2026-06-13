@@ -23,6 +23,7 @@ PAGE_ID = os.environ.get("FB_PAGE_ID", "1163349337160596").strip()
 MIN_HOURS = float(os.environ.get("MIN_HOURS_BETWEEN_POSTS", "20"))
 MARKER = ".posted-fb"
 
+class ExpiredToken(Exception): pass
 class TransientError(Exception): pass
 class RateLimited(Exception): pass
 class HardError(Exception): pass
@@ -30,6 +31,8 @@ class HardError(Exception): pass
 def _classify(status, j):
     e = j.get("error") if isinstance(j, dict) else None
     if e:
+        if e.get("code") == 190 or e.get("error_subcode") in (463, 467, 460, 492):
+            return "expired"
         if e.get("code") in (4, 17, 32, 613) or e.get("is_transient"):
             return "rate" if e.get("code") in (4, 17, 32, 613) else "transient"
     if status >= 500:
@@ -49,6 +52,7 @@ def _req(method, path, **kw):
         if r.ok and not (isinstance(j, dict) and "error" in j):
             return j
         kind = _classify(r.status_code, j); last = (r.status_code, j or r.text)
+        if kind == "expired": raise ExpiredToken("%s %s: %s" % (method, path, last))
         if kind == "rate": raise RateLimited("%s %s: %s" % (method, path, last))
         if kind == "transient" and attempt == 0: time.sleep(6); continue
         raise (TransientError if kind == "transient" else HardError)("%s %s: %s" % (method, path, last))
@@ -150,6 +154,8 @@ def main():
             {"fb_post_id": pid, "posted_at": datetime.datetime.now(datetime.timezone.utc).isoformat(), "ref": ref}, indent=2),
             encoding="utf-8")
         print("FB PUBLISHED %s -> %s" % (ref, pid)); return 0
+    except ExpiredToken as e:
+        print("FB token expired/invalid - pausing Facebook (no error) until the token is refreshed.\n  %s" % e); return 0
     except RateLimited as e:
         print("FB rate limited - try next daily run.\n  %s" % e); return 0
     except TransientError as e:
