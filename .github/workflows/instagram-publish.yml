@@ -1,16 +1,11 @@
 name: Social Publish (IG / FB / LinkedIn)
 
-# Posts ONE queued project per day to Instagram, the Facebook Page, and LinkedIn.
-# Each platform is independent: its own per-platform .posted marker and its own
-# 20h guard inside the script, so one platform's rate-limit never blocks another.
-# Not triggered on push (that blew Instagram's 24h creation cap); runs daily.
-
 on:
   push:
     branches: [main]
-    paths: ['.ci-trigger']   # TEMP one-shot trigger for verification
+    paths: ['.ci-trigger']        # TEMP: lets us trigger + capture logs without the browser
   schedule:
-    - cron: '30 13 * * *'   # ~19:00 IST daily (GitHub cron is UTC; may drift a few min)
+    - cron: '30 13 * * *'
   workflow_dispatch: {}
 
 permissions:
@@ -32,33 +27,45 @@ jobs:
           python-version: '3.12'
       - run: pip install requests
 
-      - name: Instagram (one per day)
+      - name: Instagram
+        if: ${{ always() }}
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
-        run: python scripts/ig_publish.py
+        run: python scripts/ig_publish.py 2>&1 | tee social/_ig.log
 
-      - name: Facebook Page (one per day)
+      - name: Facebook Page
         if: ${{ always() }}
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-        run: python scripts/fb_publish.py
+        run: python scripts/fb_publish.py 2>&1 | tee social/_fb.log
 
-      - name: LinkedIn (one per day)
+      - name: LinkedIn
         if: ${{ always() }}
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_VERSION: ${{ secrets.LINKEDIN_VERSION }}
-        run: python scripts/li_publish.py
+        run: python scripts/li_publish.py 2>&1 | tee social/_li.log
 
-      - name: Commit posted markers
+      - name: Token presence (names only, never values)
         if: ${{ always() }}
         run: |
-          if [ -n "$(git status --porcelain social)" ]; then
-            git config user.name "akd-bot"
-            git config user.email "actions@users.noreply.github.com"
-            git add social
-            git commit -m "Mark posted [skip ci]"
+          {
+            echo "FB_PAGE_TOKEN set:        ${{ secrets.FB_PAGE_TOKEN != '' }}"
+            echo "FB_PAGE_ID set:           ${{ secrets.FB_PAGE_ID != '' }}"
+            echo "LINKEDIN_ACCESS_TOKEN set:${{ secrets.LINKEDIN_ACCESS_TOKEN != '' }}"
+            echo "IG_PAGE_TOKEN set:        ${{ secrets.IG_PAGE_TOKEN != '' }}"
+            echo "IG_USER_ID set:           ${{ secrets.IG_USER_ID != '' }}"
+          } > social/_secrets-present.txt
+
+      - name: Commit logs + markers
+        if: ${{ always() }}
+        run: |
+          git config user.name "akd-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A social
+          if ! git diff --cached --quiet; then
+            git commit -m "diag: capture publish logs [skip ci]"
             git push
           fi
