@@ -39,6 +39,7 @@ jobs:
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          MIN_HOURS_BETWEEN_POSTS: '0'
         run: python scripts/fb_publish.py 2>&1 | tee social/_fb.log
 
       - name: LinkedIn
