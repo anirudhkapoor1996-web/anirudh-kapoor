@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vaani — live demo (one app, every vertical)</title>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0D10;--panel:#12161B;--card:#161B21;--line:#252D36;--tx:#EAEDF0;--sec:#9AA6B2;--mut:#6B7682;--ac:#4ADE80;--gold:#C9A227;--blue:#5B9BD5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:15px/1.5 Archivo,-apple-system,sans-serif}
+.bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--panel)}
+.logo{font-family:Spectral,serif;font-size:20px}.logo b{color:var(--ac)}
+.bar .sp{flex:1}
+.seg{display:flex;gap:4px;background:#0C0F13;border:1px solid var(--line);border-radius:10px;padding:4px}
+.seg button{background:none;border:none;color:var(--sec);padding:7px 12px;border-radius:7px;font:600 13px Archivo;cursor:pointer}
+.seg button.on{background:var(--ac);color:#06231a}
+.view-toggle button{background:#0C0F13;border:1px solid var(--line);color:var(--sec);padding:8px 14px;border-radius:8px;font:600 13px Archivo;cursor:pointer}
+.view-toggle button.on{border-color:var(--ac);color:var(--ac)}
+.stage{max-width:1100px;margin:0 auto;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:840px){.stage{grid-template-columns:1fr}}
+.pane{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-height:560px}
+.pane h3{font-family:Spectral,serif;font-weight:600;font-size:15px;padding:12px 16px;border-bottom:1px solid var(--line);color:var(--sec);display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ac)}
+/* guest chat */
+.chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:82%;padding:10px 13px;border-radius:12px;font-size:14px;white-space:pre-wrap}
+.msg.bot{background:var(--card);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.me{background:var(--ac);color:#06231a;align-self:flex-end;border-bottom-right-radius:3px;font-weight:500}
+.chips{display:flex;gap:7px;flex-wrap:wrap;padding:0 16px 10px}
+.chip{background:#0C0F13;border:1px solid var(--line);color:var(--sec);border-radius:20px;padding:6px 12px;font-size:12.5px;cursor:pointer}
+.chip:hover{border-color:var(--ac);color:var(--ac)}
+.inputrow{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.inputrow input{flex:1;background:#0C0F13;border:1px solid var(--line);border-radius:9px;color:var(--tx);padding:11px 13px;font:14px Archivo}
+.inputrow input:focus{outline:none;border-color:var(--ac)}
+.inputrow button{background:var(--ac);color:#06231a;border:none;border-radius:9px;padding:0 18px;font:700 14px Archivo;cursor:pointer}
+.bill{margin:6px 16px 0;background:#0C0F13;border:1px dashed var(--line);border-radius:10px;padding:10px 13px;font-size:13px}
+.bill .ln{display:flex;justify-content:space-between;color:var(--sec);padding:2px 0}
+.bill .tot{display:flex;justify-content:space-between;color:var(--tx);font-weight:700;border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
+.pay{margin:10px 16px 16px;display:flex;gap:8px}
+.pay button{flex:1;border:none;border-radius:9px;padding:11px;font:700 13px Archivo;cursor:pointer}
+.pay .razor{background:#3b7;color:#04230f}.pay .folio{background:#0C0F13;border:1px solid var(--line);color:var(--tx)}
+/* dispatch */
+.q{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}
+.tix{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:9px;padding:10px 12px}
+.tix .top{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+.tix .body{font-size:14px;margin:3px 0 7px}
+.tix .team{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+.tix .acts{display:flex;gap:6px;margin-top:6px}
+.tix .acts button{background:#0C0F13;border:1px solid var(--line);color:var(--sec);border-radius:6px;padding:4px 9px;font:600 11px Archivo;cursor:pointer}
+.tix.done{border-left-color:var(--ac);opacity:.6}
+.kpi{display:flex;gap:10px;padding:12px 16px;border-top:1px solid var(--line);font-size:13px}
+.kpi div{flex:1;background:#0C0F13;border:1px solid var(--line);border-radius:9px;padding:9px;text-align:center}
+.kpi b{display:block;font-family:Spectral,serif;font-size:20px;color:var(--ac)}
+.note{max-width:1100px;margin:0 auto;padding:0 18px 24px;color:var(--mut);font-size:12.5px}
+.empty{color:var(--mut);font-size:13px;text-align:center;margin-top:40px}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="logo"><b>Vaani</b> · live demo</div>
+  <div class="seg" id="verts"></div>
+  <div class="sp"></div>
+  <div class="view-toggle" id="vt">
+    <button data-v="guest" class="on">Customer view</button>
+    <button data-v="ops">Staff dashboard</button>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="pane" id="guestPane">
+    <h3><span class="dot"></span><span id="guestTitle"></span></h3>
+    <div class="chat" id="chat"></div>
+    <div id="billWrap"></div>
+    <div class="chips" id="chips"></div>
+    <div class="inputrow">
+      <input id="inp" placeholder="Type a request…" autocomplete="off">
+      <button id="send">Send</button>
+    </div>
+  </div>
+  <div class="pane" id="opsPane" style="display:none">
+    <h3><span class="dot" style="background:var(--blue)"></span><span id="opsTitle"></span></h3>
+    <div class="q" id="queue"><div class="empty">No requests yet — send one from the customer view.</div></div>
+    <div class="kpi">
+      <div><b id="kReq">0</b>requests</div>
+      <div><b id="kOpen">0</b>open</div>
+      <div><b id="kRev">₹0</b>billed</div>
+    </div>
+  </div>
+</div>
+<div class="note">Demo: the AI parsing runs locally in your browser so it works instantly. In production the same screen calls your n8n + LLM "brain" (key stays server-side), routes to real staff, and bills via Razorpay. Switch vertical (top-left) to see <b>one app</b> serve a hotel, a restaurant, a clinic, and a property manager — the vertical is just a config.</div>
+
+<script>
+// ---- per-vertical config (this is the only thing that changes between "products") ----
+const VERTICALS = {
+  hotel: { label:"Hotel", entry:"Room", guest:"The Grand · Room 412", ops:"Front Desk — live requests",
+    greet:"Namaste! This is the Grand's assistant. Tell me what you need — room service, housekeeping, anything. (e.g. \"2 coffees and extra towels to 412\")",
+    chips:["2 club sandwiches","Extra towels","AC not cooling","Late checkout?","My bill"],
+    menu:[{k:["club sandwich","sandwich"],name:"Club Sandwich",price:450,team:"Kitchen"},{k:["coffee"],name:"Coffee",price:150,team:"Kitchen"},{k:["water","bottle"],name:"Bottled Water",price:80,team:"Kitchen"},{k:["beer"],name:"Beer",price:350,team:"Bar"},{k:["dessert","cake"],name:"Dessert",price:280,team:"Kitchen"}],
+    tasks:[{k:["towel"],name:"Extra towels",team:"Housekeeping"},{k:["clean","cleanup","make up"],name:"Room cleanup",team:"Housekeeping"},{k:["ac","cooling","hot","fan"],name:"AC / maintenance issue",team:"Maintenance"},{k:["late checkout","checkout"],name:"Late checkout request",team:"Front Desk"}] },
+  restaurant: { label:"Restaurant", entry:"Table", guest:"Olive Bistro · Table 7", ops:"Kitchen & Floor — live orders",
+    greet:"Welcome to Olive Bistro! Order from your table — just tell me what you'd like. (e.g. \"one margherita and two cokes\")",
+    chips:["1 Margherita pizza","2 Cokes","Call the waiter","Pasta Alfredo","My bill"],
+    menu:[{k:["margherita","pizza"],name:"Margherita Pizza",price:380,team:"Kitchen"},{k:["pasta","alfredo"],name:"Pasta Alfredo",price:340,team:"Kitchen"},{k:["coke","cola"],name:"Coke",price:90,team:"Bar"},{k:["coffee"],name:"Coffee",price:120,team:"Bar"},{k:["tiramisu","dessert"],name:"Tiramisu",price:260,team:"Kitchen"}],
+    tasks:[{k:["waiter","help","service"],name:"Waiter requested",team:"Floor"},{k:["water"],name:"Water for table",team:"Floor"}] },
+  clinic: { label:"Clinic", entry:"You", guest:"Smile Dental · new enquiry", ops:"Reception — enquiries & bookings",
+    greet:"Hello! This is Smile Dental. I can book you in or answer questions (hours, location, prices). What do you need? (e.g. \"book a cleaning this Saturday\")",
+    chips:["Book a consultation","Teeth cleaning price?","Are you open Sunday?","Where are you?"],
+    menu:[{k:["consultation","consult","checkup"],name:"Consultation (deposit)",price:300,team:"Reception"},{k:["cleaning","clean","scaling"],name:"Teeth Cleaning (deposit)",price:500,team:"Reception"},{k:["whitening"],name:"Whitening (deposit)",price:1000,team:"Reception"}],
+    tasks:[{k:["open","sunday","hours","timing"],name:"Asked: opening hours",team:"Reception",faq:"We're open Mon–Sat 9:30am–7pm, closed Sunday."},{k:["where","location","address"],name:"Asked: location",team:"Reception",faq:"We're at Sector 50, Gurgaon — I can WhatsApp you the map pin."},{k:["book","appointment","slot"],name:"Booking request",team:"Reception"}] },
+  property: { label:"Property", entry:"Flat", guest:"Maple Residences · Flat B-704", ops:"Facilities — tickets",
+    greet:"Hi! This is Maple Residences facilities desk. Report an issue or make a request. (e.g. \"kitchen tap is leaking in B-704\")",
+    chips:["Tap leaking","No water supply","Pay maintenance bill","Book the clubhouse"],
+    menu:[{k:["maintenance bill","pay maintenance","bill"],name:"Monthly maintenance",price:2500,team:"Accounts"},{k:["clubhouse","hall"],name:"Clubhouse booking (deposit)",price:2000,team:"Office"}],
+    tasks:[{k:["tap","leak","plumb","water leak"],name:"Plumbing — leak",team:"Plumber"},{k:["no water","water supply"],name:"No water supply",team:"Maintenance"},{k:["electric","power","light","switch"],name:"Electrical issue",team:"Electrician"},{k:["lift","elevator"],name:"Lift issue",team:"Maintenance"}] }
+};
+
+let cur="hotel", view="guest";
+let order=[], tickets=[];
+
+const $=s=>document.querySelector(s);
+const chat=$("#chat"), chips=$("#chips"), queue=$("#queue"), billWrap=$("#billWrap");
+
+// build vertical selector
+const verts=$("#verts");
+Object.keys(VERTICALS).forEach((k,i)=>{const b=document.createElement("button");b.textContent=VERTICALS[k].label;b.dataset.k=k;if(i===0)b.className="on";b.onclick=()=>switchVert(k);verts.appendChild(b);});
+
+function switchVert(k){cur=k;order=[];tickets=[];[...verts.children].forEach(b=>b.classList.toggle("on",b.dataset.k===k));resetGuest();renderOps();}
+$("#vt").onclick=e=>{if(e.target.dataset.v){view=e.target.dataset.v;[...$("#vt").children].forEach(b=>b.classList.toggle("on",b.dataset.v===view));$("#guestPane").style.display=view==="guest"?"flex":"none";$("#opsPane").style.display=view==="ops"?"flex":"none";}};
+
+function resetGuest(){const c=VERTICALS[cur];chat.innerHTML="";$("#guestTitle").textContent=c.guest;$("#opsTitle").textContent=c.ops;bot(c.greet);chips.innerHTML="";c.chips.forEach(t=>{const ch=document.createElement("div");ch.className="chip";ch.textContent=t;ch.onclick=()=>handle(t);chips.appendChild(ch);});renderBill();}
+function bot(t){const d=document.createElement("div");d.className="msg bot";d.textContent=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;}
+function me(t){const d=document.createElement("div");d.className="msg me";d.textContent=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;}
+
+function qtyFrom(t){const words={one:1,two:2,three:3,four:4,a:1,an:1,couple:2};const m=t.match(/(\d+)/);if(m)return parseInt(m[1]);for(const w in words){if(new RegExp("\\b"+w+"\\b").test(t))return words[w];}return 1;}
+
+// ---- the "brain" (demo: local rules; production: n8n + LLM) ----
+function handle(text){
+  if(!text.trim())return; me(text); const t=text.toLowerCase(); const c=VERTICALS[cur]; let acted=false;
+  // bill / checkout intent
+  if(/\b(bill|checkout|check out|pay|total)\b/.test(t) && cur!=="property"){ if(order.length){showBill();bot("Here's your bill — pay by UPI/card, or add it to your "+(cur==="hotel"?"room folio":"tab")+".");}else bot("Nothing on your bill yet.");return; }
+  // menu items (billable)
+  c.menu.forEach(it=>{ if(it.k.some(k=>t.includes(k))){ const q=qtyFrom(t); order.push({name:it.name,price:it.price,qty:q,team:it.team}); logTicket((q>1?q+"× ":"")+it.name, it.team, it.price*q); acted=true; }});
+  // tasks (non-billable / requests / faqs)
+  c.tasks.forEach(tk=>{ if(tk.k.some(k=>t.includes(k))){ if(tk.faq){bot(tk.faq);} logTicket(tk.name, tk.team, 0); acted=true; }});
+  if(acted){ renderBill(); const loc=detectLoc(t,c); const billable=order.length?` I've noted it${order.length?" on your bill":""}.`:""; if(!c.tasks.some(tk=>tk.k.some(k=>t.includes(k))&&tk.faq)) bot("Done — routed to the right team"+(loc?` for ${c.entry} ${loc}`:"")+"."+billable+" Anything else?"); }
+  else { bot("Got it — let me get a team member to help with that. (In production the LLM handles any phrasing; this demo knows the sample catalogue. Try the suggestion chips.)"); logTicket("Freeform: \""+text+"\"","Front Desk",0); }
+}
+function detectLoc(t,c){const m=t.match(/\b(\d{2,4}|[a-z]-?\d{2,4})\b/i);return m?m[0].toUpperCase():"";}
+
+function logTicket(body,team,amt){tickets.unshift({body,team,amt,status:"new",t:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})});renderOps();}
+function renderBill(){const tot=order.reduce((s,o)=>s+o.price*o.qty,0);if(!order.length){billWrap.innerHTML="";return;}let h='<div class="bill">';order.forEach(o=>h+=`<div class="ln"><span>${o.qty>1?o.qty+"× ":""}${o.name}</span><span>₹${o.price*o.qty}</span></div>`);h+=`<div class="tot"><span>Total</span><span>₹${tot}</span></div></div>`;billWrap.innerHTML=h;}
+function showBill(){renderBill();const tot=order.reduce((s,o)=>s+o.price*o.qty,0);billWrap.innerHTML+=`<div class="pay"><button class="razor" onclick="payNow(${tot})">Pay ₹${tot} (Razorpay)</button><button class="folio" onclick="toFolio(${tot})">Add to ${cur==='hotel'?'folio':'tab'}</button></div>`;}
+window.payNow=t=>{bot(`Payment of ₹${t} received — thank you! A receipt is on its way.`);markBilled(t);order=[];renderBill();};
+window.toFolio=t=>{bot(`₹${t} added to your ${cur==='hotel'?'room folio':'tab'} — settle at checkout.`);markBilled(t);order=[];renderBill();};
+function markBilled(t){billedExtra+=t;renderOps();}
+let billedExtra=0;
+
+function renderOps(){
+  if(!tickets.length){queue.innerHTML='<div class="empty">No requests yet — send one from the customer view.</div>';}
+  else{queue.innerHTML="";tickets.forEach((tk,i)=>{const d=document.createElement("div");d.className="tix"+(tk.status==="done"?" done":"");d.innerHTML=`<div class="top"><span class="team">${tk.team}</span><span>${tk.t}</span></div><div class="body">${tk.body}${tk.amt?` · <b>₹${tk.amt}</b>`:""}</div>`;const acts=document.createElement("div");acts.className="acts";if(tk.status!=="done"){const b=document.createElement("button");b.textContent="Mark done";b.onclick=()=>{tk.status="done";renderOps();};acts.appendChild(b);}d.appendChild(acts);queue.appendChild(d);});}
+  $("#kReq").textContent=tickets.length;
+  $("#kOpen").textContent=tickets.filter(t=>t.status!=="done").length;
+  $("#kRev").textContent="₹"+(tickets.reduce((s,t)=>s+t.amt,0)+billedExtra);
+}
+
+$("#send").onclick=()=>{handle($("#inp").value);$("#inp").value="";};
+$("#inp").addEventListener("keydown",e=>{if(e.key==="Enter"){handle($("#inp").value);$("#inp").value="";}});
+resetGuest();renderOps();
+</script>
+</body>
+</html>
