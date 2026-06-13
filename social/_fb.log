@@ -1,2 +1,2 @@
-FB HARD ERROR A-01: POST 1163349337160596/photos: (403, {'error': {'message': '(#200) Unpublished posts must be posted to a page as the page itself.', 'type': 'OAuthException', 'code': 200, 'fbtrace_id': 'AjE2kn1rNuhgNDci6lcBsP7'}})
+FB HARD ERROR A-01: POST 1163349337160596/photos: (403, {'error': {'message': '(#200) Permissions error', 'type': 'OAuthException', 'code': 200, 'fbtrace_id': 'AScP5pp9rQeNfwCmFzTJHPD'}})
 FB: publishing A-01 -> 7 photo(s)...
