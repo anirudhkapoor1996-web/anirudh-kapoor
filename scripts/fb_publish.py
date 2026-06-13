@@ -58,31 +58,6 @@ def _req(method, path, **kw):
         raise (TransientError if kind == "transient" else HardError)("%s %s: %s" % (method, path, last))
     raise TransientError("%s %s after retry: %s" % (method, path, last))
 
-def token_expiry(tok):
-    try:
-        r = requests.get(BASE + "/debug_token", params={"input_token": tok, "access_token": tok}, timeout=60)
-        j = r.json().get("data", {}) if r.ok else {}
-        ea = j.get("expires_at"); da = j.get("data_access_expires_at"); typ = j.get("type")
-        never = (ea == 0)
-        return "type=%s expires_at=%s (%s) data_access_expires_at=%s" % (
-            typ, ea, "NEVER EXPIRES" if never else "expires", da)
-    except Exception as ex:
-        return "expiry-probe exc: %s" % ex
-
-
-def granted_permissions():
-    try:
-        r = requests.get(BASE + "/me/permissions", params={"access_token": TOKEN}, timeout=60)
-        j = r.json()
-        if r.ok:
-            g = [d["permission"] for d in j.get("data", []) if d.get("status") == "granted"]
-            d = [d["permission"] for d in j.get("data", []) if d.get("status") == "declined"]
-            return "granted=[%s] declined=[%s]" % (", ".join(sorted(g)), ", ".join(sorted(d)))
-        return "perm-probe error: %s" % j
-    except Exception as ex:
-        return "perm-probe exc: %s" % ex
-
-
 def media_url(ref, fn): return "%s/social/%s/%s" % (SITE, ref, fn)
 
 def resolve_page_token(tok):
@@ -136,7 +111,6 @@ def next_project(root):
 def main():
     if not TOKEN:
         print("FB_PAGE_TOKEN not set - skipping Facebook (no-op)."); return 0
-    print("FB token permissions:", granted_permissions())
     root = pathlib.Path(__file__).resolve().parent.parent
     h = hours_since_last(root)
     if h is not None and h < MIN_HOURS:
@@ -147,7 +121,6 @@ def main():
     folder, ref, m = nxt
     try:
         page_token = resolve_page_token(TOKEN)
-        print("FB page-token expiry:", token_expiry(page_token))
         print("FB: publishing %s -> %d photo(s)..." % (ref, len(m["media"])))
         pid = publish(ref, m, page_token)
         (folder / MARKER).write_text(json.dumps(
