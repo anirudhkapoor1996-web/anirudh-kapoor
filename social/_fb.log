@@ -1,2 +1,3 @@
-FB HARD ERROR A-01: POST 1163349337160596/photos: (403, {'error': {'message': '(#200) Permissions error', 'type': 'OAuthException', 'code': 200, 'fbtrace_id': 'AScP5pp9rQeNfwCmFzTJHPD'}})
+FB HARD ERROR A-01: POST 1163349337160596/photos: (403, {'error': {'message': '(#200) Permissions error', 'type': 'OAuthException', 'code': 200, 'fbtrace_id': 'ARdZ079RXb_VAfa6jp1lhby'}})
+FB token permissions: granted=[business_management, instagram_basic, instagram_content_publish, pages_read_engagement, pages_show_list, public_profile] declined=[]
 FB: publishing A-01 -> 7 photo(s)...
