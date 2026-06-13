@@ -4,6 +4,9 @@ name: Social Publish (IG / FB / LinkedIn)
 # Each platform is independent (own .posted marker + 20h guard). Runs daily.
 
 on:
+  push:
+    branches: [main]
+    paths: ['.ci-trigger']
   schedule:
     - cron: '30 13 * * *'   # ~19:00 IST daily
   workflow_dispatch: {}
@@ -31,26 +34,26 @@ jobs:
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
-        run: python scripts/ig_publish.py
+        run: python scripts/ig_publish.py 2>&1 | tee social/_ig.log
       - name: Facebook Page
         if: ${{ always() }}
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-        run: python scripts/fb_publish.py
+        run: python scripts/fb_publish.py 2>&1 | tee social/_fb.log
       - name: LinkedIn
         if: ${{ always() }}
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_VERSION: ${{ secrets.LINKEDIN_VERSION }}
-        run: python scripts/li_publish.py
+        run: python scripts/li_publish.py 2>&1 | tee social/_li.log
       - name: Commit posted markers
         if: ${{ always() }}
         run: |
-          if [ -n "$(git status --porcelain social)" ]; then
-            git config user.name "akd-bot"
-            git config user.email "actions@users.noreply.github.com"
-            git add social
+          git config user.name "akd-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A social
+          if ! git diff --cached --quiet; then
             git commit -m "Mark posted [skip ci]"
             git push
           fi
