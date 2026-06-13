@@ -12,7 +12,7 @@ at most once per ~day. Rate-limit (code 9) and transient (5xx / is_transient)
 errors are NOT failures - we stop and try again next daily run. Only genuine
 config/manifest problems fail the job (and alert).
 """
-import os, sys, json, time, glob, pathlib, datetime
+import os, sys, json, time, glob, pathlib, datetime, re
 import requests
 
 GRAPH = os.environ.get("GRAPH_API_VERSION", "v23.0")
@@ -102,10 +102,30 @@ def hours_since_last_post(root):
     now = datetime.datetime.now(datetime.timezone.utc)
     return (now - newest).total_seconds() / 3600.0
 
-def next_project(root):
+def live_posted_refs():
+    """Refs already live on the IG account, read from each post's caption ("... A\u00b7NN.").
+    This makes dedup robust even if a .posted marker was lost: we never repost what's already up.
+    Best-effort: on any API error we return an empty set and fall back to the .posted markers."""
+    refs = set(); after = None
+    try:
+        for _ in range(6):  # up to ~600 recent posts
+            params = {"fields": "caption", "limit": "100"}
+            if after: params["after"] = after
+            j = api_get("%s/media" % UID, params)
+            for it in j.get("data", []):
+                cap = it.get("caption") or ""
+                for n in re.findall(r"A[\u00b7.\-](\d{1,3})\b", cap):
+                    refs.add("A-%02d" % int(n))
+            after = ((j.get("paging", {}) or {}).get("cursors", {}) or {}).get("after")
+            if not after: break
+    except Exception as e:
+        print("Live-account dedup unavailable (%s); using .posted markers only." % e, file=sys.stderr)
+    return refs
+
+def next_project(root, skip=frozenset()):
     for path in sorted(glob.glob(str(root / "social" / "*" / "post.json"))):
         folder = pathlib.Path(path).parent; ref = folder.name
-        if ref.startswith("_") or (folder / ".posted").exists():
+        if ref.startswith("_") or (folder / ".posted").exists() or ref in skip:
             continue
         m = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
         if not m.get("ready"):
@@ -121,7 +141,10 @@ def main():
     if h is not None and h < MIN_HOURS:
         print("Last post was %.1fh ago (< %.0fh). Already posted today; nothing to do." % (h, MIN_HOURS))
         return 0
-    nxt = next_project(root)
+    live = live_posted_refs()
+    if live:
+        print("Already on the account (will skip): %s" % ", ".join(sorted(live)))
+    nxt = next_project(root, skip=live)
     if not nxt:
         print("No ready, un-posted projects in the queue. Nothing to do.")
         return 0
