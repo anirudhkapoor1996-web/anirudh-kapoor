@@ -54,6 +54,19 @@ def _req(method, path, **kw):
         raise (TransientError if kind == "transient" else HardError)("%s %s: %s" % (method, path, last))
     raise TransientError("%s %s after retry: %s" % (method, path, last))
 
+def granted_permissions():
+    try:
+        r = requests.get(BASE + "/me/permissions", params={"access_token": TOKEN}, timeout=60)
+        j = r.json()
+        if r.ok:
+            g = [d["permission"] for d in j.get("data", []) if d.get("status") == "granted"]
+            d = [d["permission"] for d in j.get("data", []) if d.get("status") == "declined"]
+            return "granted=[%s] declined=[%s]" % (", ".join(sorted(g)), ", ".join(sorted(d)))
+        return "perm-probe error: %s" % j
+    except Exception as ex:
+        return "perm-probe exc: %s" % ex
+
+
 def media_url(ref, fn): return "%s/social/%s/%s" % (SITE, ref, fn)
 
 def resolve_page_token(tok):
@@ -107,6 +120,7 @@ def next_project(root):
 def main():
     if not TOKEN:
         print("FB_PAGE_TOKEN not set - skipping Facebook (no-op)."); return 0
+    print("FB token permissions:", granted_permissions())
     root = pathlib.Path(__file__).resolve().parent.parent
     h = hours_since_last(root)
     if h is not None and h < MIN_HOURS:
