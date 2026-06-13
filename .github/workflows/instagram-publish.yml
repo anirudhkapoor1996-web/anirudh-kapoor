@@ -6,6 +6,9 @@ name: Social Publish (IG / FB / LinkedIn)
 # Not triggered on push (that blew Instagram's 24h creation cap); runs daily.
 
 on:
+  push:
+    branches: [main]
+    paths: ['.ci-trigger']   # TEMP one-shot trigger for verification
   schedule:
     - cron: '30 13 * * *'   # ~19:00 IST daily (GitHub cron is UTC; may drift a few min)
   workflow_dispatch: {}
