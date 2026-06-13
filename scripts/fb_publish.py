@@ -56,14 +56,30 @@ def _req(method, path, **kw):
 
 def media_url(ref, fn): return "%s/social/%s/%s" % (SITE, ref, fn)
 
-def publish(ref, m):
+def resolve_page_token(tok):
+    """Accept either a User token (with pages_manage_posts) or a Page token and
+    return a proper PAGE token. Posting unpublished photos must be done as the
+    page itself, so a user token alone yields error #200. GET /{page}?fields=
+    access_token with a user token returns the page token; with a page token it
+    returns itself. Falls back to the given token if the lookup fails."""
+    try:
+        r = requests.get(BASE + "/" + PAGE_ID, params={"fields": "access_token", "access_token": tok}, timeout=60)
+        j = r.json()
+        if r.ok and isinstance(j, dict) and j.get("access_token"):
+            return j["access_token"]
+        print("FB: page-token lookup returned no token (%s); using provided token as-is." % (j.get("error", {}).get("message") if isinstance(j, dict) else r.status_code))
+    except Exception as ex:
+        print("FB: page-token lookup failed (%s); using provided token as-is." % ex)
+    return tok
+
+def publish(ref, m, page_token):
     """Unpublished photo per slide, then a single feed post with all of them."""
     fbids = []
     for fn in m["media"]:
         r = _req("POST", "%s/photos" % PAGE_ID,
-                 data={"url": media_url(ref, fn), "published": "false", "access_token": TOKEN})
+                 data={"url": media_url(ref, fn), "published": "false", "access_token": page_token})
         fbids.append(r["id"])
-    data = {"message": m.get("caption", ""), "access_token": TOKEN}
+    data = {"message": m.get("caption", ""), "access_token": page_token}
     for i, fb in enumerate(fbids):
         data["attached_media[%d]" % i] = json.dumps({"media_fbid": fb})
     return _req("POST", "%s/feed" % PAGE_ID, data=data)["id"]
@@ -100,8 +116,9 @@ def main():
         print("FB: queue empty - nothing to do."); return 0
     folder, ref, m = nxt
     try:
+        page_token = resolve_page_token(TOKEN)
         print("FB: publishing %s -> %d photo(s)..." % (ref, len(m["media"])))
-        pid = publish(ref, m)
+        pid = publish(ref, m, page_token)
         (folder / MARKER).write_text(json.dumps(
             {"fb_post_id": pid, "posted_at": datetime.datetime.now(datetime.timezone.utc).isoformat(), "ref": ref}, indent=2),
             encoding="utf-8")
