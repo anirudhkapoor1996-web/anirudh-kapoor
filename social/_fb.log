@@ -1,3 +1,4 @@
-FB HARD ERROR A-01: POST 1163349337160596/photos: (403, {'error': {'message': '(#200) Permissions error', 'type': 'OAuthException', 'code': 200, 'fbtrace_id': 'ATLXfzvMVZCaifiLK7RjBd0'}})
-FB token permissions: granted=[business_management, instagram_basic, instagram_content_publish, pages_read_engagement, pages_show_list, public_profile] declined=[]
+FB token permissions: perm-probe error: {'error': {'message': '(#100) Tried accessing nonexisting field (permissions)', 'type': 'OAuthException', 'code': 100, 'fbtrace_id': 'A9coQvkLguGHOQ-q-eLKRgf'}}
+FB page-token expiry: type=PAGE expires_at=1781323200 (expires) data_access_expires_at=1789093469
 FB: publishing A-01 -> 7 photo(s)...
+FB PUBLISHED A-01 -> 1163349337160596_1364790619083285
