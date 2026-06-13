@@ -14,7 +14,7 @@ import requests
 
 API = "https://api.linkedin.com"
 SITE = os.environ.get("SITE_BASE_URL", "https://anirudh-kapoor.com").rstrip("/")
-VERSION = os.environ.get("LINKEDIN_VERSION", "202506").strip()
+VERSION = (os.environ.get("LINKEDIN_VERSION", "").strip() or "202506")
 MIN_HOURS = float(os.environ.get("MIN_HOURS_BETWEEN_POSTS", "20"))
 MARKER = ".posted-li"
 MAX_IMAGES = 9
