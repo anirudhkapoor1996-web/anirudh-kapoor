@@ -36,6 +36,7 @@
   </div>
 
   <div class="controls">
+    <div class="filters" id="tiers"></div>
     <div class="filters" id="filters"></div>
     <div class="tools">
       <span class="count" id="count"></span>
@@ -153,19 +154,34 @@ const noresultEl = document.getElementById('noresult');
 const sortBtn = document.getElementById('sortbtn');
 let active = 'All';
 let sortDesc = true;
+let view = 'Featured';
+
+/* deeper cuts — older, smaller & student/experimental work lives in the "Early" tier */
+const EARLY = new Set(['A·04','A·05','A·29','A·30','A·36','A·47','A·48','A·49','A·63','A·64','A·65','A·66','A·67','A·68','A·69','A·70','A·72','A·73','A·74','A·75']);
+const TIERS = ['Featured','Early & smaller'];
+const tiersEl = document.getElementById('tiers');
 
 document.getElementById('total').textContent = ENTRIES.length;
+
+TIERS.forEach(t=>{
+  const b = document.createElement('span');
+  b.className = 'fchip' + (t===view?' on':'');
+  b.textContent = t; b.dataset.tier = t;
+  b.addEventListener('click', ()=>{ view=t; document.querySelectorAll('#tiers .fchip').forEach(x=>x.classList.toggle('on', x.dataset.tier===t)); render(); });
+  tiersEl.appendChild(b);
+});
 
 CATS.forEach(c=>{
   const b = document.createElement('span');
   b.className = 'fchip' + (c==='All'?' on':'');
   b.textContent = c; b.dataset.cat = c;
-  b.addEventListener('click', ()=>{ active=c; document.querySelectorAll('.fchip').forEach(x=>x.classList.toggle('on', x.dataset.cat===c)); render(); });
+  b.addEventListener('click', ()=>{ active=c; document.querySelectorAll('#filters .fchip').forEach(x=>x.classList.toggle('on', x.dataset.cat===c)); render(); });
   filtersEl.appendChild(b);
 });
 
 function render(){
   const list = ENTRIES
+    .filter(e => view==='Featured' ? !EARLY.has(e.ref) : EARLY.has(e.ref))
     .filter(e => active==='All' || e.cat===active)
     .sort((a,b)=>{ const ay=a.yr??-Infinity, by=b.yr??-Infinity; return sortDesc ? by-ay : ay-by; });
   rowsEl.innerHTML = list.map(e=>{
