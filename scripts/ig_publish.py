@@ -34,7 +34,7 @@ def _classify(status, j):
     if e:
         if e.get("code") in (4, 9) or e.get("error_subcode") in (2207042, 2207051, 2207069):
             return "rate"
-        if e.get("is_transient"):
+        if e.get("is_transient") or e.get("error_subcode") in (2207052, 2207027):
             return "transient"
     if status >= 500:
         return "transient"
