@@ -81,6 +81,7 @@ def publish_image(ref, m):
 def publish_carousel(ref, m):
     kids = [api_post("%s/media" % UID, {"image_url": media_url(ref, fn), "is_carousel_item": "true"})["id"] for fn in m["media"]]
     p = api_post("%s/media" % UID, {"media_type": "CAROUSEL", "children": ",".join(kids), "caption": m.get("caption", "")})["id"]
+    wait_ready(p)
     return api_post("%s/media_publish" % UID, {"creation_id": p})["id"]
 def publish_reel(ref, m):
     d = {"media_type": "REELS", "video_url": media_url(ref, m["media"][0]), "caption": m.get("caption", "")}
