@@ -77,6 +77,7 @@ def wait_ready(cid, tries=30, delay=10):
 
 def publish_image(ref, m):
     c = api_post("%s/media" % UID, {"image_url": media_url(ref, m["media"][0]), "caption": m.get("caption", "")})["id"]
+    wait_ready(c)
     return api_post("%s/media_publish" % UID, {"creation_id": c})["id"]
 def publish_carousel(ref, m):
     kids = [api_post("%s/media" % UID, {"image_url": media_url(ref, fn), "is_carousel_item": "true"})["id"] for fn in m["media"]]
