@@ -137,6 +137,18 @@ def next_project(root, skip=frozenset()):
         return folder, ref, m
     return None
 
+SAVE_SHARE = "Save this, and share it with someone shaping a space of their own."
+
+def enhance_caption(cap):
+    if not cap or "Save this" in cap:
+        return cap
+    lines = cap.split("\n")
+    for i, ln in enumerate(lines):
+        if ln.lstrip().startswith("#"):
+            return "\n".join(lines[:i] + [SAVE_SHARE, ""] + lines[i:])
+    return cap.rstrip() + "\n\n" + SAVE_SHARE
+
+
 def main():
     root = pathlib.Path(__file__).resolve().parent.parent
     h = hours_since_last_post(root)
@@ -152,6 +164,7 @@ def main():
         return 0
     folder, ref, m = nxt
     typ = m.get("type", "carousel")
+    m["caption"] = enhance_caption(m.get("caption", ""))
     try:
         print("Publishing %s (%s) -> %d item(s)..." % (ref, typ, len(m["media"])))
         mid = PUB[typ](ref, m)
