@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anirudh Kapoor — Designer, Builder, Writer</title>
-<meta name="description" content="Anirudh Kapoor — designer, builder, and writer in Gurgaon. One method across several practices: a design studio, a curated export house, and an independent real-estate advisory.">
+<meta name="description" content="Anirudh Kapoor — designer, builder, and writer in Gurgaon. One method across several ventures: a design studio, a curated export house, an independent real-estate advisory, a broadcast channel, and a review project.">
 <meta name="theme-color" content="#ece9e3">
 <meta property="og:title" content="Anirudh Kapoor — Designer, Builder, Writer">
-<meta property="og:description" content="One method, several practices — design, exports, and real-estate advisory.">
+<meta property="og:description" content="One method, several ventures.">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="/assets/logo-ink.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,12 +37,11 @@
     padding:clamp(20px,3.2vh,40px) clamp(24px,5vw,60px);}
   .page>*{position:relative;z-index:1;}
 
-  /* faint background watermark — the AK monogram, as on the original site */
-  .wm-bg{position:absolute;z-index:0;right:-8vw;top:50%;transform:translateY(-50%);
-    height:132vh;width:auto;opacity:.06;pointer-events:none;user-select:none;}
+  /* faint background watermark — AK monogram (33% smaller than before) */
+  .wm-bg{position:absolute;z-index:0;right:-2vw;top:50%;transform:translateY(-50%);
+    height:88vh;width:auto;opacity:.06;pointer-events:none;user-select:none;}
 
   .eyebrow{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);}
-  .mono{font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
 
   /* top bar */
   .bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;}
@@ -53,44 +52,47 @@
   .bar .links a:hover{color:var(--sage);}
 
   /* main, vertically centred, no scroll */
-  main{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(26px,4.6vh,54px);min-height:0;}
+  main{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(22px,4vh,46px);min-height:0;}
 
-  .intro h1{font-family:var(--display);font-weight:300;font-size:clamp(34px,4.6vw,62px);line-height:.98;letter-spacing:-.01em;margin-top:14px;}
+  .intro h1{font-family:var(--display);font-weight:300;font-size:clamp(32px,4.2vw,58px);line-height:.98;letter-spacing:-.01em;margin-top:12px;}
   .intro h1 em{font-style:italic;color:var(--sage);}
-  .intro .tag{font-family:var(--serif);font-weight:300;font-size:clamp(17px,1.7vw,22px);line-height:1.5;color:var(--ink-2);max-width:46ch;margin-top:16px;}
+  .intro .tag{font-family:var(--serif);font-weight:300;font-size:clamp(16px,1.6vw,21px);line-height:1.5;color:var(--ink-2);max-width:46ch;margin-top:14px;}
 
-  .vlabel{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);display:flex;gap:14px;align-items:baseline;margin-bottom:16px;}
+  .vlabel{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);display:flex;gap:14px;align-items:baseline;margin-bottom:14px;}
   .vlabel .num{font-family:var(--mono);color:var(--ink-soft);}
-  .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,24px);}
-  .vcard{display:flex;flex-direction:column;gap:9px;border:1px solid var(--line);border-radius:2px;
-    padding:clamp(18px,2.1vw,28px);background:color-mix(in oklch,var(--panel) 50%,transparent);
+  .vrow{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.1vw,18px);}
+  .vcard{display:flex;flex-direction:column;gap:7px;border:1px solid var(--line);border-radius:2px;
+    padding:clamp(14px,1.4vw,22px);background:color-mix(in oklch,var(--panel) 50%,transparent);
     transition:background .3s,border-color .3s,transform .3s;}
   .vcard:hover{background:var(--panel);border-color:var(--sage);transform:translateY(-3px);}
-  .vcard .vkick{font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
-  .vcard h2{font-family:var(--display);font-weight:400;font-size:clamp(24px,2.5vw,34px);line-height:1.02;letter-spacing:-.01em;}
+  .vcard .vkick{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+  .vcard h2{font-family:var(--display);font-weight:400;font-size:clamp(21px,1.9vw,28px);line-height:1.0;letter-spacing:-.01em;}
   .vcard h2 em{font-style:italic;color:var(--sage);}
-  .vcard p{font-family:var(--serif);font-size:14.5px;line-height:1.45;color:var(--ink-2);margin:2px 0 0;flex:1 1 auto;}
-  .vcard .enter{font-family:var(--mono);font-size:12px;color:var(--sage);display:inline-flex;align-items:center;gap:8px;margin-top:6px;}
+  .vcard p{font-family:var(--serif);font-size:13.5px;line-height:1.4;color:var(--ink-2);margin:2px 0 0;flex:1 1 auto;}
+  .vcard .enter,.vcard .links2 a{font-family:var(--mono);font-size:11.5px;color:var(--sage);display:inline-flex;align-items:center;gap:7px;margin-top:6px;}
+  .vcard .links2{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;}
+  .vcard .links2 a{margin-top:0;}
+  .vcard .links2 a:hover{color:var(--ink);}
   .vcard .enter .ar{transition:transform .25s;}
   .vcard:hover .enter .ar{transform:translateX(5px);}
 
-  /* footer: CV + contact, one frame */
+  /* footer: CV + contact only — no venture socials on the hub */
   .foot{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 28px;
     border-top:1px solid var(--line);padding-top:clamp(14px,2.2vh,22px);}
   .foot .grp{display:flex;gap:24px;flex-wrap:wrap;align-items:center;}
   .foot a,.foot span{font-family:var(--sans);font-size:12px;letter-spacing:.08em;color:var(--ink-2);}
   .foot a{transition:color .25s;}
   .foot a:hover{color:var(--sage);}
-  .foot .loc{font-family:var(--mono);letter-spacing:.02em;color:var(--ink-soft);text-transform:none;}
+  .foot .loc{font-family:var(--mono);letter-spacing:.02em;color:var(--ink-soft);}
 
-  /* short or narrow screens: allow scroll instead of clipping */
-  @media (max-width:820px){
+  /* narrower / shorter screens: wrap and allow scroll instead of clipping */
+  @media (max-width:1180px){
     body{overflow:auto;}
     .page{height:auto;min-height:100dvh;overflow:visible;}
-    .vrow{grid-template-columns:1fr;}
-    .vcard p{display:none;}
-    .wm-bg{height:80vh;right:-22vw;opacity:.05;}
+    .vrow{grid-template-columns:repeat(2,1fr);}
+    .wm-bg{height:60vh;right:-16vw;opacity:.05;}
   }
+  @media (max-width:600px){ .vrow{grid-template-columns:1fr;} }
   @media (max-height:560px){ body{overflow:auto;} .page{height:auto;overflow:visible;} }
 </style>
 </head>
@@ -102,9 +104,6 @@
   <header class="bar">
     <a class="wm" href="/" aria-label="Anirudh Kapoor"><img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
     <nav class="links">
-      <a href="/design/">Design</a>
-      <a href="/exports/">Exports</a>
-      <a href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">Real&nbsp;Estate</a>
       <a href="/CV.html">CV</a>
       <a href="mailto:anirudhkapoor1996@gmail.com">Contact</a>
     </nav>
@@ -114,30 +113,51 @@
     <div class="intro">
       <span class="eyebrow">Designer · Builder · Writer</span>
       <h1>Anirudh <em>Kapoor.</em></h1>
-      <p class="tag">One method — objective logic and subjective taste, held to the same standard — across a few distinct practices.</p>
+      <p class="tag">One method — objective logic and subjective taste, held to the same standard — across a few distinct ventures.</p>
     </div>
 
     <section>
-      <div class="vlabel"><span class="num">01 — 03</span><span>The Ventures</span></div>
+      <div class="vlabel"><span class="num">01 — 05</span><span>The Ventures</span></div>
       <div class="vrow">
+
         <a class="vcard" href="/design/">
           <span class="vkick">Studio</span>
           <h2>Design <em>Intelligence</em></h2>
-          <p>Spaces, objects, language, and systems — one curiosity across eighteen disciplines.</p>
+          <p>Spaces, objects, language &amp; systems — one curiosity, many materials.</p>
           <span class="enter">Enter the studio <span class="ar">→</span></span>
         </a>
+
         <a class="vcard" href="/exports/">
           <span class="vkick">Trade</span>
-          <h2>Anirudh Kapoor <em>Exports</em></h2>
-          <p>A curated export house for India's finest gems, jewellery, handicrafts, art &amp; décor.</p>
+          <h2>AK <em>Exports</em></h2>
+          <p>Curated gems, jewellery, handicrafts, art &amp; décor — to the world.</p>
           <span class="enter">Enter exports <span class="ar">→</span></span>
         </a>
+
         <a class="vcard" href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">
           <span class="vkick">Advisory</span>
           <h2>AK Real <em>Estate</em></h2>
-          <p>Independent, buyer-side property advisory for Gurgaon — a risk filter, not a broker.</p>
+          <p>Independent, buyer-side property advisory for Gurgaon.</p>
           <span class="enter">Visit the practice <span class="ar">↗</span></span>
         </a>
+
+        <div class="vcard">
+          <span class="vkick">Broadcast</span>
+          <h2><em>Anomalogy</em></h2>
+          <p>Anomaly broadcasts — issued for civilian safety.</p>
+          <span class="links2">
+            <a href="https://www.youtube.com/@Anomalogy" target="_blank" rel="noopener">YouTube ↗</a>
+            <a href="https://www.instagram.com/anomalogy" target="_blank" rel="noopener">Instagram ↗</a>
+          </span>
+        </div>
+
+        <a class="vcard" href="https://www.instagram.com/things.reviewed" target="_blank" rel="noopener">
+          <span class="vkick">Reviews</span>
+          <h2>Things.<em>reviewed</em></h2>
+          <p>Reviewing all things beauty &amp; lifestyle.</p>
+          <span class="enter">Instagram <span class="ar">↗</span></span>
+        </a>
+
       </div>
     </section>
   </main>
@@ -147,11 +167,7 @@
       <a href="mailto:anirudhkapoor1996@gmail.com">anirudhkapoor1996@gmail.com</a>
       <a href="/CV.html">Curriculum Vitæ →</a>
     </div>
-    <div class="grp">
-      <a href="https://www.youtube.com/@anomalogy1" target="_blank" rel="noopener">Anomalogy ↗</a>
-      <a href="https://www.instagram.com/anirudh_kapoor_designs" target="_blank" rel="noopener">Instagram ↗</a>
-      <span class="loc">Gurgaon / Worldwide</span>
-    </div>
+    <span class="loc">Gurgaon / Worldwide</span>
   </footer>
 
 </div>
