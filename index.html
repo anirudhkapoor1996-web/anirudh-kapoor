@@ -19,191 +19,141 @@
     --ink:#20231e; --ink-2:#3b3f38; --ink-soft:#5d615a;
     --sage:#3f4f3f; --sage-2:#566656;
     --line:color-mix(in oklch, var(--ink) 13%, transparent);
-    --line-strong:color-mix(in oklch, var(--ink) 26%, transparent);
+    --line-strong:color-mix(in oklch, var(--ink) 24%, transparent);
     --serif:'Spectral',Georgia,serif; --display:'Cormorant Garamond',Georgia,serif;
     --sans:'Archivo','Helvetica Neue',Helvetica,sans-serif; --mono:'IBM Plex Mono',monospace;
-    --maxw:1180px;
   }
   *{box-sizing:border-box;}
-  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:19px;line-height:1.62;}
+  html,body{height:100%;}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);overflow:hidden;}
   ::selection{background:var(--sage);color:var(--paper);}
   a{color:inherit;text-decoration:none;}
   img{display:block;max-width:100%;}
   em,i{font-style:italic;}
-  h1,h2,h3{margin:0;font-weight:400;}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:clamp(24px,5vw,56px);}
-  .eyebrow{font-family:var(--sans);font-weight:600;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);}
-  .mono{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+  h1,h2{margin:0;font-weight:400;}
 
-  /* nav */
-  .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
-    padding:20px clamp(24px,5vw,56px);background:color-mix(in oklch,var(--paper) 82%,transparent);
-    backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .4s,padding .4s;}
-  .nav.scrolled{border-bottom-color:var(--line);padding-top:14px;padding-bottom:14px;}
-  .nav .wm{display:flex;align-items:center;gap:13px;font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing:.22em;}
-  .nav .wm img{height:27px;width:auto;}
-  .nav .right{display:flex;gap:26px;font-family:var(--sans);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
-  .nav .right a{transition:color .25s;}
-  .nav .right a:hover{color:var(--ink);}
-  @media(max-width:640px){.nav .right{display:none;}}
+  .page{position:relative;height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+    padding:clamp(20px,3.2vh,40px) clamp(24px,5vw,60px);}
+  .page>*{position:relative;z-index:1;}
 
-  /* hero */
-  .hero{min-height:72vh;display:flex;flex-direction:column;justify-content:center;padding-top:140px;padding-bottom:60px;}
-  .hero .kick{margin-bottom:26px;}
-  .hero h1{font-family:var(--display);font-weight:300;font-size:clamp(56px,11vw,150px);line-height:.92;letter-spacing:-.015em;}
-  .hero h1 em{font-style:italic;color:var(--sage);}
-  .hero .sub{font-family:var(--serif);font-weight:300;font-size:clamp(19px,2.2vw,26px);line-height:1.5;color:var(--ink-2);max-width:44ch;margin-top:30px;}
-  .hero .rail{display:flex;gap:36px;flex-wrap:wrap;margin-top:46px;}
-  .hero .rail span{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
-  .hero .rail b{color:var(--ink);font-weight:500;}
+  /* faint background watermark — the AK monogram, as on the original site */
+  .wm-bg{position:absolute;z-index:0;right:-8vw;top:50%;transform:translateY(-50%);
+    height:132vh;width:auto;opacity:.06;pointer-events:none;user-select:none;}
 
-  /* section opener */
-  .opener{font-family:var(--sans);font-weight:600;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);display:flex;gap:16px;align-items:baseline;margin-bottom:8px;}
-  .opener .num{font-family:var(--mono);color:var(--ink-soft);}
+  .eyebrow{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);}
+  .mono{font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
 
-  /* ventures */
-  .ventures{padding:40px 0 30px;}
-  .v-list{margin-top:40px;border-top:1px solid var(--line-strong);}
-  .v{display:grid;grid-template-columns:64px 1fr auto;gap:28px;align-items:center;
-    padding:42px 16px 42px 0;border-bottom:1px solid var(--line);transition:background .3s,padding .3s;}
-  .v:hover{background:var(--panel);padding-left:18px;padding-right:18px;}
-  .v .vnum{font-family:var(--mono);font-size:13px;color:var(--sage);}
-  .v .vbody{min-width:0;}
-  .v .vkick{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px;}
-  .v h2{font-family:var(--display);font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.02;letter-spacing:-.01em;}
-  .v h2 em{font-style:italic;color:var(--sage);}
-  .v .vdesc{font-size:16.5px;color:var(--ink-2);max-width:60ch;margin-top:12px;}
-  .v .vtags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
-  .v .vtags span{font-family:var(--sans);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:100px;padding:5px 12px;}
-  .v .venter{font-family:var(--mono);font-size:13px;color:var(--sage);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;}
-  .v .venter .ar{transition:transform .25s;}
-  .v:hover .venter .ar{transform:translateX(5px);}
-  @media(max-width:760px){
-    .v{grid-template-columns:1fr;gap:14px;padding:34px 0;}
-    .v:hover{padding-left:0;padding-right:0;background:transparent;}
-    .v .venter{margin-top:6px;}
+  /* top bar */
+  .bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+  .wm{display:flex;align-items:center;gap:12px;font-family:var(--sans);font-weight:600;font-size:13.5px;letter-spacing:.2em;}
+  .wm img{height:26px;width:auto;}
+  .bar .links{display:flex;gap:24px;font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
+  .bar .links a{transition:color .25s;}
+  .bar .links a:hover{color:var(--sage);}
+
+  /* main, vertically centred, no scroll */
+  main{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(26px,4.6vh,54px);min-height:0;}
+
+  .intro h1{font-family:var(--display);font-weight:300;font-size:clamp(34px,4.6vw,62px);line-height:.98;letter-spacing:-.01em;margin-top:14px;}
+  .intro h1 em{font-style:italic;color:var(--sage);}
+  .intro .tag{font-family:var(--serif);font-weight:300;font-size:clamp(17px,1.7vw,22px);line-height:1.5;color:var(--ink-2);max-width:46ch;margin-top:16px;}
+
+  .vlabel{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);display:flex;gap:14px;align-items:baseline;margin-bottom:16px;}
+  .vlabel .num{font-family:var(--mono);color:var(--ink-soft);}
+  .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,24px);}
+  .vcard{display:flex;flex-direction:column;gap:9px;border:1px solid var(--line);border-radius:2px;
+    padding:clamp(18px,2.1vw,28px);background:color-mix(in oklch,var(--panel) 50%,transparent);
+    transition:background .3s,border-color .3s,transform .3s;}
+  .vcard:hover{background:var(--panel);border-color:var(--sage);transform:translateY(-3px);}
+  .vcard .vkick{font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+  .vcard h2{font-family:var(--display);font-weight:400;font-size:clamp(24px,2.5vw,34px);line-height:1.02;letter-spacing:-.01em;}
+  .vcard h2 em{font-style:italic;color:var(--sage);}
+  .vcard p{font-family:var(--serif);font-size:14.5px;line-height:1.45;color:var(--ink-2);margin:2px 0 0;flex:1 1 auto;}
+  .vcard .enter{font-family:var(--mono);font-size:12px;color:var(--sage);display:inline-flex;align-items:center;gap:8px;margin-top:6px;}
+  .vcard .enter .ar{transition:transform .25s;}
+  .vcard:hover .enter .ar{transform:translateX(5px);}
+
+  /* footer: CV + contact, one frame */
+  .foot{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 28px;
+    border-top:1px solid var(--line);padding-top:clamp(14px,2.2vh,22px);}
+  .foot .grp{display:flex;gap:24px;flex-wrap:wrap;align-items:center;}
+  .foot a,.foot span{font-family:var(--sans);font-size:12px;letter-spacing:.08em;color:var(--ink-2);}
+  .foot a{transition:color .25s;}
+  .foot a:hover{color:var(--sage);}
+  .foot .loc{font-family:var(--mono);letter-spacing:.02em;color:var(--ink-soft);text-transform:none;}
+
+  /* short or narrow screens: allow scroll instead of clipping */
+  @media (max-width:820px){
+    body{overflow:auto;}
+    .page{height:auto;min-height:100dvh;overflow:visible;}
+    .vrow{grid-template-columns:1fr;}
+    .vcard p{display:none;}
+    .wm-bg{height:80vh;right:-22vw;opacity:.05;}
   }
-
-  /* also */
-  .also{padding:30px 0 10px;}
-  .also-row{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:30px;padding-top:26px;border-top:1px solid var(--line);}
-  .also-row a{font-family:var(--sans);font-size:13px;letter-spacing:.06em;color:var(--ink-2);display:inline-flex;align-items:center;gap:8px;transition:color .25s;}
-  .also-row a:hover{color:var(--sage);}
-  .also-row .ar{color:var(--sage);}
-
-  /* contact */
-  .contact{padding:90px 0 30px;}
-  .contact .big{font-family:var(--display);font-weight:300;font-size:clamp(48px,9vw,118px);line-height:.94;letter-spacing:-.015em;}
-  .contact .big em{font-style:italic;color:var(--sage);}
-  .contact .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:22px;margin-top:48px;padding-top:24px;border-top:1px solid var(--line-strong);}
-  .contact .row a{font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);transition:color .25s;}
-  .contact .row a:hover{color:var(--sage);}
-
-  /* footer */
-  footer{padding:60px 0 40px;}
-  .legal{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;border-top:1px solid var(--line);padding-top:28px;}
-  .legal img{height:42px;width:auto;}
-  .legal .mono{font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
-
-  @media print{.nav{position:static;}}
+  @media (max-height:560px){ body{overflow:auto;} .page{height:auto;overflow:visible;} }
 </style>
 </head>
 <body>
+<div class="page">
 
-<nav class="nav" id="nav">
-  <a class="wm" href="/" aria-label="Anirudh Kapoor — home"><img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
-  <div class="right">
-    <a href="#ventures">Ventures</a>
-    <a href="/design/">Design</a>
-    <a href="/exports/">Exports</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
+  <img class="wm-bg" src="/assets/logo-ink.png" alt="" aria-hidden="true">
 
-<header class="hero">
-  <div class="wrap">
-    <div class="kick eyebrow">Gurgaon / Worldwide · Est. 2013</div>
-    <h1>Anirudh <em>Kapoor.</em></h1>
-    <p class="sub">Designer, builder, and writer. One method — objective logic and subjective taste, held to the same standard — runs through a few distinct practices. Each is its own world.</p>
-    <div class="rail">
-      <span><b>3</b> practices</span>
-      <span><b>Gurgaon</b> / Worldwide</span>
-      <span><b>Est.</b> 2013</span>
+  <header class="bar">
+    <a class="wm" href="/" aria-label="Anirudh Kapoor"><img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
+    <nav class="links">
+      <a href="/design/">Design</a>
+      <a href="/exports/">Exports</a>
+      <a href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">Real&nbsp;Estate</a>
+      <a href="/CV.html">CV</a>
+      <a href="mailto:anirudhkapoor1996@gmail.com">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="intro">
+      <span class="eyebrow">Designer · Builder · Writer</span>
+      <h1>Anirudh <em>Kapoor.</em></h1>
+      <p class="tag">One method — objective logic and subjective taste, held to the same standard — across a few distinct practices.</p>
     </div>
-  </div>
-</header>
 
-<section class="ventures wrap" id="ventures">
-  <div class="opener"><span class="num">01 — 03</span><span>The Ventures</span></div>
-  <div class="v-list">
-
-    <a class="v" href="/design/">
-      <div class="vnum">01</div>
-      <div class="vbody">
-        <div class="vkick">Studio · Design Intelligence</div>
-        <h2>Design <em>Intelligence</em></h2>
-        <p class="vdesc">A working archive of spaces, objects, language, and systems — one curiosity across eighteen disciplines, from architecture and product to identity and code.</p>
-        <div class="vtags"><span>Architecture &amp; interiors</span><span>Product</span><span>Art</span><span>Identity &amp; web</span></div>
+    <section>
+      <div class="vlabel"><span class="num">01 — 03</span><span>The Ventures</span></div>
+      <div class="vrow">
+        <a class="vcard" href="/design/">
+          <span class="vkick">Studio</span>
+          <h2>Design <em>Intelligence</em></h2>
+          <p>Spaces, objects, language, and systems — one curiosity across eighteen disciplines.</p>
+          <span class="enter">Enter the studio <span class="ar">→</span></span>
+        </a>
+        <a class="vcard" href="/exports/">
+          <span class="vkick">Trade</span>
+          <h2>Anirudh Kapoor <em>Exports</em></h2>
+          <p>A curated export house for India's finest gems, jewellery, handicrafts, art &amp; décor.</p>
+          <span class="enter">Enter exports <span class="ar">→</span></span>
+        </a>
+        <a class="vcard" href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">
+          <span class="vkick">Advisory</span>
+          <h2>AK Real <em>Estate</em></h2>
+          <p>Independent, buyer-side property advisory for Gurgaon — a risk filter, not a broker.</p>
+          <span class="enter">Visit the practice <span class="ar">↗</span></span>
+        </a>
       </div>
-      <div class="venter">Enter the studio <span class="ar">→</span></div>
-    </a>
+    </section>
+  </main>
 
-    <a class="v" href="/exports/">
-      <div class="vnum">02</div>
-      <div class="vbody">
-        <div class="vkick">Trade · Anirudh Kapoor Exports</div>
-        <h2>Anirudh Kapoor <em>Exports</em></h2>
-        <p class="vdesc">A curated export house for India's finest gems, jewellery, handicrafts, art, and home décor — wholesale, private-label, and made-to-order for buyers worldwide.</p>
-        <div class="vtags"><span>Wholesale</span><span>Private label</span><span>Sourcing agent</span><span>Worldwide</span></div>
-      </div>
-      <div class="venter">Enter exports <span class="ar">→</span></div>
-    </a>
+  <footer class="foot">
+    <div class="grp">
+      <a href="mailto:anirudhkapoor1996@gmail.com">anirudhkapoor1996@gmail.com</a>
+      <a href="/CV.html">Curriculum Vitæ →</a>
+    </div>
+    <div class="grp">
+      <a href="https://www.youtube.com/@anomalogy1" target="_blank" rel="noopener">Anomalogy ↗</a>
+      <a href="https://www.instagram.com/anirudh_kapoor_designs" target="_blank" rel="noopener">Instagram ↗</a>
+      <span class="loc">Gurgaon / Worldwide</span>
+    </div>
+  </footer>
 
-    <a class="v" href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">
-      <div class="vnum">03</div>
-      <div class="vbody">
-        <div class="vkick">Advisory · AK Real Estate Solutions</div>
-        <h2>AK Real Estate <em>Solutions</em></h2>
-        <p class="vdesc">Independent, buyer-side residential property advisory for Gurgaon — a risk filter, not a broker. No builder commissions; written Green / Yellow / Red verdicts.</p>
-        <div class="vtags"><span>Independent advisory</span><span>Due diligence</span><span>Gurgaon</span></div>
-      </div>
-      <div class="venter">Visit the practice <span class="ar">↗</span></div>
-    </a>
-
-  </div>
-</section>
-
-<section class="also wrap">
-  <div class="opener"><span class="num">+</span><span>Also</span></div>
-  <div class="also-row">
-    <a href="https://www.youtube.com/@anomalogy1" target="_blank" rel="noopener">Anomalogy — the podcast <span class="ar">↗</span></a>
-    <a href="/CV.html">Curriculum Vitæ <span class="ar">→</span></a>
-    <a href="https://www.instagram.com/anirudh_kapoor_designs" target="_blank" rel="noopener">Instagram <span class="ar">↗</span></a>
-  </div>
-</section>
-
-<section class="contact wrap" id="contact">
-  <div class="opener"><span class="num">04</span><span>Contact</span></div>
-  <div class="big">Shall we<br><em>begin?</em></div>
-  <div class="row">
-    <a href="mailto:anirudhkapoor1996@gmail.com">anirudhkapoor1996@gmail.com</a>
-    <a href="/design/">Design studio</a>
-    <a href="/exports/">Exports</a>
-    <a href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">Real Estate ↗</a>
-  </div>
-</section>
-
-<footer class="wrap">
-  <div class="legal">
-    <img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram">
-    <span class="mono">Anirudh Kapoor · Designer, Builder, Writer</span>
-    <span class="mono">Gurgaon / Worldwide · Est. 2013</span>
-  </div>
-</footer>
-
-<script>
-  (function(){ var nav=document.getElementById('nav'); var f=function(){ nav.classList.toggle('scrolled', window.scrollY>40); }; addEventListener('scroll',f,{passive:true}); f(); })();
-</script>
+</div>
 </body>
 </html>
