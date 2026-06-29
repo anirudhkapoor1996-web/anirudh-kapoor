@@ -3,286 +3,207 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anirudh Kapoor — Design Intelligence</title>
-<meta name="description" content="Anirudh Kapoor — designer, builder, writer, and AI generalist. A working archive of spaces, objects, systems, and ideas.">
-<script>document.documentElement.classList.add('js');</script>
-<link rel="stylesheet" href="assets/home.css">
-<link rel="stylesheet" href="assets/immersive.css">
-<link rel="icon" type="image/png" href="assets/logo-ink.png">
+<title>Anirudh Kapoor — Designer, Builder, Writer</title>
+<meta name="description" content="Anirudh Kapoor — designer, builder, and writer in Gurgaon. One method across several practices: a design studio, a curated export house, and an independent real-estate advisory.">
+<meta name="theme-color" content="#ece9e3">
+<meta property="og:title" content="Anirudh Kapoor — Designer, Builder, Writer">
+<meta property="og:description" content="One method, several practices — design, exports, and real-estate advisory.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/assets/logo-ink.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ece9e3; --paper-deep:#e3e0d8; --panel:#f3f1ec;
+    --ink:#20231e; --ink-2:#3b3f38; --ink-soft:#5d615a;
+    --sage:#3f4f3f; --sage-2:#566656;
+    --line:color-mix(in oklch, var(--ink) 13%, transparent);
+    --line-strong:color-mix(in oklch, var(--ink) 26%, transparent);
+    --serif:'Spectral',Georgia,serif; --display:'Cormorant Garamond',Georgia,serif;
+    --sans:'Archivo','Helvetica Neue',Helvetica,sans-serif; --mono:'IBM Plex Mono',monospace;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:19px;line-height:1.62;}
+  ::selection{background:var(--sage);color:var(--paper);}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  em,i{font-style:italic;}
+  h1,h2,h3{margin:0;font-weight:400;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:clamp(24px,5vw,56px);}
+  .eyebrow{font-family:var(--sans);font-weight:600;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);}
+  .mono{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+
+  /* nav */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:20px clamp(24px,5vw,56px);background:color-mix(in oklch,var(--paper) 82%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .4s,padding .4s;}
+  .nav.scrolled{border-bottom-color:var(--line);padding-top:14px;padding-bottom:14px;}
+  .nav .wm{display:flex;align-items:center;gap:13px;font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing:.22em;}
+  .nav .wm img{height:27px;width:auto;}
+  .nav .right{display:flex;gap:26px;font-family:var(--sans);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+  .nav .right a{transition:color .25s;}
+  .nav .right a:hover{color:var(--ink);}
+  @media(max-width:640px){.nav .right{display:none;}}
+
+  /* hero */
+  .hero{min-height:72vh;display:flex;flex-direction:column;justify-content:center;padding-top:140px;padding-bottom:60px;}
+  .hero .kick{margin-bottom:26px;}
+  .hero h1{font-family:var(--display);font-weight:300;font-size:clamp(56px,11vw,150px);line-height:.92;letter-spacing:-.015em;}
+  .hero h1 em{font-style:italic;color:var(--sage);}
+  .hero .sub{font-family:var(--serif);font-weight:300;font-size:clamp(19px,2.2vw,26px);line-height:1.5;color:var(--ink-2);max-width:44ch;margin-top:30px;}
+  .hero .rail{display:flex;gap:36px;flex-wrap:wrap;margin-top:46px;}
+  .hero .rail span{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+  .hero .rail b{color:var(--ink);font-weight:500;}
+
+  /* section opener */
+  .opener{font-family:var(--sans);font-weight:600;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);display:flex;gap:16px;align-items:baseline;margin-bottom:8px;}
+  .opener .num{font-family:var(--mono);color:var(--ink-soft);}
+
+  /* ventures */
+  .ventures{padding:40px 0 30px;}
+  .v-list{margin-top:40px;border-top:1px solid var(--line-strong);}
+  .v{display:grid;grid-template-columns:64px 1fr auto;gap:28px;align-items:center;
+    padding:42px 16px 42px 0;border-bottom:1px solid var(--line);transition:background .3s,padding .3s;}
+  .v:hover{background:var(--panel);padding-left:18px;padding-right:18px;}
+  .v .vnum{font-family:var(--mono);font-size:13px;color:var(--sage);}
+  .v .vbody{min-width:0;}
+  .v .vkick{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px;}
+  .v h2{font-family:var(--display);font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.02;letter-spacing:-.01em;}
+  .v h2 em{font-style:italic;color:var(--sage);}
+  .v .vdesc{font-size:16.5px;color:var(--ink-2);max-width:60ch;margin-top:12px;}
+  .v .vtags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .v .vtags span{font-family:var(--sans);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:100px;padding:5px 12px;}
+  .v .venter{font-family:var(--mono);font-size:13px;color:var(--sage);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;}
+  .v .venter .ar{transition:transform .25s;}
+  .v:hover .venter .ar{transform:translateX(5px);}
+  @media(max-width:760px){
+    .v{grid-template-columns:1fr;gap:14px;padding:34px 0;}
+    .v:hover{padding-left:0;padding-right:0;background:transparent;}
+    .v .venter{margin-top:6px;}
+  }
+
+  /* also */
+  .also{padding:30px 0 10px;}
+  .also-row{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:30px;padding-top:26px;border-top:1px solid var(--line);}
+  .also-row a{font-family:var(--sans);font-size:13px;letter-spacing:.06em;color:var(--ink-2);display:inline-flex;align-items:center;gap:8px;transition:color .25s;}
+  .also-row a:hover{color:var(--sage);}
+  .also-row .ar{color:var(--sage);}
+
+  /* contact */
+  .contact{padding:90px 0 30px;}
+  .contact .big{font-family:var(--display);font-weight:300;font-size:clamp(48px,9vw,118px);line-height:.94;letter-spacing:-.015em;}
+  .contact .big em{font-style:italic;color:var(--sage);}
+  .contact .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:22px;margin-top:48px;padding-top:24px;border-top:1px solid var(--line-strong);}
+  .contact .row a{font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);transition:color .25s;}
+  .contact .row a:hover{color:var(--sage);}
+
+  /* footer */
+  footer{padding:60px 0 40px;}
+  .legal{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;border-top:1px solid var(--line);padding-top:28px;}
+  .legal img{height:42px;width:auto;}
+  .legal .mono{font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
+
+  @media print{.nav{position:static;}}
+</style>
 </head>
 <body>
 
-<!-- ====================== INTRO ====================== -->
-<div id="intro" aria-hidden="true">
-  <div class="mark-wrap"><img src="assets/logo-ink.png" alt=""></div>
-  <div class="iline"></div>
-  <div class="iwm">Anirudh&nbsp;Kapoor</div>
-</div>
-
-<!-- ====================== NAV ====================== -->
 <nav class="nav" id="nav">
-  <a class="wm" href="#top"><img src="assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
-  <div class="links">
-    <a href="#work">Work</a>
-    <a href="Archive.html">Archive</a>
-    <a href="About.html">Studio</a>
-    <a href="#witness">Writing</a>
-    <a href="#cv">CV</a>
+  <a class="wm" href="/" aria-label="Anirudh Kapoor — home"><img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
+  <div class="right">
+    <a href="#ventures">Ventures</a>
+    <a href="/design/">Design</a>
+    <a href="/exports/">Exports</a>
     <a href="#contact">Contact</a>
-    <a href="exports/">Exports</a>
-    <a href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">Real&nbsp;Estate</a>
   </div>
-  <span class="menu">Menu</span>
 </nav>
 
-<a id="top"></a>
-
-<!-- ====================== HERO ====================== -->
-<header class="ihero">
-  <img class="ihero-mark" src="assets/logo-ink.png" alt="" id="heroMark">
+<header class="hero">
   <div class="wrap">
-    <div class="kick eyebrow">Designer · Builder · Writer · AI&nbsp;Generalist</div>
-    <h1>
-      <span class="mask"><span>Design</span></span>
-      <span class="mask"><span><em>intelligence.</em></span></span>
-    </h1>
-    <p class="sub">One mind across spaces, objects, language, and systems — organised by a single conviction: that objective logic and subjective taste are instruments of the same intelligence.</p>
+    <div class="kick eyebrow">Gurgaon / Worldwide · Est. 2013</div>
+    <h1>Anirudh <em>Kapoor.</em></h1>
+    <p class="sub">Designer, builder, and writer. One method — objective logic and subjective taste, held to the same standard — runs through a few distinct practices. Each is its own world.</p>
     <div class="rail">
-      <span><b>Est. 2013</b></span>
+      <span><b>3</b> practices</span>
       <span><b>Gurgaon</b> / Worldwide</span>
-      <span><b>18</b> disciplines</span>
+      <span><b>Est.</b> 2013</span>
     </div>
   </div>
-  <div class="scrollcue"><span>Scroll</span><span class="ln"></span></div>
 </header>
 
-<!-- ====================== MANIFESTO ====================== -->
-<section class="manifesto wrap">
-  <p class="big" id="manifesto">Not a portfolio of services, but one sustained argument — that <em>taste</em> and <em>logic</em> are a single faculty, observed from eighteen angles.</p>
-  <div class="foot">
-    <div class="rv"><div class="t">Logic</div><p>Research, constraint, system, and proof. The objective half of the method.</p></div>
-    <div class="rv"><div class="t">Taste</div><p>Proportion, material, restraint, and wit — held to the same standard.</p></div>
-    <div class="rv"><div class="t">Range</div><p>From buildings to objects to grammar to code. One curiosity, many materials.</p></div>
-  </div>
-</section>
+<section class="ventures wrap" id="ventures">
+  <div class="opener"><span class="num">01 — 03</span><span>The Ventures</span></div>
+  <div class="v-list">
 
-<!-- ====================== CINEMATIC WORK ====================== -->
-<section class="cwork" id="work">
-  <div class="wrap">
-    <div class="cwork-head">
-      <div class="opener rv"><span class="num">01</span><span>Selected Work</span></div>
-      <a href="Archive.html" class="rv">View the full archive →</a>
-    </div>
-  </div>
-
-  <a class="cfig" href="Project — House of Ming.html">
-    <div class="media"><div class="plate"><span class="cap">ARTWORK — HOUSE OF MING, TAJ MANSINGH</span></div></div>
-    <div class="scrim"></div>
-    <div class="info">
-      <div>
-        <div class="num">A·01 / Artwork &amp; Installation Design</div>
-        <h3>House of <em>Ming</em></h3>
-        <div class="meta">Taj Mansingh, New Delhi · 2018</div>
+    <a class="v" href="/design/">
+      <div class="vnum">01</div>
+      <div class="vbody">
+        <div class="vkick">Studio · Design Intelligence</div>
+        <h2>Design <em>Intelligence</em></h2>
+        <p class="vdesc">A working archive of spaces, objects, language, and systems — one curiosity across eighteen disciplines, from architecture and product to identity and code.</p>
+        <div class="vtags"><span>Architecture &amp; interiors</span><span>Product</span><span>Art</span><span>Identity &amp; web</span></div>
       </div>
-      <span class="view">View case study →</span>
-    </div>
-  </a>
+      <div class="venter">Enter the studio <span class="ar">→</span></div>
+    </a>
 
-  <a class="cfig" href="#">
-    <div class="media"><div class="plate"><span class="cap">WORKPLACE — FACEBOOK &amp; GOOGLE OFFICES</span></div></div>
-    <div class="scrim"></div>
-    <div class="info">
-      <div>
-        <div class="num">A·02 / Architecture &amp; Interiors</div>
-        <h3>The Tech <em>Offices</em></h3>
-        <div class="meta">Facebook &amp; Google · Gurgaon · 2016</div>
+    <a class="v" href="/exports/">
+      <div class="vnum">02</div>
+      <div class="vbody">
+        <div class="vkick">Trade · Anirudh Kapoor Exports</div>
+        <h2>Anirudh Kapoor <em>Exports</em></h2>
+        <p class="vdesc">A curated export house for India's finest gems, jewellery, handicrafts, art, and home décor — wholesale, private-label, and made-to-order for buyers worldwide.</p>
+        <div class="vtags"><span>Wholesale</span><span>Private label</span><span>Sourcing agent</span><span>Worldwide</span></div>
       </div>
-      <span class="view">View case study →</span>
-    </div>
-  </a>
+      <div class="venter">Enter exports <span class="ar">→</span></div>
+    </a>
 
-  <a class="cfig" href="#">
-    <div class="media"><div class="plate"><span class="cap">SYSTEMS — AI TRADING &amp; WORKFLOWS</span></div></div>
-    <div class="scrim"></div>
-    <div class="info">
-      <div>
-        <div class="num">A·03 / AI Generalist</div>
-        <h3>Systems that <em>compound</em></h3>
-        <div class="meta">Agentic workflows · trading systems · 2025</div>
+    <a class="v" href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">
+      <div class="vnum">03</div>
+      <div class="vbody">
+        <div class="vkick">Advisory · AK Real Estate Solutions</div>
+        <h2>AK Real Estate <em>Solutions</em></h2>
+        <p class="vdesc">Independent, buyer-side residential property advisory for Gurgaon — a risk filter, not a broker. No builder commissions; written Green / Yellow / Red verdicts.</p>
+        <div class="vtags"><span>Independent advisory</span><span>Due diligence</span><span>Gurgaon</span></div>
       </div>
-      <span class="view">View case study →</span>
-    </div>
-  </a>
-</section>
+      <div class="venter">Visit the practice <span class="ar">↗</span></div>
+    </a>
 
-<!-- ====================== INDEX (hover preview) ====================== -->
-<section class="windex wrap" id="index">
-  <div class="opener rv"><span class="num">02</span><span>The Archive · Selected Index</span></div>
-  <div class="wlist" id="wlist">
-    <a class="wrow" href="Project — House of Ming.html" data-img="ARTWORK — HOUSE OF MING"><span class="n">A·01</span><span class="t">House of <em>Ming</em></span><span class="d">Artwork · 2018</span></a>
-    <a class="wrow" href="#" data-img="WORKPLACE — TECH OFFICES"><span class="n">A·02</span><span class="t">The Tech <em>Offices</em></span><span class="d">Interiors · 2016</span></a>
-    <a class="wrow" href="#" data-img="SYSTEMS — AI WORKFLOWS"><span class="n">A·03</span><span class="t">Systems that <em>compound</em></span><span class="d">AI · 2025</span></a>
-    <a class="wrow" href="#" data-img="PRODUCT — CAST BRASS"><span class="n">A·04</span><span class="t">The Cast Brass <em>Series</em></span><span class="d">Product · 2025</span></a>
-    <a class="wrow" href="#" data-img="EXHIBITION — PAVILION"><span class="n">A·05</span><span class="t">Pavilion, in <em>Section</em></span><span class="d">Exhibition · 2024</span></a>
-    <a class="wrow" href="#" data-img="IDENTITY — JEWELLERY WEB"><span class="n">A·06</span><span class="t">Jewellery &amp; Creative <em>Web</em></span><span class="d">Branding · Web · 2024</span></a>
-    <a class="wrow" href="#" data-img="SIGNAGE — DLF SYSTEMS"><span class="n">A·07</span><span class="t">Wayfinding at <em>Scale</em></span><span class="d">Signage · 2018</span></a>
-  </div>
-</section>
-<div class="float-preview" id="floatPrev" aria-hidden="true"><div class="plate"><span class="cap"></span></div></div>
-
-<!-- ====================== DISCIPLINES MARQUEE ====================== -->
-<section class="marquee" aria-label="Eighteen fields">
-  <div class="mrow r1" id="m1"></div>
-  <div class="mrow r2" id="m2"></div>
-</section>
-
-<!-- ====================== THE WITNESS ====================== -->
-<section class="iwitness" id="witness">
-  <div class="wrap">
-    <div class="opener rv"><span class="num">03</span><span>The Witness</span></div>
-    <div class="wbar rv"><span>MACHINE&nbsp;ASSESSMENT&nbsp;·&nbsp;001</span><span>NON-HUMAN&nbsp;·&nbsp;UNPAID&nbsp;·&nbsp;ON&nbsp;THE&nbsp;RECORD</span></div>
-    <blockquote class="rv">“Across eighteen fields, the same hand is visible — a preference for <em>constraint over decoration</em>, and a refusal to treat any discipline as beneath rigour. It reads as one person's argument that taste and logic are a single faculty.”</blockquote>
-    <div class="wprov rv"><span>Generated by a large language model from the complete project archive.</span><span>An assessment, not a client endorsement. Method &amp; prompt published in full.</span></div>
   </div>
 </section>
 
-<!-- ====================== CV BAND ====================== -->
-<section class="cvband wrap" id="cv">
-  <div class="opener rv" style="margin-bottom:34px;"><span class="num">04</span><span>Curriculum Vitæ</span></div>
-  <div class="inner">
-    <div class="rv">
-      <h2>Twelve years,<br><em>one method.</em></h2>
-      <p>Politecnico di Milano–trained product designer. Art &amp; Interior Director for the Taj; brand and spaces for Hyatt, Marriott, ITC, DLF and Diageo; automotive journalist; builder of AI trading systems and workflows. Twelve languages. The full record, designed.</p>
-    </div>
-    <div class="acts rv">
-      <a class="btn solid" href="CV.html">View the CV →</a>
-      <a class="btn ghost" href="CV.html#print">Download PDF ↓</a>
-    </div>
+<section class="also wrap">
+  <div class="opener"><span class="num">+</span><span>Also</span></div>
+  <div class="also-row">
+    <a href="https://www.youtube.com/@anomalogy1" target="_blank" rel="noopener">Anomalogy — the podcast <span class="ar">↗</span></a>
+    <a href="/CV.html">Curriculum Vitæ <span class="ar">→</span></a>
+    <a href="https://www.instagram.com/anirudh_kapoor_designs" target="_blank" rel="noopener">Instagram <span class="ar">↗</span></a>
   </div>
 </section>
 
-<!-- ====================== CONTACT / FOOTER ====================== -->
-<footer class="foot sec wrap" id="contact">
-  <div class="opener rv" style="margin-bottom:30px;"><span class="num">05</span><span>Contact</span></div>
-  <div class="big rv">Shall we<br><em>begin?</em></div>
-  <div class="row rv">
+<section class="contact wrap" id="contact">
+  <div class="opener"><span class="num">04</span><span>Contact</span></div>
+  <div class="big">Shall we<br><em>begin?</em></div>
+  <div class="row">
     <a href="mailto:anirudhkapoor1996@gmail.com">anirudhkapoor1996@gmail.com</a>
-    <a href="https://www.instagram.com/anirudh_kapoor_designs" target="_blank" rel="noopener">Instagram — Anirudh Kapoor Designs</a>
-    <a href="https://www.youtube.com/@anomalogy1" target="_blank" rel="noopener">Anomalogy — the podcast</a>
-    <a href="#">Press &amp; media kit</a>
-    <a href="exports/">Exports — Anirudh Kapoor Exports</a>
-    <a href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">AK Real Estate ↗</a>
+    <a href="/design/">Design studio</a>
+    <a href="/exports/">Exports</a>
+    <a href="https://akrealestatesolutions.co.in" target="_blank" rel="noopener">Real Estate ↗</a>
   </div>
+</section>
+
+<footer class="wrap">
   <div class="legal">
-    <img class="foot-mark" src="assets/logo-ink.png" alt="Anirudh Kapoor monogram">
-    <span class="mono">Anirudh Kapoor · Designer, Builder, Writer, AI Generalist</span>
+    <img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram">
+    <span class="mono">Anirudh Kapoor · Designer, Builder, Writer</span>
     <span class="mono">Gurgaon / Worldwide · Est. 2013</span>
   </div>
 </footer>
 
 <script>
-const HTML = document.documentElement;
-
-/* ---------- intro ---------- */
-(function(){
-  const intro = document.getElementById('intro');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const seen = sessionStorage.getItem('ak_intro');
-  function end(){ intro.classList.add('done'); HTML.classList.remove('lock'); HTML.classList.add('ready'); setTimeout(()=>{ intro.style.display='none'; }, 1150); }
-  if(reduced || seen){ intro.style.display='none'; HTML.classList.add('ready'); return; }
-  try{ sessionStorage.setItem('ak_intro','1'); }catch(e){}
-  HTML.classList.add('lock','anim');
-  const t = setTimeout(end, 2450);
-  intro.addEventListener('click', ()=>{ clearTimeout(t); end(); });
-  /* hard safety: never trap the user */
-  setTimeout(()=>{ HTML.classList.remove('lock'); HTML.classList.add('ready'); if(intro)intro.style.display='none'; }, 4000);
-})();
-
-/* ---------- reveal observer + safety net ---------- */
-(function(){
-  const rvs = [...document.querySelectorAll('.rv')];
-  const io = new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin:'0px 0px -6% 0px', threshold:0.04 });
-  rvs.forEach(el=>io.observe(el));
-  function vis(){ rvs.forEach(el=>{ if(el.getBoundingClientRect().top < innerHeight*0.96){ el.classList.add('in'); io.unobserve(el); } }); }
-  requestAnimationFrame(vis); addEventListener('load', vis);
-  setTimeout(()=>rvs.forEach(el=>el.classList.add('in')), 2600);
-})();
-
-/* ---------- nav scrolled ---------- */
-(function(){ const nav=document.getElementById('nav'); const f=()=>nav.classList.toggle('scrolled', scrollY>40); addEventListener('scroll',f,{passive:true}); f(); })();
-
-/* ---------- parallax (hero mark + work media) ---------- */
-(function(){
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced) return;
-  const mark = document.getElementById('heroMark');
-  const medias = [...document.querySelectorAll('.cfig .media')];
-  let ticking=false;
-  function upd(){
-    ticking=false;
-    if(mark){ mark.style.transform = 'translateY(calc(-50% + '+(scrollY*0.12)+'px))'; }
-    medias.forEach(m=>{ const r=m.parentElement.getBoundingClientRect(); const off=(r.top + r.height/2 - innerHeight/2); m.style.transform='translateY('+(off*-0.06)+'px)'; });
-  }
-  addEventListener('scroll', ()=>{ if(!ticking){ requestAnimationFrame(upd); ticking=true; } }, {passive:true});
-  upd();
-})();
-
-/* ---------- manifesto word lighting ---------- */
-(function(){
-  const el = document.getElementById('manifesto');
-  const text = el.innerHTML;
-  // wrap top-level words while preserving <em> tags
-  const tmp = document.createElement('div'); tmp.innerHTML = text;
-  function wrap(node){
-    const out = document.createDocumentFragment();
-    node.childNodes.forEach(ch=>{
-      if(ch.nodeType===3){
-        ch.textContent.split(/(\s+)/).forEach(tok=>{
-          if(tok.trim()){ const s=document.createElement('span'); s.className='word'; s.textContent=tok; out.appendChild(s); }
-          else out.appendChild(document.createTextNode(tok));
-        });
-      } else if(ch.nodeType===1){
-        const s=document.createElement('span'); s.className='word'; s.appendChild(ch.cloneNode(true)); out.appendChild(s);
-      }
-    });
-    return out;
-  }
-  el.innerHTML=''; el.appendChild(wrap(tmp));
-  const words=[...el.querySelectorAll('.word')];
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced){ words.forEach(w=>w.classList.add('lit')); return; }
-  function lite(){
-    const vh=innerHeight;
-    words.forEach(w=>{ const r=w.getBoundingClientRect(); if(r.top < vh*0.82){ w.classList.add('lit'); } });
-  }
-  addEventListener('scroll', lite, {passive:true}); addEventListener('load', lite); lite();
-  setTimeout(()=>words.forEach(w=>w.classList.add('lit')), 4000);
-})();
-
-/* ---------- index hover preview ---------- */
-(function(){
-  const list=document.getElementById('wlist'); const prev=document.getElementById('floatPrev'); const cap=prev.querySelector('.cap');
-  if(matchMedia('(hover:none)').matches) return;
-  let raf=null, tx=0, ty=0, cx=0, cy=0;
-  function loop(){ cx+=(tx-cx)*0.16; cy+=(ty-cy)*0.16; prev.style.left=cx+'px'; prev.style.top=cy+'px'; raf=requestAnimationFrame(loop); }
-  list.querySelectorAll('.wrow').forEach(row=>{
-    row.addEventListener('mouseenter', ()=>{ cap.textContent=row.dataset.img||''; prev.classList.add('show'); list.parentElement.classList.add('has-hover'); if(!raf)loop(); });
-    row.addEventListener('mouseleave', ()=>{ prev.classList.remove('show'); list.parentElement.classList.remove('has-hover'); });
-  });
-  addEventListener('mousemove', e=>{ tx=e.clientX; ty=e.clientY; }, {passive:true});
-})();
-
-/* ---------- marquee build ---------- */
-(function(){
-  const fields=['Interior Design','Exhibition Design','Construction','Product Design','Furniture','Artwork Consultancy','Signage','Real Estate','Automotive Journalism','Product Reviews','AI Generalist','Linguistics','Branding','Creative Direction','Design Research','Anomalogy','Jewellery','Web & Identity'];
-  function build(elId, arr){
-    const row=document.getElementById(elId);
-    const make=()=>arr.map(f=>`<span class="it">${f}<span class="dot">·</span></span>`).join('');
-    row.innerHTML = make()+make(); // duplicate for seamless -50% loop
-  }
-  build('m1', fields);
-  build('m2', [...fields].reverse());
-})();
+  (function(){ var nav=document.getElementById('nav'); var f=function(){ nav.classList.toggle('scrolled', window.scrollY>40); }; addEventListener('scroll',f,{passive:true}); f(); })();
 </script>
 </body>
 </html>
