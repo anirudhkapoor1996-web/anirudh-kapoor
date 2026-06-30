@@ -14,27 +14,8 @@ Required env (GitHub Actions secrets):
 Required env (repo variables or secrets):
   DRIVE_ARCHIVE_FOLDER_ID       Drive folder ID for "AKD — Posted Designs"
                                  (current value: 1vWU62Br4t93mcMENTFxaxlaslAEF6nQ3)
-
-SETUP STEPS (one-time, done in Google Cloud Console):
-  1. Create a Service Account in your Google Cloud project.
-  2. Grant it "Editor" access to the "AKD — Posted Designs" Drive folder
-     (share the folder with the service account's email address).
-  3. Create and download a JSON key for the service account.
-  4. Add the JSON key as GitHub secret GOOGLE_SERVICE_ACCOUNT_JSON.
-  5. Add DRIVE_ARCHIVE_FOLDER_ID = 1vWU62Br4t93mcMENTFxaxlaslAEF6nQ3
-     as a GitHub repository variable (or secret).
-
-Required platforms before archiving (can be adjusted below):
-  REQUIRED_MARKERS = [".posted", ".posted-fb", ".posted-li"]
-
-Optional (manual platforms -- add marker file manually in the repo to unblock):
-  Upwork:  .posted-upwork
-  Fiverr:  .posted-fiverr
-  Cowork:  .posted-cowork
-  (These are NOT required for Drive archival by default, but you can add them
-   to REQUIRED_MARKERS once you set up those workflows.)
 """
-import os, sys, json, glob, pathlib, datetime, mimetypes
+import ast, os, sys, json, glob, pathlib, datetime, mimetypes
 
 try:
     from google.oauth2 import service_account
@@ -46,7 +27,6 @@ except ImportError:
 
 # --- config -------------------------------------------------------------------
 REQUIRED_MARKERS  = [".posted", ".posted-fb", ".posted-li"]
-# Add ".posted-upwork", ".posted-fiverr", ".posted-cowork" once those are live.
 
 FOLDER_ID = os.environ.get("DRIVE_ARCHIVE_FOLDER_ID",
                             "1vWU62Br4t93mcMENTFxaxlaslAEF6nQ3")
@@ -60,12 +40,31 @@ def die(msg):
     sys.exit(1)
 
 
+def parse_service_account_json(raw):
+    """Parse service account JSON, accepting both JSON and Python dict repr."""
+    if not raw:
+        die("GOOGLE_SERVICE_ACCOUNT_JSON secret is not set or is empty.")
+    # Try standard JSON first
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        pass
+    # Fallback: try Python dict literal (handles single-quoted dicts)
+    try:
+        result = ast.literal_eval(raw)
+        if isinstance(result, dict):
+            return result
+    except (ValueError, SyntaxError):
+        pass
+    die("GOOGLE_SERVICE_ACCOUNT_JSON is not valid JSON. "
+        "Please re-paste the raw .json key file contents into the GitHub secret. "
+        "First 2 chars: " + repr(raw[:2]))
+
+
 def build_drive_service():
     if not GOOGLE_LIBS:
         die("google-api-python-client not installed. Add it to the workflow's pip install.")
-    if not SA_JSON:
-        die("GOOGLE_SERVICE_ACCOUNT_JSON secret is not set.")
-    info  = json.loads(SA_JSON)
+    info  = parse_service_account_json(SA_JSON)
     creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
     return build("drive", "v3", credentials=creds, cache_discovery=False)
 
@@ -126,12 +125,10 @@ def main():
     for ref, folder, m in archivable:
         print("Archiving %s to Google Drive..." % ref)
 
-        # Create a subfolder named "<ref> -- <title or ref>" inside the archive folder
         title    = m.get("caption", "").split("\n")[0][:60] or ref
         sub_name = "%s -- %s" % (ref, title)
         sub_id, sub_url = create_subfolder(service, sub_name, FOLDER_ID)
 
-        # Upload slides + post.json + all marker files
         uploaded = []
         for f in sorted(folder.iterdir()):
             if f.name.startswith(".DS_Store"):
