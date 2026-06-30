@@ -1,15 +1,22 @@
-name: Social Publish (IG / FB / LinkedIn)
+name: Social Publish
 
-# Posts ONE queued project per day to Instagram, the Facebook Page, and LinkedIn.
-# Each platform is independent (own .posted marker + 20h guard). Runs daily.
+# Posts any ready, un-posted project in social/<ref>/ to all platforms:
+#   Instagram (@anirudh_kapoor_designs)
+#   Facebook Page (Anirudh Kapoor Designs)
+#   LinkedIn
+# Then archives the project folder to Google Drive once all three succeed.
+#
+# Fires when slides or post.json are pushed under social/, or via Run workflow.
 
 on:
-  schedule:
-    - cron: '30 13 * * *'   # ~19:00 IST daily
+  push:
+    branches: [main]
+    paths:
+      - 'social/**'
   workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: write       # commit .posted* and .drive-archived markers back
 
 concurrency:
   group: social-publish
@@ -18,36 +25,54 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-      SITE_BASE_URL: https://anirudh-kapoor.com
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install requests
-      - name: Instagram
-        if: ${{ always() }}
+
+      - name: Install dependencies
+        run: |
+          pip install requests google-api-python-client google-auth
+
+      # -- Instagram
+      - name: Publish to Instagram
         env:
-          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_USER_ID:    ${{ secrets.IG_USER_ID }}
           IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://anirudh-kapoor.com' }}
         run: python scripts/ig_publish.py
-      - name: Facebook Page
-        if: ${{ always() }}
+
+      # -- Facebook
+      - name: Publish to Facebook
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ID:    ${{ secrets.FB_PAGE_ID }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://anirudh-kapoor.com' }}
         run: python scripts/fb_publish.py
-      - name: LinkedIn
-        if: ${{ always() }}
+
+      # -- LinkedIn
+      - name: Publish to LinkedIn
         env:
-          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_ACCESS_TOKEN:  ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_REFRESH_TOKEN: ${{ secrets.LINKEDIN_REFRESH_TOKEN }}
+          LINKEDIN_CLIENT_ID:     ${{ secrets.LINKEDIN_CLIENT_ID }}
           LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
-          LINKEDIN_VERSION: ${{ secrets.LINKEDIN_VERSION }}
+          LINKEDIN_VERSION:       ${{ vars.LINKEDIN_VERSION || '202506' }}
+          SITE_BASE_URL:          ${{ vars.SITE_BASE_URL || 'https://anirudh-kapoor.com' }}
         run: python scripts/li_publish.py
-      - name: Commit posted markers
-        if: ${{ always() }}
+
+      # -- Google Drive archival
+      - name: Archive to Google Drive
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          DRIVE_ARCHIVE_FOLDER_ID:     ${{ vars.DRIVE_ARCHIVE_FOLDER_ID || '1vWU62Br4t93mcMENTFxaxlaslAEF6nQ3' }}
+        run: python scripts/drive_archive.py
+
+      # -- Commit all markers back
+      - name: Commit posted markers and archive records
         run: |
           if [ -n "$(git status --porcelain social)" ]; then
             git config user.name "akd-bot"
