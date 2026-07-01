@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-AKD Google Drive archival — runs after all social platforms succeed.
+AKD Google Drive archival â runs after all social platforms succeed.
 
 For each project in social/<ref>/ that has been posted to ALL required
 platforms (IG + FB + LinkedIn), this script:
-  1. Uploads all slides to the "AKD — Posted Designs" folder in Google Drive.
+  1. Uploads all slides to the "AKD â Posted Designs" folder in Google Drive.
   2. Writes social/<ref>/.drive-archived with the Drive folder URL.
 
 Required env (GitHub Actions secrets):
@@ -12,7 +12,7 @@ Required env (GitHub Actions secrets):
                                  that has Editor access to the Drive folder.
 
 Required env (repo variables or secrets):
-  DRIVE_ARCHIVE_FOLDER_ID       Drive folder ID for "AKD — Posted Designs"
+  DRIVE_ARCHIVE_FOLDER_ID       Drive folder ID for "AKD â Posted Designs"
                                  (current value: 1vWU62Br4t93mcMENTFxaxlaslAEF6nQ3)
 """
 import ast, os, sys, json, glob, pathlib, datetime, mimetypes
@@ -43,6 +43,7 @@ def die(msg):
 def unescape_structural_newlines(raw):
     """
     Replace literal \\n sequences with real newlines ONLY outside JSON strings.
+    Copies \\<char> verbatim inside strings to preserve escape sequences.
     """
     result = []
     i = 0
@@ -77,67 +78,54 @@ def unescape_structural_newlines(raw):
                 i += 1
     return ''.join(result)
 
-
 def parse_service_account_json(raw):
     if not raw:
         die("GOOGLE_SERVICE_ACCOUNT_JSON secret is not set or is empty.")
 
-    # --- DEBUG: show raw header ---
-    print("DEBUG raw length = %d" % len(raw))
-    print("DEBUG raw[:6] = " + repr(raw[:6]))
-    print("DEBUG raw contains real newlines = %r" % ('\n' in raw))
-    print("DEBUG raw contains literal backslash-n = %r" % ('\\n' in raw))
-
-    # Attempt 1: standard JSON
-    a1_err = None
+    # Attempt 1: standard JSON (secret stored correctly with real newlines)
     try:
         return json.loads(raw)
-    except json.JSONDecodeError as e:
-        a1_err = "JSONDecodeError at char %d: %s" % (e.pos, e.msg)
-    except Exception as e:
-        a1_err = type(e).__name__ + ": " + str(e)
-    print("DEBUG a1 failed: " + a1_err)
+    except Exception:
+        pass
 
-    # Attempt 2: structural \\n → real newlines (parse-aware)
-    a2_err = None
+    # Attempt 2: structural \n â real newlines, parse-aware (clean \n-escaped secret)
     try:
-        cleaned = unescape_structural_newlines(raw)
-        print("DEBUG a2 cleaned[:200] = " + repr(cleaned[:200]))
-        print("DEBUG a2 cleaned contains real newlines = %r" % ('\n' in cleaned))
-        return json.loads(cleaned)
-    except json.JSONDecodeError as e:
-        a2_err = "JSONDecodeError at char %d: %s | near: %s" % (
-            e.pos, e.msg, repr(cleaned[max(0, e.pos-10):e.pos+10]))
-    except Exception as e:
-        a2_err = type(e).__name__ + ": " + str(e)
-    print("DEBUG a2 failed: " + a2_err)
+        return json.loads(unescape_structural_newlines(raw))
+    except Exception:
+        pass
 
-    # Attempt 3: try replacing ALL \\n (even inside strings) — last resort
-    a3_err = None
+    # Attempt 3: naive replace ALL \n â last resort before attempt 4
     try:
-        naive = raw.replace('\\n', '\n')
-        print("DEBUG a3 naive[:200] = " + repr(naive[:200]))
-        return json.loads(naive)
-    except json.JSONDecodeError as e:
-        a3_err = "JSONDecodeError at char %d: %s" % (e.pos, e.msg)
-    except Exception as e:
-        a3_err = type(e).__name__ + ": " + str(e)
-    print("DEBUG a3 failed: " + a3_err)
+        return json.loads(raw.replace('\\n', '\n'))
+    except Exception:
+        pass
 
-    # Attempt 4: Python dict literal
-    a4_err = None
+    # Attempt 4: secret is double-encoded â " stored as \" throughout.
+    # Un-escape \" â " first so string delimiters are restored,
+    # then unescape_structural_newlines handles the structural \n correctly.
+    try:
+        unquoted = raw.replace('\\"', '"')
+        return json.loads(unescape_structural_newlines(unquoted))
+    except Exception:
+        pass
+
+    # Attempt 5: double-encoded + naive \n replacement
+    try:
+        return json.loads(raw.replace('\\"', '"').replace('\\n', '\n'))
+    except Exception:
+        pass
+
+    # Attempt 6: Python dict literal
     try:
         result = ast.literal_eval(raw)
         if isinstance(result, dict):
             return result
-    except (ValueError, SyntaxError) as e:
-        a4_err = str(e)
-    print("DEBUG a4 failed: " + str(a4_err))
+    except Exception:
+        pass
 
     die(
-        "GOOGLE_SERVICE_ACCOUNT_JSON could not be parsed after 4 attempts. "
-        "a1=" + str(a1_err) + " | a2=" + str(a2_err) + " | "
-        "Re-paste the raw .json key file into the GitHub secret."
+        "GOOGLE_SERVICE_ACCOUNT_JSON could not be parsed after 6 attempts. "
+        "Please re-paste the raw .json key file into the GitHub secret."
     )
 
 
