@@ -40,13 +40,61 @@ def die(msg):
     sys.exit(1)
 
 
+def unescape_structural_newlines(raw):
+    """
+    Replace literal \\n sequences with real newlines ONLY outside JSON strings.
+
+    When a service-account JSON file is pasted into a secret via a tool that
+    escapes line-endings, structural newlines become the two-char sequence
+    backslash+n.  The private_key field already contains backslash+n as valid
+    JSON string escapes (meaning newline in the PEM key).  A naive global
+    replace breaks those escapes; this function is parse-aware so it only
+    replaces structural ones (outside quoted strings).
+    """
+    result = []
+    i = 0
+    in_string = False
+    while i < len(raw):
+        ch = raw[i]
+        if in_string:
+            if ch == '\\':
+                # Escape sequence — copy both chars verbatim
+                result.append(ch)
+                if i + 1 < len(raw):
+                    result.append(raw[i + 1])
+                    i += 2
+                else:
+                    i += 1
+            elif ch == '"':
+                in_string = False
+                result.append(ch)
+                i += 1
+            else:
+                result.append(ch)
+                i += 1
+        else:
+            if ch == '"':
+                in_string = True
+                result.append(ch)
+                i += 1
+            elif ch == '\\' and i + 1 < len(raw) and raw[i + 1] == 'n':
+                # Structural \n → real newline
+                result.append('\n')
+                i += 2
+            else:
+                result.append(ch)
+                i += 1
+    return ''.join(result)
+
+
 def parse_service_account_json(raw):
     """
-    Parse the service account JSON secret, handling common storage artefacts:
-      1. Correct JSON  (ideal)
-      2. Double-escaped: literal \\n instead of real newlines — happens when
-         someone pastes through a tool that escapes line endings
-      3. Python dict repr with single quotes
+    Parse the service account JSON secret, accepting common storage artefacts.
+
+    Attempt 1: standard JSON (ideal case).
+    Attempt 2: structural newlines stored as literal \\n sequences — fixed by
+               a parse-aware replacement that leaves \\n inside strings intact.
+    Attempt 3: Python dict literal with single-quoted keys/values.
     """
     if not raw:
         die("GOOGLE_SERVICE_ACCOUNT_JSON secret is not set or is empty.")
@@ -57,12 +105,9 @@ def parse_service_account_json(raw):
     except json.JSONDecodeError:
         pass
 
-    # Attempt 2: replace literal \n / \t / \r with real whitespace, then JSON
+    # Attempt 2: structural \\n → real newlines (parse-aware, preserves string escapes)
     try:
-        cleaned = (raw
-                   .replace('\\n', '\n')
-                   .replace('\\t', '\t')
-                   .replace('\\r', '\r'))
+        cleaned = unescape_structural_newlines(raw)
         return json.loads(cleaned)
     except json.JSONDecodeError:
         pass
@@ -75,9 +120,11 @@ def parse_service_account_json(raw):
     except (ValueError, SyntaxError):
         pass
 
-    die("GOOGLE_SERVICE_ACCOUNT_JSON could not be parsed after 3 attempts. "
+    die(
+        "GOOGLE_SERVICE_ACCOUNT_JSON could not be parsed after 3 attempts. "
         "First 4 chars: " + repr(raw[:4]) + ". "
-        "Please re-paste the raw .json key file content into the GitHub secret.")
+        "Please re-paste the raw .json key file content into the GitHub secret."
+    )
 
 
 def build_drive_service():
