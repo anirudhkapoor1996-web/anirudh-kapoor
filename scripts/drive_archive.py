@@ -43,13 +43,6 @@ def die(msg):
 def unescape_structural_newlines(raw):
     """
     Replace literal \\n sequences with real newlines ONLY outside JSON strings.
-
-    When a service-account JSON file is pasted into a secret via a tool that
-    escapes line-endings, structural newlines become the two-char sequence
-    backslash+n.  The private_key field already contains backslash+n as valid
-    JSON string escapes (meaning newline in the PEM key).  A naive global
-    replace breaks those escapes; this function is parse-aware so it only
-    replaces structural ones (outside quoted strings).
     """
     result = []
     i = 0
@@ -58,7 +51,6 @@ def unescape_structural_newlines(raw):
         ch = raw[i]
         if in_string:
             if ch == '\\':
-                # Escape sequence — copy both chars verbatim
                 result.append(ch)
                 if i + 1 < len(raw):
                     result.append(raw[i + 1])
@@ -78,7 +70,6 @@ def unescape_structural_newlines(raw):
                 result.append(ch)
                 i += 1
             elif ch == '\\' and i + 1 < len(raw) and raw[i + 1] == 'n':
-                # Structural \n → real newline
                 result.append('\n')
                 i += 2
             else:
@@ -88,42 +79,65 @@ def unescape_structural_newlines(raw):
 
 
 def parse_service_account_json(raw):
-    """
-    Parse the service account JSON secret, accepting common storage artefacts.
-
-    Attempt 1: standard JSON (ideal case).
-    Attempt 2: structural newlines stored as literal \\n sequences — fixed by
-               a parse-aware replacement that leaves \\n inside strings intact.
-    Attempt 3: Python dict literal with single-quoted keys/values.
-    """
     if not raw:
         die("GOOGLE_SERVICE_ACCOUNT_JSON secret is not set or is empty.")
 
+    # --- DEBUG: show raw header ---
+    print("DEBUG raw length = %d" % len(raw))
+    print("DEBUG raw[:6] = " + repr(raw[:6]))
+    print("DEBUG raw contains real newlines = %r" % ('\n' in raw))
+    print("DEBUG raw contains literal backslash-n = %r" % ('\\n' in raw))
+
     # Attempt 1: standard JSON
+    a1_err = None
     try:
         return json.loads(raw)
-    except json.JSONDecodeError:
-        pass
+    except json.JSONDecodeError as e:
+        a1_err = "JSONDecodeError at char %d: %s" % (e.pos, e.msg)
+    except Exception as e:
+        a1_err = type(e).__name__ + ": " + str(e)
+    print("DEBUG a1 failed: " + a1_err)
 
-    # Attempt 2: structural \\n → real newlines (parse-aware, preserves string escapes)
+    # Attempt 2: structural \\n → real newlines (parse-aware)
+    a2_err = None
     try:
         cleaned = unescape_structural_newlines(raw)
+        print("DEBUG a2 cleaned[:200] = " + repr(cleaned[:200]))
+        print("DEBUG a2 cleaned contains real newlines = %r" % ('\n' in cleaned))
         return json.loads(cleaned)
-    except json.JSONDecodeError:
-        pass
+    except json.JSONDecodeError as e:
+        a2_err = "JSONDecodeError at char %d: %s | near: %s" % (
+            e.pos, e.msg, repr(cleaned[max(0, e.pos-10):e.pos+10]))
+    except Exception as e:
+        a2_err = type(e).__name__ + ": " + str(e)
+    print("DEBUG a2 failed: " + a2_err)
 
-    # Attempt 3: Python dict literal (single-quoted keys/values)
+    # Attempt 3: try replacing ALL \\n (even inside strings) — last resort
+    a3_err = None
+    try:
+        naive = raw.replace('\\n', '\n')
+        print("DEBUG a3 naive[:200] = " + repr(naive[:200]))
+        return json.loads(naive)
+    except json.JSONDecodeError as e:
+        a3_err = "JSONDecodeError at char %d: %s" % (e.pos, e.msg)
+    except Exception as e:
+        a3_err = type(e).__name__ + ": " + str(e)
+    print("DEBUG a3 failed: " + a3_err)
+
+    # Attempt 4: Python dict literal
+    a4_err = None
     try:
         result = ast.literal_eval(raw)
         if isinstance(result, dict):
             return result
-    except (ValueError, SyntaxError):
-        pass
+    except (ValueError, SyntaxError) as e:
+        a4_err = str(e)
+    print("DEBUG a4 failed: " + str(a4_err))
 
     die(
-        "GOOGLE_SERVICE_ACCOUNT_JSON could not be parsed after 3 attempts. "
-        "First 4 chars: " + repr(raw[:4]) + ". "
-        "Please re-paste the raw .json key file content into the GitHub secret."
+        "GOOGLE_SERVICE_ACCOUNT_JSON could not be parsed after 4 attempts. "
+        "a1=" + str(a1_err) + " | a2=" + str(a2_err) + " | "
+        "Re-paste the raw .json key file into the GitHub secret."
     )
 
 
