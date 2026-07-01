@@ -3,7 +3,7 @@
 AKD Google Drive archival — runs after all social platforms succeed.
 
 For each project in social/<ref>/ that has been posted to ALL required
-platforms (IG + FB + LinkedIn + site), this script:
+platforms (IG + FB + LinkedIn), this script:
   1. Uploads all slides to the "AKD — Posted Designs" folder in Google Drive.
   2. Writes social/<ref>/.drive-archived with the Drive folder URL.
 
@@ -26,7 +26,7 @@ except ImportError:
     GOOGLE_LIBS = False
 
 # --- config -------------------------------------------------------------------
-REQUIRED_MARKERS  = [".posted", ".posted-fb", ".posted-li"]
+REQUIRED_MARKERS = [".posted", ".posted-fb", ".posted-li"]
 
 FOLDER_ID = os.environ.get("DRIVE_ARCHIVE_FOLDER_ID",
                             "1vWU62Br4t93mcMENTFxaxlaslAEF6nQ3")
@@ -41,29 +41,48 @@ def die(msg):
 
 
 def parse_service_account_json(raw):
-    """Parse service account JSON, accepting both JSON and Python dict repr."""
+    """
+    Parse the service account JSON secret, handling common storage artefacts:
+      1. Correct JSON  (ideal)
+      2. Double-escaped: literal \\n instead of real newlines — happens when
+         someone pastes through a tool that escapes line endings
+      3. Python dict repr with single quotes
+    """
     if not raw:
         die("GOOGLE_SERVICE_ACCOUNT_JSON secret is not set or is empty.")
-    # Try standard JSON first
+
+    # Attempt 1: standard JSON
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
         pass
-    # Fallback: try Python dict literal (handles single-quoted dicts)
+
+    # Attempt 2: replace literal \n / \t / \r with real whitespace, then JSON
+    try:
+        cleaned = (raw
+                   .replace('\\n', '\n')
+                   .replace('\\t', '\t')
+                   .replace('\\r', '\r'))
+        return json.loads(cleaned)
+    except json.JSONDecodeError:
+        pass
+
+    # Attempt 3: Python dict literal (single-quoted keys/values)
     try:
         result = ast.literal_eval(raw)
         if isinstance(result, dict):
             return result
     except (ValueError, SyntaxError):
         pass
-    die("GOOGLE_SERVICE_ACCOUNT_JSON is not valid JSON. "
-        "Please re-paste the raw .json key file contents into the GitHub secret. "
-        "First 2 chars: " + repr(raw[:2]))
+
+    die("GOOGLE_SERVICE_ACCOUNT_JSON could not be parsed after 3 attempts. "
+        "First 4 chars: " + repr(raw[:4]) + ". "
+        "Please re-paste the raw .json key file content into the GitHub secret.")
 
 
 def build_drive_service():
     if not GOOGLE_LIBS:
-        die("google-api-python-client not installed. Add it to the workflow's pip install.")
+        die("google-api-python-client not installed.")
     info  = parse_service_account_json(SA_JSON)
     creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
     return build("drive", "v3", credentials=creds, cache_discovery=False)
@@ -80,13 +99,13 @@ def create_subfolder(service, name, parent_id):
 
 
 def upload_file(service, local_path, parent_id):
-    name     = local_path.name
-    mime, _  = mimetypes.guess_type(str(local_path))
-    mime     = mime or "application/octet-stream"
-    media    = MediaFileUpload(str(local_path), mimetype=mime, resumable=True)
-    meta     = {"name": name, "parents": [parent_id]}
-    f        = service.files().create(body=meta, media_body=media,
-                                       fields="id").execute()
+    name    = local_path.name
+    mime, _ = mimetypes.guess_type(str(local_path))
+    mime    = mime or "application/octet-stream"
+    media   = MediaFileUpload(str(local_path), mimetype=mime, resumable=True)
+    meta    = {"name": name, "parents": [parent_id]}
+    f       = service.files().create(body=meta, media_body=media,
+                                      fields="id").execute()
     return f["id"]
 
 
@@ -135,7 +154,7 @@ def main():
                 continue
             if f.is_file():
                 fid = upload_file(service, f, sub_id)
-                uploaded.append({"file": f.name, "drive_id": fid})
+                uploaded.append(f.name)
                 print("  uploaded %s" % f.name)
 
         record = {
@@ -145,8 +164,8 @@ def main():
             "ref":              ref,
             "files_uploaded":   len(uploaded),
         }
-        (folder / ".drive-archived").write_text(json.dumps(record, indent=2),
-                                                  encoding="utf-8")
+        (folder / ".drive-archived").write_text(
+            json.dumps(record, indent=2), encoding="utf-8")
         print("ARCHIVED %s -> Drive: %s" % (ref, sub_url))
 
     print("Drive archival complete.")
