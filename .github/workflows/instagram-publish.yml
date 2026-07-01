@@ -65,7 +65,10 @@ jobs:
         run: python scripts/li_publish.py
 
       # -- Google Drive archival
+      # Runs even if a publishing step failed — drive_archive.py only archives
+      # projects that have ALL required markers (.posted + .posted-fb + .posted-li).
       - name: Archive to Google Drive
+        if: always()
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           DRIVE_ARCHIVE_FOLDER_ID:     ${{ vars.DRIVE_ARCHIVE_FOLDER_ID || '1vWU62Br4t93mcMENTFxaxlaslAEF6nQ3' }}
@@ -73,6 +76,7 @@ jobs:
 
       # -- Commit all markers back
       - name: Commit posted markers and archive records
+        if: always()
         run: |
           if [ -n "$(git status --porcelain social)" ]; then
             git config user.name "akd-bot"
