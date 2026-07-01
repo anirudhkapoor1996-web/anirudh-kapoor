@@ -7,9 +7,15 @@ platforms (IG + FB + LinkedIn), this script:
   1. Uploads all slides to the "AKD - Posted Designs" folder in Google Drive.
   2. Writes social/<ref>/.drive-archived with the Drive folder URL.
 
-Required env (GitHub Actions secrets):
-  GOOGLE_SERVICE_ACCOUNT_JSON   JSON key for a Google Service Account
-                                 that has Editor access to the Drive folder.
+Auth (checked in order):
+  GOOGLE_OAUTH_REFRESH_TOKEN + GOOGLE_OAUTH_CLIENT_ID + GOOGLE_OAUTH_CLIENT_SECRET
+      OAuth2 user credentials - REQUIRED for personal Google Drive.
+      Service accounts have no storage quota on personal Drive.
+      Get these once with scripts/get_drive_token.py, store as GitHub secrets.
+
+  GOOGLE_SERVICE_ACCOUNT_JSON (fallback)
+      Service account JSON key - only works if the target folder is a
+      Shared Drive where the SA is a member. Will fail on personal Drive.
 
 Required env (repo variables or secrets):
   DRIVE_ARCHIVE_FOLDER_ID       Drive folder ID for "AKD - Posted Designs"
@@ -148,6 +154,32 @@ def parse_service_account_json(raw):
 def build_drive_service():
     if not GOOGLE_LIBS:
         die("google-api-python-client not installed.")
+
+    # --- Prefer OAuth2 user credentials -----------------------------------
+    # Service accounts cannot upload to personal Drive (no storage quota).
+    # Use OAuth2 refresh token (Anirudh's real account) instead.
+    refresh_token = os.environ.get("GOOGLE_OAUTH_REFRESH_TOKEN", "").strip()
+    client_id     = os.environ.get("GOOGLE_OAUTH_CLIENT_ID", "").strip()
+    client_secret = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET", "").strip()
+
+    if refresh_token and client_id and client_secret:
+        from google.oauth2.credentials import Credentials as OAuthCreds
+        from google.auth.transport.requests import Request as GoogleRequest
+        creds = OAuthCreds(
+            token=None,
+            refresh_token=refresh_token,
+            token_uri="https://oauth2.googleapis.com/token",
+            client_id=client_id,
+            client_secret=client_secret,
+            scopes=SCOPES,
+        )
+        creds.refresh(GoogleRequest())
+        print("Auth: OAuth2 user credentials (personal Drive upload OK).")
+        return build("drive", "v3", credentials=creds, cache_discovery=False)
+
+    # --- Fallback: service account ----------------------------------------
+    # Works only if DRIVE_ARCHIVE_FOLDER_ID is a Shared Drive the SA joined.
+    print("Auth: service account (personal Drive uploads will fail - set OAuth secrets).")
     info  = parse_service_account_json(SA_JSON)
     creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
     return build("drive", "v3", credentials=creds, cache_discovery=False)
