@@ -79,6 +79,19 @@ jobs:
           GOOGLE_OAUTH_REFRESH_TOKEN:   ${{ secrets.GOOGLE_OAUTH_REFRESH_TOKEN }}
         run: python scripts/drive_archive.py
 
+      # -- Clean up local slide files once archived to Drive
+      # Keeps post.json and all .posted*/.drive-archived markers so the
+      # "already posted" bookkeeping is never lost -- only the heavy
+      # image files are removed, freeing repo/local storage.
+      - name: Clean up local copies of archived projects
+        if: always()
+        run: |
+          for d in social/A-*/; do
+            if [ -f "${d}.drive-archived" ]; then
+              find "$d" -maxdepth 1 -type f \( -iname 'slide-*.jpg' -o -iname 'slide-*.jpeg' -o -iname 'slide-*.png' \) -delete
+            fi
+          done
+
       # -- Commit all markers back
       - name: Commit posted markers and archive records
         if: always()
