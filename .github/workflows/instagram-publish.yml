@@ -13,6 +13,8 @@ on:
     branches: [main]
     paths:
       - 'social/**'
+  schedule:
+      - cron: '30 13 * * *' # ~19:00 IST daily
   workflow_dispatch: {}
 
 permissions:
