@@ -52,7 +52,7 @@
 
   /* main, vertically centred */
   main{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(22px,4vh,46px);min-height:0;
-    padding:clamp(26px,5vh,58px) 0;}
+    padding:clamp(14px,2.6vh,30px) 0;}
 
   .intro h1{font-family:var(--display);font-weight:300;font-size:clamp(32px,4.2vw,58px);line-height:.98;letter-spacing:-.01em;margin-top:12px;}
   .intro h1 em{font-style:italic;color:var(--sage);}
@@ -62,9 +62,9 @@
   .vlabel .num{font-family:var(--mono);color:var(--ink-soft);}
 
   /* three tiles per row on desktop, two on tablet, one on phone */
-  .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.5vw,26px);}
-  .vcard{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-radius:2px;
-    padding:clamp(18px,1.8vw,28px);background:color-mix(in oklch,var(--panel) 50%,transparent);
+  .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.3vw,22px);}
+  .vcard{display:flex;flex-direction:column;gap:7px;border:1px solid var(--line);border-radius:2px;
+    padding:clamp(16px,1.6vw,24px);background:color-mix(in oklch,var(--panel) 50%,transparent);
     transition:background .3s,border-color .3s,transform .3s;}
   .vcard:hover{background:var(--panel);border-color:var(--sage);transform:translateY(-3px);}
   .vcard .vkick{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
