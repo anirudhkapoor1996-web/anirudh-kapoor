@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anirudh Kapoor — Designer, Builder, Writer</title>
-<meta name="description" content="Anirudh Kapoor — designer, builder, and writer in Gurgaon. One method across several ventures: a design studio, a curated export house, an independent real-estate advisory, an original music project, a podcast, and a review project.">
+<meta name="description" content="Anirudh Kapoor — designer, builder, and writer in Gurgaon. One method across several ventures: a design studio, an iOS product, a curated export house, an independent real-estate advisory, an original music project, a podcast, and a review project.">
 <meta name="theme-color" content="#ece9e3">
 <meta property="og:title" content="Anirudh Kapoor — Designer, Builder, Writer">
 <meta property="og:description" content="One method, several ventures.">
@@ -24,16 +24,15 @@
     --sans:'Archivo','Helvetica Neue',Helvetica,sans-serif; --mono:'IBM Plex Mono',monospace;
   }
   *{box-sizing:border-box;}
-  html,body{height:100%;}
   html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);overflow:hidden;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);}
   ::selection{background:var(--sage);color:var(--paper);}
   a{color:inherit;text-decoration:none;}
   img{display:block;max-width:100%;}
   em,i{font-style:italic;}
   h1,h2{margin:0;font-weight:400;}
 
-  .page{position:relative;height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+  .page{position:relative;min-height:100dvh;display:flex;flex-direction:column;
     padding:clamp(20px,3.2vh,40px) clamp(24px,5vw,60px);}
   .page>*{position:relative;z-index:1;}
 
@@ -51,26 +50,29 @@
   .bar .links a{transition:color .25s;}
   .bar .links a:hover{color:var(--sage);}
 
-  /* main, vertically centred, no scroll */
-  main{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(22px,4vh,46px);min-height:0;}
+  /* main, vertically centred */
+  main{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(22px,4vh,46px);min-height:0;
+    padding:clamp(26px,5vh,58px) 0;}
 
   .intro h1{font-family:var(--display);font-weight:300;font-size:clamp(32px,4.2vw,58px);line-height:.98;letter-spacing:-.01em;margin-top:12px;}
   .intro h1 em{font-style:italic;color:var(--sage);}
   .intro .tag{font-family:var(--serif);font-weight:300;font-size:clamp(16px,1.6vw,21px);line-height:1.5;color:var(--ink-2);max-width:46ch;margin-top:14px;}
 
-  .vlabel{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);display:flex;gap:14px;align-items:baseline;margin-bottom:14px;}
+  .vlabel{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);display:flex;gap:14px;align-items:baseline;margin-bottom:18px;}
   .vlabel .num{font-family:var(--mono);color:var(--ink-soft);}
-  .vrow{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.1vw,18px);}
-  .vcard{display:flex;flex-direction:column;gap:7px;border:1px solid var(--line);border-radius:2px;
-    padding:clamp(14px,1.4vw,22px);background:color-mix(in oklch,var(--panel) 50%,transparent);
+
+  /* three tiles per row on desktop, two on tablet, one on phone */
+  .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.5vw,26px);}
+  .vcard{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-radius:2px;
+    padding:clamp(18px,1.8vw,28px);background:color-mix(in oklch,var(--panel) 50%,transparent);
     transition:background .3s,border-color .3s,transform .3s;}
   .vcard:hover{background:var(--panel);border-color:var(--sage);transform:translateY(-3px);}
   .vcard .vkick{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
-  .vcard h2{font-family:var(--display);font-weight:400;font-size:clamp(21px,1.9vw,28px);line-height:1.0;letter-spacing:-.01em;}
+  .vcard h2{font-family:var(--display);font-weight:400;font-size:clamp(24px,2.2vw,32px);line-height:1.0;letter-spacing:-.01em;}
   .vcard h2 em{font-style:italic;color:var(--sage);}
-  .vcard p{font-family:var(--serif);font-size:13.5px;line-height:1.4;color:var(--ink-2);margin:2px 0 0;flex:1 1 auto;}
-  .vcard .enter,.vcard .links2 a{font-family:var(--mono);font-size:11.5px;color:var(--sage);display:inline-flex;align-items:center;gap:7px;margin-top:6px;}
-  .vcard .links2{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;}
+  .vcard p{font-family:var(--serif);font-size:14.5px;line-height:1.45;color:var(--ink-2);margin:2px 0 0;flex:1 1 auto;max-width:34ch;}
+  .vcard .enter,.vcard .links2 a{font-family:var(--mono);font-size:11.5px;color:var(--sage);display:inline-flex;align-items:center;gap:7px;margin-top:8px;}
+  .vcard .links2{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;}
   .vcard .links2 a{margin-top:0;}
   .vcard .links2 a:hover{color:var(--ink);}
   .vcard .enter .ar{transition:transform .25s;}
@@ -85,15 +87,13 @@
   .foot a:hover{color:var(--sage);}
   .foot .loc{font-family:var(--mono);letter-spacing:.02em;color:var(--ink-soft);}
 
-  /* narrower / shorter screens: wrap and allow scroll instead of clipping */
+  /* tablet: two per row */
   @media (max-width:1180px){
-    body{overflow:auto;}
-    .page{height:auto;min-height:100dvh;overflow:visible;}
     .vrow{grid-template-columns:repeat(2,1fr);}
     .wm-bg{height:60vh;right:-16vw;opacity:.05;}
   }
+  /* phone: one per row */
   @media (max-width:600px){ .vrow{grid-template-columns:1fr;} }
-  @media (max-height:560px){ body{overflow:auto;} .page{height:auto;overflow:visible;} }
 </style>
 </head>
 <body>
@@ -117,7 +117,7 @@
     </div>
 
     <section>
-      <div class="vlabel"><span class="num">01 — 06</span><span>The Ventures</span></div>
+      <div class="vlabel"><span class="num">01 — 07</span><span>The Ventures</span></div>
       <div class="vrow">
 
         <a class="vcard" href="/design/">
@@ -125,6 +125,13 @@
           <h2>Art and Design <em>Consultancy</em></h2>
           <p>Spaces, objects, language &amp; systems — one curiosity, many materials.</p>
           <span class="enter">Enter the studio <span class="ar">→</span></span>
+        </a>
+
+        <a class="vcard" href="/khao/">
+          <span class="vkick">Software</span>
+          <h2><em>Khao</em></h2>
+          <p>An iOS app that helps you decide what to eat — designed, built and shipped solo to the App Store.</p>
+          <span class="enter">Enter Khao <span class="ar">→</span></span>
         </a>
 
         <a class="vcard" href="/exports/">
