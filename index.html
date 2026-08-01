@@ -32,7 +32,10 @@
   em,i{font-style:italic;}
   h1,h2{margin:0;font-weight:400;}
 
-  .page{position:relative;min-height:100dvh;display:flex;flex-direction:column;
+  /* overflow-x:clip — the watermark below sits at right:-2vw and was dragging the
+     whole page sideways (44px on a 390px phone). clip, not hidden: hidden would make
+     this a scroll container and cost us the sticky/anchor behaviour for nothing. */
+  .page{position:relative;min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip;
     padding:clamp(20px,3.2vh,40px) clamp(24px,5vw,60px);}
   .page>*{position:relative;z-index:1;}
 
