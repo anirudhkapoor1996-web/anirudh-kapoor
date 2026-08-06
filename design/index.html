@@ -76,7 +76,7 @@
   </div>
 
   <a class="cfig" href="/khao/">
-    <div class="media"><div class="plate"><span class="cap">PRODUCT — KHAO, ONE DISH AT A TIME</span></div></div>
+    <div class="media"><div class="plate"><img src="/assets/projects/A-08/hero.jpg" alt="Khao — the dish-first food app" style="width:100%;height:100%;object-fit:cover;display:block;"></div></div>
     <div class="scrim"></div>
     <div class="info">
       <div>
@@ -89,7 +89,7 @@
   </a>
 
   <a class="cfig" href="/Project — House of Ming.html">
-    <div class="media"><div class="plate"><span class="cap">ARTWORK — HOUSE OF MING, TAJ MANSINGH</span></div></div>
+    <div class="media"><div class="plate"><img src="/assets/projects/A-01/hero.jpg" alt="House of Ming — Taj Mansingh" style="width:100%;height:100%;object-fit:cover;display:block;"></div></div>
     <div class="scrim"></div>
     <div class="info">
       <div>
@@ -132,8 +132,8 @@
 <section class="windex wrap" id="index">
   <div class="opener rv"><span class="num">02</span><span>The Archive · Selected Index</span></div>
   <div class="wlist" id="wlist">
-    <a class="wrow" href="/khao/" data-img="PRODUCT — KHAO, iOS APP"><span class="n">A·08</span><span class="t"><em>Khao</em></span><span class="d">Product &amp; Software · 2026</span></a>
-    <a class="wrow" href="/Project — House of Ming.html" data-img="ARTWORK — HOUSE OF MING"><span class="n">A·01</span><span class="t">House of <em>Ming</em></span><span class="d">Artwork · 2018</span></a>
+    <a class="wrow" href="/khao/" data-img="PRODUCT — KHAO, iOS APP" data-pic="/assets/projects/A-08/hero.jpg"><span class="n">A·08</span><span class="t"><em>Khao</em></span><span class="d">Product &amp; Software · 2026</span></a>
+    <a class="wrow" href="/Project — House of Ming.html" data-img="ARTWORK — HOUSE OF MING" data-pic="/assets/projects/A-01/hero.jpg"><span class="n">A·01</span><span class="t">House of <em>Ming</em></span><span class="d">Artwork · 2018</span></a>
     <a class="wrow" href="#" data-img="WORKPLACE — TECH OFFICES"><span class="n">A·02</span><span class="t">The Tech <em>Offices</em></span><span class="d">Interiors · 2016</span></a>
     <a class="wrow" href="#" data-img="SYSTEMS — AI WORKFLOWS"><span class="n">A·03</span><span class="t">Systems that <em>compound</em></span><span class="d">AI · 2025</span></a>
     <a class="wrow" href="#" data-img="PRODUCT — CAST BRASS"><span class="n">A·04</span><span class="t">The Cast Brass <em>Series</em></span><span class="d">Product · 2025</span></a>
@@ -279,8 +279,14 @@ const HTML = document.documentElement;
   if(matchMedia('(hover:none)').matches) return;
   let raf=null, tx=0, ty=0, cx=0, cy=0;
   function loop(){ cx+=(tx-cx)*0.16; cy+=(ty-cy)*0.16; prev.style.left=cx+'px'; prev.style.top=cy+'px'; raf=requestAnimationFrame(loop); }
+  var pplate=prev.querySelector('.plate');
+  var pimg=document.createElement('img');
+  pimg.style.cssText='width:100%;height:100%;object-fit:cover;display:block;';
   list.querySelectorAll('.wrow').forEach(row=>{
-    row.addEventListener('mouseenter', ()=>{ cap.textContent=row.dataset.img||''; prev.classList.add('show'); list.parentElement.classList.add('has-hover'); if(!raf)loop(); });
+    row.addEventListener('mouseenter', ()=>{ var pic=row.dataset.pic;
+      if(pic){ pimg.src=pic; if(!pimg.parentNode) pplate.insertBefore(pimg, cap); cap.style.display='none'; }
+      else { if(pimg.parentNode) pimg.remove(); cap.style.display=''; }
+      cap.textContent=row.dataset.img||''; prev.classList.add('show'); list.parentElement.classList.add('has-hover'); if(!raf)loop(); });
     row.addEventListener('mouseleave', ()=>{ prev.classList.remove('show'); list.parentElement.classList.remove('has-hover'); });
   });
   addEventListener('mousemove', e=>{ tx=e.clientX; ty=e.clientY; }, {passive:true});
