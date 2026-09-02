@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khao — Support — Anirudh Kapoor</title>
+<meta name="description" content="Support for Khao, the iOS app that helps you decide what to eat. A self-guided troubleshooter, and a working support address, from Anirudh Kapoor.">
+<meta name="theme-color" content="#ece9e3">
+<link rel="stylesheet" href="../assets/home.css">
+<link rel="stylesheet" href="../assets/project.css">
+<link rel="icon" type="image/png" href="../assets/logo-ink.png">
+
+<style>
+/* =========================================================
+   SUPPORT PAGE — additions only.
+   Everything else comes from home.css + project.css.
+   ========================================================= */
+
+/* email shown plainly, and readable at 360px */
+.p-meta dd.addr{ font-family:var(--mono); font-size:13px; line-height:1.45; overflow-wrap:anywhere; }
+.mailplain{ font-family:var(--mono); font-size:clamp(15px,2.4vw,20px); color:var(--sage);
+  border-bottom:1px solid var(--line-strong); padding-bottom:3px; overflow-wrap:anywhere; }
+.mailplain:hover,.mailplain:focus-visible{ color:var(--ink); }
+.contactcard{ border-top:1px solid var(--line-strong); margin-top:34px; padding-top:26px;
+  display:grid; grid-template-columns:150px 1fr; gap:12px 24px; }
+.contactcard dt{ font-family:var(--sans); font-size:12px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--sage); padding-top:3px; }
+.contactcard dd{ margin:0; font-size:17px; color:var(--ink-2); }
+
+/* ---- troubleshooter ---- */
+.tb{ margin-top:34px; }
+.tb-stage{ background:var(--panel); border:1px solid var(--line-strong); padding:30px 32px; }
+.tb-step{ font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--sage); margin-bottom:14px; }
+.tb-q{ font-family:var(--display); font-weight:400; font-size:clamp(23px,3vw,32px); line-height:1.12;
+  letter-spacing:-.005em; margin:0; color:var(--ink); max-width:26ch; }
+.tb-q:focus{ outline:none; }
+.tb-q:focus-visible{ outline:2px solid var(--sage); outline-offset:6px; }
+.tb-note{ font-size:16.5px; line-height:1.55; color:var(--ink-2); max-width:58ch; margin:14px 0 0; }
+.tb-opts{ display:grid; gap:9px; margin-top:24px; }
+.tb-opt{ display:block; width:100%; text-align:left; font-family:var(--serif); font-size:17px;
+  line-height:1.4; color:var(--ink); background:var(--paper); border:1px solid var(--line-strong);
+  padding:15px 18px; cursor:pointer; transition:background .18s, color .18s, border-color .18s; }
+.tb-opt:hover{ background:var(--sage); color:var(--paper); border-color:var(--sage); }
+.tb-opt:focus-visible{ outline:2px solid var(--sage); outline-offset:3px; }
+
+/* free-text question */
+.tb-field{ margin-top:22px; }
+.tb-field label{ display:block; font-family:var(--sans); font-size:12px; font-weight:600;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--sage); margin-bottom:9px; }
+.tb-field input,.tb-field textarea{ width:100%; font-family:var(--serif); font-size:17px;
+  color:var(--ink); background:var(--paper); border:1px solid var(--line-strong); padding:13px 15px; }
+.tb-field textarea{ min-height:110px; resize:vertical; line-height:1.5; }
+.tb-field input:focus-visible,.tb-field textarea:focus-visible{ outline:2px solid var(--sage); outline-offset:2px; }
+.tb-hint{ font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); margin-top:8px; }
+
+/* outcome */
+.tb-checks{ list-style:none; margin:22px 0 0; padding:0; counter-reset:c; }
+.tb-checks li{ font-size:16.5px; line-height:1.55; color:var(--ink-2); padding:13px 0 13px 40px;
+  border-top:1px solid var(--line); position:relative; }
+.tb-checks li::before{ counter-increment:c; content:counter(c,decimal-leading-zero);
+  position:absolute; left:0; top:15px; font-family:var(--mono); font-size:11px; color:var(--sage); }
+.tb-honest{ font-family:var(--serif); font-weight:300; font-size:17.5px; line-height:1.5; color:var(--ink);
+  border-left:2px solid var(--sage); padding-left:22px; margin:28px 0 0; max-width:52ch; }
+
+/* report */
+.tb-reportwrap{ margin-top:34px; border-top:1px solid var(--line-strong); padding-top:26px; }
+.tb-fields{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.tb-fields .tb-field{ margin-top:0; }
+.tb-report{ width:100%; min-height:300px; margin-top:20px; font-family:var(--mono); font-size:12px;
+  line-height:1.6; color:var(--ink); background:var(--paper); border:1px solid var(--line-strong);
+  padding:16px; resize:vertical; white-space:pre; overflow:auto; }
+.tb-report:focus-visible{ outline:2px solid var(--sage); outline-offset:2px; }
+.tb-actions{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:18px; }
+.tb-btn{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+  padding:13px 22px; border:1px solid var(--sage); background:var(--sage); color:var(--paper);
+  cursor:pointer; transition:background .18s, color .18s; }
+.tb-btn:hover{ background:var(--ink); border-color:var(--ink); }
+.tb-btn.ghost{ background:transparent; color:var(--sage); border-color:var(--line-strong); }
+.tb-btn.ghost:hover{ background:var(--sage); color:var(--paper); border-color:var(--sage); }
+.tb-btn:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+.tb-status{ font-family:var(--mono); font-size:11.5px; color:var(--sage); }
+
+/* trail + controls */
+.tb-bar{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+  margin-top:16px; }
+.tb-trail{ font-family:var(--mono); font-size:11.5px; line-height:1.6; color:var(--ink-soft);
+  margin:0; padding:0; list-style:none; max-width:62ch; }
+.tb-trail li{ padding-left:16px; position:relative; }
+.tb-trail li::before{ content:'›'; position:absolute; left:0; color:var(--sage); }
+.tb-mini{ display:flex; gap:10px; flex-wrap:wrap; }
+.tb-mini button{ font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+  background:none; border:0; border-bottom:1px solid var(--line-strong); color:var(--ink-soft);
+  padding:3px 1px; cursor:pointer; }
+.tb-mini button:hover{ color:var(--sage); border-bottom-color:var(--sage); }
+.tb-mini button:focus-visible{ outline:2px solid var(--sage); outline-offset:3px; }
+
+.skip{ position:absolute; left:-9999px; top:0; background:var(--ink); color:var(--paper);
+  font-family:var(--mono); font-size:12px; padding:12px 18px; z-index:200; }
+.skip:focus{ left:8px; top:8px; }
+
+@media (max-width:980px){
+  .contactcard{ grid-template-columns:1fr; gap:4px 0; }
+  .contactcard dd{ margin-bottom:14px; }
+}
+/* the support address is one long unbreakable token; never let it push the page */
+.dl-item .nm,.dl-item .sub{ overflow-wrap:anywhere; }
+
+@media (max-width:520px){
+  .tb-stage{ padding:20px 18px; }
+  .tb-fields{ grid-template-columns:1fr; }
+  .tb-btn{ width:100%; text-align:center; justify-content:center; }
+  .tb-actions{ gap:10px; }
+  .tb-status{ width:100%; }
+  /* the report keeps its fixed 54-column shape so it stays readable in the
+     email it is destined for; it scrolls inside its own box rather than
+     widening the page. */
+  .tb-report{ font-size:10.5px; padding:12px; min-height:260px; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#support">Skip to support</a>
+
+<!-- ====================== NAV ====================== -->
+<nav class="nav" id="nav">
+  <a class="wm" href="../Homepage.html"><img src="../assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
+  <div class="links">
+    <a href="../Homepage.html#work">Work</a>
+    <a href="../Archive.html">Archive</a>
+    <a href="../About.html">Studio</a>
+    <a href="../Homepage.html#witness">Writing</a>
+    <a href="../CV.html">CV</a>
+    <a href="../Homepage.html#contact">Contact</a>
+  </div>
+  <span class="menu">Menu</span>
+</nav>
+
+<!-- ====================== HERO ====================== -->
+<header class="p-hero wrap">
+  <a class="crumb rv" href="index.html">← &nbsp;Khao</a>
+  <div class="p-eyebrow rv">A·08 &nbsp;/&nbsp; Support</div>
+  <h1 class="p-title rv">Support</h1>
+  <p class="p-dek rv">Help for Khao — the app that decides what to eat. A short set of questions to work out what is actually happening, and a real address at the end of it.</p>
+  <dl class="p-meta rv">
+    <div><dt>Product</dt><dd>Khao</dd></div>
+    <div><dt>Platform</dt><dd>iOS · iPhone &amp; iPad</dd></div>
+    <div><dt>Android</dt><dd>Closed testing</dd></div>
+    <div><dt>Support</dt><dd class="addr"><a href="mailto:anirudhkapoor1996@icloud.com">anirudhkapoor1996@icloud.com</a></dd></div>
+    <div><dt>Answered by</dt><dd>A person</dd></div>
+  </dl>
+</header>
+
+<!-- ====================== 01 SUPPORT ====================== -->
+<section class="sec tight wrap" id="support" aria-labelledby="h-support">
+  <div class="opener rv" id="h-support" role="heading" aria-level="2" style="margin-bottom:46px;"><span class="num" aria-hidden="true">01</span><span>Support</span></div>
+  <div class="overview">
+    <div class="lead rv">One dish at a time. When that stops working, this is where to write.</div>
+    <div class="body rv">
+      <p>Khao is an iOS app that answers one question: <em>what should we eat?</em> It draws on a library of roughly 1,377 recipes held on the device itself, and offers one dish at a time, tuned to diet, taste, hunger and the time you actually have. There is no login, no account and no server. An Android build is in closed testing.</p>
+      <p>If something is wrong, the troubleshooter below asks a few questions and hands you a written report to send. You do not have to use it — you can simply write.</p>
+    </div>
+  </div>
+
+  <dl class="contactcard rv">
+    <dt>Support email</dt>
+    <dd><a class="mailplain" href="mailto:anirudhkapoor1996@icloud.com">anirudhkapoor1996@icloud.com</a></dd>
+    <dt>Who reads it</dt>
+    <dd>Anirudh Kapoor, who designed and built Khao. Not a queue, not a bot.</dd>
+    <dt>Useful to include</dt>
+    <dd>Your app version, your device and iOS or Android version, what you expected, what happened instead, and a screenshot if you have one.</dd>
+    <dt>Billing &amp; refunds</dt>
+    <dd>Purchases and refunds are handled by Apple or Google, not here. This address can look at what the app is doing; it cannot process a refund.</dd>
+  </dl>
+</section>
+
+<!-- ====================== 02 TROUBLESHOOTER ====================== -->
+<section class="sec tight wrap" aria-labelledby="h-triage">
+  <div class="opener rv" id="h-triage" role="heading" aria-level="2" style="margin-bottom:36px;"><span class="num" aria-hidden="true">02</span><span>Troubleshooter</span></div>
+  <p class="tb-note rv" style="max-width:62ch;">A few questions, then a written report you can copy or send. It runs entirely in your browser — nothing you type here is transmitted anywhere until you choose to send the email yourself.</p>
+
+  <div class="tb rv">
+    <div class="tb-stage" id="tbStage" role="group" aria-labelledby="tbHeading"></div>
+    <div class="tb-bar">
+      <ol class="tb-trail" id="tbTrail" aria-label="Answers so far"></ol>
+      <div class="tb-mini">
+        <button type="button" id="tbBack" hidden>← Back</button>
+        <button type="button" id="tbRestart" hidden>Start over</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== 03 BY DESIGN ====================== -->
+<section class="sec tight wrap" aria-label="How Khao behaves by design, and where your data is">
+  <div class="chapter rv" style="border-top:0; padding-top:0;">
+    <div class="ch-l"><span class="num" aria-hidden="true">03</span><h3>By design</h3></div>
+    <div class="ch-r">
+      <p class="pull">Some of what looks broken is Khao doing exactly what it was built to do.</p>
+      <p>Worth knowing before you write — none of these are faults, and knowing them may save you the email:</p>
+      <ul class="constraints">
+        <li data-n="01">Dietary and allergy rules run as a hard gate <em>before</em> anything is ranked. Nothing is offered as close enough, so a narrow enough rule set can empty the deck outright.</li>
+        <li data-n="02">In a household, the exclusions stack. A dish only has to break one person's rule to be withheld from everyone.</li>
+        <li data-n="03">Fasting and festival days are understood, and the catalogue narrows on them on purpose.</li>
+        <li data-n="04">A dish you keep dismissing is offered less often. The palate model is quiet but it is working.</li>
+        <li data-n="05">Khao+ entitlement comes from the App Store or Play Store, never from Khao. If it looks locked, Restore Purchases is the step.</li>
+        <li data-n="06">Everything is on the device. Deleting the app takes your settings and history with it, and there is no copy elsewhere.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter rv">
+    <div class="ch-l"><span class="num" aria-hidden="true">04</span><h3>Data</h3></div>
+    <div class="ch-r">
+      <p>Khao has no account and no sign-up. The recipe catalogue ships inside the app, and your settings, your household rules and your history stay on the device — there is no server holding anyone's dietary or religious information. That was decided on principle before it was a feature.</p>
+      <p>This support page is a static file. It sets no cookies, stores nothing in your browser, loads no analytics and calls no third-party service. The troubleshooter below runs on your own device; the report it writes goes nowhere until you send it yourself. Khao's formal privacy details are on its App Store listing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== 05 THE APP ====================== -->
+<section class="sec tight wrap" aria-labelledby="h-app">
+  <div class="opener rv" id="h-app" role="heading" aria-level="2" style="margin-bottom:36px;"><span class="num" aria-hidden="true">05</span><span>The App</span></div>
+  <div class="downloads rv">
+    <a class="dl-item" href="https://apps.apple.com/in/app/khao/id6789647593" target="_blank" rel="noopener"><div><div class="nm">Khao on the App Store</div><div class="sub">iPhone &amp; iPad · English &amp; Hindi</div></div><span class="arrow">↗ OPEN</span></a>
+    <a class="dl-item" href="index.html"><div><div class="nm">How Khao was built</div><div class="sub">The case study</div></div><span class="arrow">↗ READ</span></a>
+    <a class="dl-item" href="https://www.instagram.com/khao_app/" target="_blank" rel="noopener"><div><div class="nm">@khao_app</div><div class="sub">Instagram</div></div><span class="arrow">↗ FOLLOW</span></a>
+    <a class="dl-item" href="mailto:anirudhkapoor1996@icloud.com"><div><div class="nm">anirudhkapoor1996@icloud.com</div><div class="sub">Support · written to directly</div></div><span class="arrow">↗ WRITE</span></a>
+  </div>
+  <p class="mono rv" style="margin-top:18px;">Ye khao. — one dish at a time, and you decide.</p>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="foot sec wrap" id="contact">
+  <div class="opener rv" id="h-contact" role="heading" aria-level="2" style="margin-bottom:30px;"><span class="num" aria-hidden="true">·</span><span>Contact</span></div>
+  <div class="big rv">Commission<br><em>a project.</em></div>
+  <div class="row rv">
+    <a href="mailto:anirudhkapoor1996@gmail.com">anirudhkapoor1996@gmail.com</a>
+    <a href="https://www.instagram.com/anirudh_kapoor_designs" target="_blank" rel="noopener">Instagram — Anirudh Kapoor Designs</a>
+    <a href="https://www.youtube.com/@anomalogy1" target="_blank" rel="noopener">Anomalogy — the podcast</a>
+    <a href="../CV.html">View the CV</a>
+  </div>
+  <div class="legal">
+    <img class="foot-mark" src="../assets/logo-ink.png" alt="Anirudh Kapoor monogram">
+    <span class="mono">Anirudh Kapoor · Designer, Builder, Writer, AI Generalist</span>
+    <span class="mono">Gurgaon / Worldwide · Est. 2013</span>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   ==========  KHAO SUPPORT KNOWLEDGE BASE  ================================
+   =========================================================================
+   EVERYTHING THE TROUBLESHOOTER KNOWS LIVES IN THIS ONE OBJECT.
+   To extend it you never need to touch the code below it.
+
+   To add a topic:   push to KHAO_KB.topics, then add its nodes.
+   To add a node:    add a key to KHAO_KB.nodes. Three kinds:
+
+     choice : { type:'choice', q, note?, options:[ {label, next} ] }
+     input  : { type:'input',  q, note?, field, label, placeholder?,
+                hint?, multiline?, optional?, next }
+     end    : { type:'end',    title, note?, checks:[ ... ] }
+
+   HOUSE RULE FOR THE COPY, PLEASE KEEP IT:
+   never say something has been fixed, never give a timeline, and never
+   state that a bug exists. Say what could explain it, and what is worth
+   checking. KHAO_KB.closing is appended to every outcome and carries the
+   promise that a person reviews the report first.
+   ========================================================================= */
+
+const KHAO_KB = {
+
+  supportEmail: 'anirudhkapoor1996@icloud.com',
+  pageUrl: 'anirudh-kapoor.com/khao/support.html',
+
+  /* Appended, unchanged, to the end of every single branch. */
+  closing: 'Nothing here has been fixed and nothing has been diagnosed. A person reads every report — Anirudh, who built Khao — and checks whether the issue is real before anything in the app changes. No timeline comes with that.',
+
+  intro: {
+    q: 'What is happening?',
+    note: 'Pick the closest one. Nothing is submitted by answering — you will see the report before anything is sent, and you send it yourself.'
+  },
+
+  topics: [
+    { id:'deck',   label:'The deck is empty, or no dishes are showing',      symptom:'No dishes / the deck is empty',                 start:'ed.1' },
+    { id:'filter', label:'A diet, allergen or fasting filter looks wrong',   symptom:'A dietary or allergen filter looks wrong',       start:'fl.1' },
+    { id:'link',   label:'A recipe or order link will not open',             symptom:'A recipe or order link does not open',           start:'lk.1' },
+    { id:'plus',   label:'I bought Khao+ but the features are locked',       symptom:'Khao+ purchased, features still locked',         start:'kp.1' },
+    { id:'notify', label:'Notifications are not arriving',                   symptom:'Notifications do not arrive',                    start:'nt.1' },
+    { id:'perf',   label:'Khao is slow, freezes, or crashes',                symptom:'App is slow, freezes or crashes',                start:'pf.1' },
+    { id:'other',  label:'Something else, or a suggestion',                  symptom:'Something else',                                 start:'ot.1' }
+  ],
+
+  nodes: {
+
+    /* ---------------------------------------------------------------
+       DECK — nothing to eat
+       --------------------------------------------------------------- */
+    'ed.1': { type:'choice',
+      q:'What does the screen actually show?',
+      options:[
+        { label:'A message saying there is nothing to suggest', next:'ed.2' },
+        { label:'Dishes appear, but only two or three, then it runs out', next:'ed.2' },
+        { label:'A blank or still-loading card that never fills', next:'ed.blank' }
+      ]},
+
+    'ed.2': { type:'choice',
+      q:'Which of these is switched on right now?',
+      note:'Khao runs your dietary rules as a hard gate before it ranks anything. Nothing gets offered as close enough, so a narrow enough set of rules can empty the deck by design rather than by fault.',
+      options:[
+        { label:'More than one person’s rules, in Household', next:'ed.household' },
+        { label:'A strict diet — Jain, vegan, or an allergy exclusion', next:'ed.diet' },
+        { label:'A short cooking time, or hunger set low', next:'ed.dials' },
+        { label:'It is a fasting or festival day', next:'ed.vrat' },
+        { label:'None of these — everything is at its default', next:'ed.default' }
+      ]},
+
+    'ed.household': { type:'end',
+      title:'Household rules stack, and the strictest one wins',
+      note:'A dish only has to break one person’s rule to be withheld from the whole household. What you are seeing may be that reconciliation working.',
+      checks:[
+        'Open Household and read the combined rule set, not any one person’s.',
+        'Switch to yourself alone and see whether dishes come back. That single test tells you whether the household is what is narrowing it.',
+        'If dishes return for one person but not for the household, note which person’s rules make the difference and put that in the report.'
+      ]},
+
+    'ed.diet': { type:'end',
+      title:'A hard dietary gate can empty the deck legitimately',
+      note:'Diet and allergy rules are applied before scoring, never as a weight inside it, so there is no partial match to fall back on.',
+      checks:[
+        'Widen exactly one rule and watch what comes back. Changing several at once hides which one was responsible.',
+        'Note the single rule that brings the deck back, and put that in the report.',
+        'If widening every rule still leaves the deck empty, say so — that is the more interesting answer.'
+      ]},
+
+    'ed.dials': { type:'end',
+      title:'Time and hunger narrow on top of the diet gate',
+      note:'The dials cut the field further after the dietary rules have already run. Two moderate settings can combine into a very narrow one.',
+      checks:[
+        'Set time to its widest setting and leave every other dial exactly where it is.',
+        'If dishes return, bring time back down one step at a time and find where it empties.',
+        'Record the setting at which it empties, and send that.'
+      ]},
+
+    'ed.vrat': { type:'end',
+      title:'Restricted days narrow the catalogue on purpose',
+      note:'Khao understands fasting and festival days and offers less on them deliberately.',
+      checks:[
+        'Check that the date Khao is working from matches your device’s own date.',
+        'If the day should not be restricted for you, say which day it was and which observance Khao appears to have applied.',
+        'If the deck is empty rather than merely narrow, that is worth reporting.'
+      ]},
+
+    'ed.default': { type:'end',
+      title:'Nothing obvious is narrowing it',
+      note:'With every dial at default and the deck still empty, the detail you send is the useful part.',
+      checks:[
+        'Force-quit Khao and open it again.',
+        'Confirm the catalogue is there at all — search or browse for a dish you know exists.',
+        'Send the report. Say whether the deck was ever populated on this device, or has been empty since you installed it.'
+      ]},
+
+    'ed.blank': { type:'end',
+      title:'The card never fills',
+      note:'The catalogue ships inside the app, so a card that never fills is not waiting on a network.',
+      checks:[
+        'Force-quit Khao and reopen it, then restart the device once.',
+        'Check the App Store or Play Store for a newer build than the one you have.',
+        'Note whether it is every card or only the first one after launch.'
+      ]},
+
+    /* ---------------------------------------------------------------
+       FILTER — the safety-critical branch
+       --------------------------------------------------------------- */
+    'fl.1': { type:'choice',
+      q:'Which of these is closest?',
+      options:[
+        { label:'A dish appeared that my settings should have excluded', next:'fl.appeared.dish' },
+        { label:'A dish I can eat never appears', next:'fl.hidden' },
+        { label:'A dish’s label and its ingredient list disagree', next:'fl.contra.dish' }
+      ]},
+
+    'fl.appeared.dish': { type:'input',
+      q:'Which dish was it?',
+      note:'The name matters more than anything else here. Spell it as Khao spells it if you can.',
+      field:'dish', label:'Name of the dish', placeholder:'e.g. Palak Paneer',
+      hint:'If you do not remember, write "not noted" and carry on.',
+      next:'fl.appeared.rule' },
+
+    'fl.appeared.rule': { type:'choice',
+      q:'Which rule should have excluded it?',
+      options:[
+        { label:'Jain', next:'fl.appeared.end' },
+        { label:'Vegan', next:'fl.appeared.end' },
+        { label:'Vegetarian', next:'fl.appeared.end' },
+        { label:'No egg', next:'fl.appeared.end' },
+        { label:'An allergen I had set', next:'fl.appeared.end' },
+        { label:'A fasting or festival day', next:'fl.appeared.end' }
+      ]},
+
+    'fl.appeared.end': { type:'end',
+      title:'Treat this dish as unverified until it has been checked',
+      note:'An exclusion in Khao is meant to be absolute. Whether this one held is exactly what needs checking, and until it has been, the sensible thing is not to rely on it.',
+      checks:[
+        'Read that dish’s ingredient list yourself before cooking or ordering anything from it.',
+        'Take two screenshots: the dish as it appeared, and the setting that should have excluded it. Attach both to the email.',
+        'Send the report now rather than later. Of everything on this page, this is the kind worth sending first.'
+      ]},
+
+    'fl.hidden': { type:'choice',
+      q:'Is anyone else’s rules active in Household?',
+      options:[
+        { label:'Yes, there is more than one person set up', next:'fl.hidden.household' },
+        { label:'No, it is just me', next:'fl.hidden.solo' },
+        { label:'I am not sure', next:'fl.hidden.household' }
+      ]},
+
+    'fl.hidden.household': { type:'end',
+      title:'The household set is everyone’s exclusions combined',
+      note:'A dish needs to break only one member’s rule to disappear for all of them.',
+      checks:[
+        'Switch to yourself alone and check whether the dish returns.',
+        'If it does, the household reconciliation is what is hiding it — which is the intended behaviour, though you may still disagree with the result.',
+        'If it stays hidden even on your own, name the dish in the report.'
+      ]},
+
+    'fl.hidden.solo': { type:'end',
+      title:'Something other than diet may be holding it back',
+      note:'Time, hunger and the palate model all narrow the field after the dietary gate has run. A dish you have dismissed repeatedly is offered less often.',
+      checks:[
+        'Widen the dials one at a time — time first, then hunger — and look for it again.',
+        'Check whether the dish exists in the catalogue at all by searching for it directly.',
+        'If it is in the catalogue and still never surfaces, name it in the report along with your current dial settings.'
+      ]},
+
+    'fl.contra.dish': { type:'input',
+      q:'Which dish, and what did the two say?',
+      note:'The catalogue was authored by hand and audited on one rule: the ingredient list always overrules the label. An earlier sweep corrected thirty-two entries where the two disagreed.',
+      field:'dish', label:'Dish, the label shown, and the ingredient that contradicts it',
+      placeholder:'e.g. Dish X — labelled vegan, but the ingredients list ghee',
+      multiline:true,
+      next:'fl.contra.end' },
+
+    'fl.contra.end': { type:'end',
+      title:'Ingredient list over label, until this entry is looked at',
+      note:'Where the two disagree the ingredient list is the one to believe. That is the rule the catalogue was audited on.',
+      checks:[
+        'Go by the ingredient list for that dish, not the label on it.',
+        'Screenshot the dish so both readings are visible in one image.',
+        'Send the report. A contradiction in a single entry is a specific, checkable thing, which makes it useful.'
+      ]},
+
+    /* ---------------------------------------------------------------
+       LINKS
+       --------------------------------------------------------------- */
+    'lk.1': { type:'choice',
+      q:'What happens when you tap the link?',
+      note:'Khao’s own dish data sits on the device, but a link out to a recipe or a delivery service leaves Khao and depends on your browser and your connection.',
+      options:[
+        { label:'Nothing at all happens', next:'lk.nothing' },
+        { label:'It opens, but the page is blank or shows an error', next:'lk.blank' },
+        { label:'The phone says nothing can open it', next:'lk.handler' },
+        { label:'It opens the wrong app, or the wrong page', next:'lk.wrong.dish' }
+      ]},
+
+    'lk.nothing': { type:'end',
+      title:'The tap does not appear to register',
+      checks:[
+        'Check you have a working connection, then try the same link again.',
+        'Force-quit Khao, reopen it, and try once more.',
+        'Try a link on a different dish. If only one dish behaves this way, say which dish in the report.'
+      ]},
+
+    'lk.blank': { type:'end',
+      title:'It opens, then fails',
+      note:'Once the link has opened, the page is out of Khao’s hands — but which page it sent you to is not.',
+      checks:[
+        'Try the same address directly in your browser and see whether it behaves any better.',
+        'A content blocker, a VPN, or Low Data Mode can each empty a page like that. Turn one off and try again.',
+        'Send the dish name and the address it opened, if you can copy it.'
+      ]},
+
+    'lk.handler': { type:'end',
+      title:'The phone has nothing set to open it',
+      note:'A link to a delivery service usually wants that service’s app, or a browser prepared to open it.',
+      checks:[
+        'Check that a default browser is set on the device.',
+        'If the link is to a delivery service, installing that service’s app may be what the phone is waiting for.',
+        'Note the exact wording of the message you saw and include it in the report.'
+      ]},
+
+    'lk.wrong.dish': { type:'input',
+      q:'Which dish, and where did it take you?',
+      field:'dish', label:'Dish tapped, and where you landed',
+      placeholder:'e.g. Dish X — opened a search page instead of the recipe',
+      multiline:true,
+      next:'lk.wrong' },
+
+    'lk.wrong': { type:'end',
+      title:'It goes somewhere unexpected',
+      note:'A wrong destination is only useful with both halves recorded: what you tapped, and where you ended up.',
+      checks:[
+        'Copy the address you landed on if the browser will let you, and paste it into the email.',
+        'Check whether it is that one dish or several.',
+        'Send the report with both halves in it.'
+      ]},
+
+    /* ---------------------------------------------------------------
+       KHAO+ ENTITLEMENT
+       --------------------------------------------------------------- */
+    'kp.1': { type:'choice',
+      q:'Where did you buy Khao+?',
+      note:'Khao keeps no account and no server, so it holds no record of your purchase of its own. The entitlement is read back from the store.',
+      options:[
+        { label:'Apple — the App Store, on iPhone or iPad', next:'kp.apple' },
+        { label:'Google Play — the Android closed test', next:'kp.android' },
+        { label:'I am not sure', next:'kp.apple' }
+      ]},
+
+    'kp.apple': { type:'choice',
+      q:'Have you used Restore Purchases in Khao’s settings since it locked?',
+      options:[
+        { label:'No, not yet', next:'kp.restore' },
+        { label:'Yes, and it is still locked', next:'kp.restored' }
+      ]},
+
+    'kp.restore': { type:'end',
+      title:'Restore Purchases is the step to take',
+      note:'Because there is no account and no server, Khao asks the App Store rather than remembering the purchase itself. Restore Purchases is what makes it ask.',
+      checks:[
+        'Open Khao’s settings and tap Restore Purchases.',
+        'Check the device is signed in to the same Apple Account that made the purchase. A different account in the same household will not carry it.',
+        'Give it a working connection while it runs — the check has to reach the App Store even though Khao itself does not.',
+        'If it is still locked afterwards, send the report.'
+      ]},
+
+    'kp.restored': { type:'end',
+      title:'Restore has run and it is still locked',
+      checks:[
+        'Confirm in your App Store purchase history that Khao was bought on the account currently signed in.',
+        'Run Restore Purchases once more on a good connection, and note what it says when it finishes.',
+        'Send the report, with the purchase date from your receipt if you have it.',
+        'For a refund or a billing question, go to Apple directly — this address can look at what the app is doing, but it cannot process a payment.'
+      ]},
+
+    'kp.android': { type:'end',
+      title:'The Android build is in closed testing',
+      note:'Purchase handling on Android is not final while the build is in closed testing, and it can behave differently from iOS.',
+      checks:[
+        'Check you are signed in with the Google account that is enrolled in the test.',
+        'Use Restore Purchases in Khao’s settings.',
+        'Send the report with the account used and the build number from the Play Store listing.'
+      ]},
+
+    /* ---------------------------------------------------------------
+       NOTIFICATIONS
+       --------------------------------------------------------------- */
+    'nt.1': { type:'choice',
+      q:'In your phone’s own Settings, are notifications allowed for Khao?',
+      options:[
+        { label:'Yes, they are allowed', next:'nt.2' },
+        { label:'No, or they are switched off', next:'nt.perm' },
+        { label:'I cannot find Khao in that list', next:'nt.perm' }
+      ]},
+
+    'nt.perm': { type:'end',
+      title:'The permission sits with the phone, not with Khao',
+      note:'Nothing Khao does can get past a block at system level.',
+      checks:[
+        'iOS: Settings → Notifications → Khao → Allow Notifications.',
+        'Android: Settings → Apps → Khao → Notifications.',
+        'If Khao is not in that list at all, open the app once and let it ask, then look again.'
+      ]},
+
+    'nt.2': { type:'choice',
+      q:'Is a Focus, Do Not Disturb, or a scheduled summary switched on?',
+      options:[
+        { label:'Yes, at least some of the time', next:'nt.focus' },
+        { label:'No', next:'nt.3' },
+        { label:'I am not sure', next:'nt.focus' }
+      ]},
+
+    'nt.focus': { type:'end',
+      title:'A Focus or a summary will hold them back',
+      note:'A Focus mode, Do Not Disturb, or a Scheduled Summary can delay or silence a notification without Khao ever knowing.',
+      checks:[
+        'Allow Khao through whichever Focus you use, or take it out of the Scheduled Summary.',
+        'Check whether the notifications arrive later in a batch — that is the summary rather than a failure to send.',
+        'If they still never arrive with the Focus off, send the report.'
+      ]},
+
+    'nt.3': { type:'choice',
+      q:'Which describes it best?',
+      options:[
+        { label:'None ever arrive', next:'nt.none' },
+        { label:'They arrive late, or all at once', next:'nt.late' },
+        { label:'They arrive, but silently', next:'nt.silent' }
+      ]},
+
+    'nt.none': { type:'end',
+      title:'None are getting through',
+      checks:[
+        'Check Khao’s own notification setting inside the app as well as the phone’s.',
+        'Restart the device once and give it a day.',
+        'Send the report, and say whether they ever worked on this device or have never arrived.'
+      ]},
+
+    'nt.late': { type:'end',
+      title:'They arrive, but not when expected',
+      checks:[
+        'On Android, check battery optimisation for Khao and set it to unrestricted.',
+        'On iOS, check whether Low Power Mode is on — it defers background work.',
+        'Note roughly how late they are, and send that with the report.'
+      ]},
+
+    'nt.silent': { type:'end',
+      title:'They arrive without sound',
+      checks:[
+        'Check the sound setting for Khao in the phone’s notification settings, not only the volume.',
+        'On iPhone, check the ring/silent switch and whether the alert is set to deliver quietly.',
+        'If sound is enabled everywhere and they are still silent, send the report.'
+      ]},
+
+    /* ---------------------------------------------------------------
+       PERFORMANCE
+       --------------------------------------------------------------- */
+    'pf.1': { type:'choice',
+      q:'What is it doing?',
+      options:[
+        { label:'It closes on its own — a crash', next:'pf.crash' },
+        { label:'It freezes and stops responding', next:'pf.freeze' },
+        { label:'It runs, but slowly', next:'pf.slow' }
+      ]},
+
+    'pf.crash': { type:'choice',
+      q:'When does it close?',
+      options:[
+        { label:'As soon as I open it', next:'pf.crash.launch' },
+        { label:'When I open a dish', next:'pf.crash.step' },
+        { label:'When I change the dials or Household', next:'pf.crash.step' },
+        { label:'At no particular moment', next:'pf.crash.step' }
+      ]},
+
+    'pf.crash.launch': { type:'end',
+      title:'It closes at launch',
+      note:'Reinstalling is the last thing to try, not the first. Khao keeps everything on the device and nothing on a server, so a reinstall may take your settings, household and history with it, with no copy to restore from.',
+      checks:[
+        'Restart the device, then open Khao before anything else.',
+        'Check the store for a newer build than the one installed.',
+        'Send the report first. Only consider reinstalling after that, knowing what it costs.'
+      ]},
+
+    'pf.crash.step': { type:'end',
+      title:'It closes at a particular point',
+      note:'A sequence that reproduces it is worth more than any description of it.',
+      checks:[
+        'Write down the exact steps that lead to it, in order, and whether it happens every time or only sometimes.',
+        'On iOS, Settings → Privacy & Security → Analytics & Improvements → Analytics Data holds crash logs; a file whose name begins with Khao can be attached to your email.',
+        'Send the report with those steps in it.'
+      ]},
+
+    'pf.freeze': { type:'end',
+      title:'It stops responding',
+      checks:[
+        'Force-quit Khao and reopen it; if it freezes again, restart the device.',
+        'Check the device has free storage — a nearly full device will stall an app that reads a large local catalogue.',
+        'Note which screen it freezes on, and whether it recovers if you wait.'
+      ]},
+
+    'pf.slow': { type:'end',
+      title:'It runs, but slowly',
+      checks:[
+        'Check free storage on the device, and restart it once.',
+        'Note whether the whole app is slow or only one screen — the deck, a dish, the dials.',
+        'Include your device model in the report. It is the single most useful line for this one.'
+      ]},
+
+    /* ---------------------------------------------------------------
+       ANYTHING ELSE
+       --------------------------------------------------------------- */
+    'ot.1': { type:'choice',
+      q:'Which is it?',
+      options:[
+        { label:'Something is wrong, but none of the above fits', next:'ot.desc' },
+        { label:'A suggestion, or a dish that is missing', next:'ot.desc' },
+        { label:'A question about privacy or my data', next:'ot.privacy' }
+      ]},
+
+    'ot.desc': { type:'input',
+      q:'Tell it in your own words.',
+      note:'What you expected, and what happened instead. Those two lines carry most of the useful information.',
+      field:'detail', label:'What happened', placeholder:'I expected… but instead…',
+      multiline:true, next:'ot.end' },
+
+    'ot.end': { type:'end',
+      title:'Written down and ready to send',
+      checks:[
+        'Add a screenshot to the email if you have one — it usually says more than the description.',
+        'If it is a missing dish, the name and where you would expect to find it is enough.',
+        'Send the report below.'
+      ]},
+
+    'ot.privacy': { type:'end',
+      title:'Where your data is',
+      note:'Khao has no account and no sign-up. The catalogue ships inside the app, and your settings, household rules and history stay on the device — there is no server holding anyone’s dietary or religious information.',
+      checks:[
+        'Deleting the app removes that data with it. There is no copy elsewhere to restore from.',
+        'This support page itself sets no cookies, stores nothing, and loads no analytics or third-party script.',
+        'Khao’s formal privacy details are on its App Store listing. If your question is not answered there, send it below.'
+      ]}
+  }
+};
+
+/* =========================================================================
+   ==========  ENGINE — no need to edit below this line  ===================
+   ========================================================================= */
+(function(){
+  'use strict';
+
+  var stage    = document.getElementById('tbStage');
+  var trailEl  = document.getElementById('tbTrail');
+  var backBtn  = document.getElementById('tbBack');
+  var resetBtn = document.getElementById('tbRestart');
+  if(!stage) return;
+
+  var LINE = 54;
+
+  var state = { topic:null, node:null, trail:[], fields:[], history:[], started:false,
+                version:'', device:'', notes:'' };
+
+  function esc(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function today(){
+    var d = new Date(), p = function(n){ return String(n).length < 2 ? '0'+n : ''+n; };
+    return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate());
+  }
+
+  /* hard-wrap plain text so the emailed report stays tidy on a phone */
+  function wrap(text, width, indent){
+    var words = String(text == null ? '' : text).replace(/\s+/g,' ').trim().split(' ');
+    var lines = [], line = '';
+    for(var i=0;i<words.length;i++){
+      var w = words[i];
+      if(line && (line + ' ' + w).length > width){ lines.push(line); line = w; }
+      else { line = line ? line + ' ' + w : w; }
+    }
+    if(line) lines.push(line);
+    if(!lines.length) lines.push('');
+    return lines.map(function(l,i){ return (i === 0 ? '' : indent) + l; }).join('\n');
+  }
+
+  function topicById(id){
+    for(var i=0;i<KHAO_KB.topics.length;i++){
+      if(KHAO_KB.topics[i].id === id) return KHAO_KB.topics[i];
+    }
+    return null;
+  }
+
+  /* ---------- report ---------- */
+  function buildReport(){
+    var t = topicById(state.topic);
+    var end = state.node ? KHAO_KB.nodes[state.node] : null;
+    var rule = new Array(LINE + 1).join('-');
+    var L = [];
+
+    L.push('KHAO — SUPPORT REPORT');
+    L.push(rule);
+    L.push('Date: ' + today());
+    L.push('Symptom: ' + wrap(t ? t.symptom : 'Not selected', LINE - 9, '  '));
+    if(end && end.title) L.push('Outcome: ' + wrap(end.title, LINE - 9, '  '));
+    L.push('');
+
+    L.push('WHAT WAS ANSWERED');
+    if(state.trail.length){
+      for(var i=0;i<state.trail.length;i++){
+        var n = (i + 1) + '.';
+        L.push(' ' + n + ' ' + wrap(state.trail[i].q, LINE - 5, '    '));
+        L.push('    → ' + wrap(state.trail[i].a, LINE - 7, '      '));
+      }
+    } else {
+      L.push(' (nothing recorded)');
+    }
+
+    if(state.fields.length){
+      L.push('');
+      L.push('DETAIL GIVEN');
+      for(var j=0;j<state.fields.length;j++){
+        var f = state.fields[j];
+        L.push(' ' + f.label + ':');
+        L.push('   ' + wrap(f.value || '(left blank)', LINE - 4, '   '));
+      }
+    }
+
+    L.push('');
+    L.push('DEVICE');
+    L.push(' App version: ' + (state.version.trim() || '(not given)'));
+    L.push(' Device & OS: ' + (state.device.trim() || '(not given)'));
+    if(state.notes.trim()){
+      L.push('');
+      L.push('ANYTHING ELSE');
+      L.push(' ' + wrap(state.notes, LINE - 2, ' '));
+    }
+
+    L.push('');
+    L.push(rule);
+    L.push(wrap('Assembled by the self-guided troubleshooter at ' +
+      KHAO_KB.pageUrl + '. Nothing in it has been diagnosed or confirmed — ' +
+      'it records only what was seen and what was answered.', LINE, ''));
+
+    return L.join('\n');
+  }
+
+  function refreshReport(){
+    var ta = document.getElementById('tbReport');
+    if(!ta) return;
+    var text = buildReport();
+    ta.value = text;
+    var t = topicById(state.topic);
+    var link = document.getElementById('tbMail');
+    if(link){
+      link.href = 'mailto:' + KHAO_KB.supportEmail +
+        '?subject=' + encodeURIComponent('Khao support — ' + (t ? t.symptom : 'report')) +
+        '&body=' + encodeURIComponent(text);
+    }
+  }
+
+  function say(msg){
+    var s = document.getElementById('tbStatus');
+    if(s) s.textContent = msg;
+  }
+
+  /* ---------- rendering ---------- */
+  function focusHeading(){
+    if(!state.started) return;
+    var h = stage.querySelector('.tb-q');
+    if(h){ h.setAttribute('tabindex','-1'); h.focus(); }
+  }
+
+  function renderTrail(){
+    trailEl.innerHTML = state.trail.map(function(s){
+      return '<li>' + esc(s.a) + '</li>';
+    }).join('');
+    backBtn.hidden   = state.history.length === 0;
+    resetBtn.hidden  = state.history.length === 0;
+  }
+
+  function stepLabel(){
+    return state.trail.length === 0 ? 'Step 1' : 'Step ' + (state.trail.length + 1);
+  }
+
+  function renderIntro(){
+    var h = '<p class="tb-step">Step 1 · Seven starting points</p>' +
+      '<h3 class="tb-q" id="tbHeading" role="heading" aria-level="3">' + esc(KHAO_KB.intro.q) + '</h3>' +
+      '<p class="tb-note">' + esc(KHAO_KB.intro.note) + '</p>' +
+      '<div class="tb-opts">';
+    for(var i=0;i<KHAO_KB.topics.length;i++){
+      h += '<button type="button" class="tb-opt" data-topic="' + esc(KHAO_KB.topics[i].id) + '">' +
+           esc(KHAO_KB.topics[i].label) + '</button>';
+    }
+    h += '</div>';
+    stage.innerHTML = h;
+    renderTrail();
+    focusHeading();
+  }
+
+  function renderChoice(id, node){
+    var h = '<p class="tb-step">' + esc(stepLabel()) + '</p>' +
+      '<h3 class="tb-q" id="tbHeading" role="heading" aria-level="3">' + esc(node.q) + '</h3>';
+    if(node.note) h += '<p class="tb-note">' + esc(node.note) + '</p>';
+    h += '<div class="tb-opts">';
+    for(var i=0;i<node.options.length;i++){
+      h += '<button type="button" class="tb-opt" data-opt="' + i + '">' +
+           esc(node.options[i].label) + '</button>';
+    }
+    h += '</div>';
+    stage.innerHTML = h;
+    renderTrail();
+    focusHeading();
+  }
+
+  function renderInput(id, node){
+    var fid = 'tbf_' + id.replace(/[^a-z0-9]/gi,'_');
+    var control = node.multiline
+      ? '<textarea id="' + fid + '"></textarea>'
+      : '<input type="text" id="' + fid + '" autocomplete="off"' +
+        (node.placeholder ? ' placeholder="' + esc(node.placeholder) + '"' : '') + '>';
+    if(node.multiline && node.placeholder){
+      control = control.replace('<textarea ', '<textarea placeholder="' + esc(node.placeholder) + '" ');
+    }
+    var h = '<p class="tb-step">' + esc(stepLabel()) + '</p>' +
+      '<h3 class="tb-q" id="tbHeading" role="heading" aria-level="3">' + esc(node.q) + '</h3>';
+    if(node.note) h += '<p class="tb-note">' + esc(node.note) + '</p>';
+    h += '<div class="tb-field"><label for="' + fid + '">' + esc(node.label) + '</label>' +
+         control +
+         (node.hint ? '<p class="tb-hint">' + esc(node.hint) + '</p>' : '') +
+         '</div>' +
+         '<div class="tb-actions"><button type="button" class="tb-btn" data-continue="1">Continue</button></div>';
+    stage.innerHTML = h;
+    renderTrail();
+    focusHeading();
+  }
+
+  function renderEnd(id, node){
+    var h = '<p class="tb-step">What this could be</p>' +
+      '<h3 class="tb-q" id="tbHeading" role="heading" aria-level="3">' + esc(node.title) + '</h3>';
+    if(node.note) h += '<p class="tb-note">' + esc(node.note) + '</p>';
+    if(node.checks && node.checks.length){
+      h += '<ol class="tb-checks">';
+      for(var i=0;i<node.checks.length;i++) h += '<li>' + esc(node.checks[i]) + '</li>';
+      h += '</ol>';
+    }
+    h += '<p class="tb-honest">' + esc(KHAO_KB.closing) + '</p>';
+
+    h += '<div class="tb-reportwrap">' +
+      '<p class="tb-step" style="margin-bottom:16px;">Your report</p>' +
+      '<div class="tb-fields">' +
+        '<div class="tb-field"><label for="tbVersion">App version</label>' +
+          '<input type="text" id="tbVersion" autocomplete="off" placeholder="e.g. 1.4.2">' +
+          '<p class="tb-hint">Khao’s settings screen, or the store listing.</p></div>' +
+        '<div class="tb-field"><label for="tbDevice">Device and OS version</label>' +
+          '<input type="text" id="tbDevice" autocomplete="off" placeholder="e.g. iPhone 13, iOS 18.2">' +
+          '<p class="tb-hint">Model, and the iOS or Android version.</p></div>' +
+      '</div>' +
+      '<div class="tb-field"><label for="tbNotes">Anything else (optional)</label>' +
+        '<textarea id="tbNotes" placeholder="Anything the questions did not ask about."></textarea></div>' +
+      '<div class="tb-field"><label for="tbReport">The report, as it will be sent</label>' +
+        '<textarea id="tbReport" readonly spellcheck="false" class="tb-report"></textarea></div>' +
+      '<div class="tb-actions">' +
+        '<button type="button" class="tb-btn" id="tbCopy">Copy report</button>' +
+        '<a class="tb-btn ghost" id="tbMail" href="mailto:' + esc(KHAO_KB.supportEmail) + '">Send by email</a>' +
+        '<span class="tb-status" id="tbStatus" role="status" aria-live="polite"></span>' +
+      '</div>' +
+      '<p class="tb-hint" style="margin-top:14px;">The email opens in your own mail app with the report already in it, addressed to ' +
+        esc(KHAO_KB.supportEmail) + '. Nothing is sent until you send it. If the button does nothing, copy the report and email it yourself.</p>' +
+    '</div>';
+
+    stage.innerHTML = h;
+    renderTrail();
+
+    document.getElementById('tbVersion').value = state.version;
+    document.getElementById('tbDevice').value  = state.device;
+    document.getElementById('tbNotes').value   = state.notes;
+
+    document.getElementById('tbVersion').addEventListener('input', function(e){
+      state.version = e.target.value; refreshReport();
+    });
+    document.getElementById('tbDevice').addEventListener('input', function(e){
+      state.device = e.target.value; refreshReport();
+    });
+    document.getElementById('tbNotes').addEventListener('input', function(e){
+      state.notes = e.target.value; refreshReport();
+    });
+    document.getElementById('tbCopy').addEventListener('click', copyReport);
+
+    refreshReport();
+    focusHeading();
+  }
+
+  function render(){
+    if(!state.topic){ renderIntro(); return; }
+    var node = KHAO_KB.nodes[state.node];
+    if(!node){ renderIntro(); return; }
+    if(node.type === 'choice') renderChoice(state.node, node);
+    else if(node.type === 'input') renderInput(state.node, node);
+    else renderEnd(state.node, node);
+  }
+
+  function snapshot(){
+    return { topic:state.topic, node:state.node,
+             trail:state.trail.slice(), fields:state.fields.slice() };
+  }
+
+  function copyReport(){
+    var ta = document.getElementById('tbReport');
+    if(!ta) return;
+    var done = function(){ say('Copied to the clipboard.'); };
+    var manual = function(){ say('Select the text above and press Ctrl + C, or Cmd + C.'); };
+    if(navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext){
+      navigator.clipboard.writeText(ta.value).then(done, function(){ legacy(ta, done, manual); });
+    } else {
+      legacy(ta, done, manual);
+    }
+  }
+
+  function legacy(ta, done, manual){
+    try{
+      ta.removeAttribute('readonly');
+      ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+      var ok = document.execCommand('copy');
+      ta.setAttribute('readonly','');
+      ok ? done() : manual();
+    } catch(e){
+      ta.setAttribute('readonly','');
+      manual();
+    }
+  }
+
+  /* ---------- events ---------- */
+  stage.addEventListener('click', function(e){
+    var el = e.target.closest ? e.target.closest('button, a') : null;
+    if(!el) return;
+
+    if(el.hasAttribute('data-topic')){
+      var t = topicById(el.getAttribute('data-topic'));
+      if(!t) return;
+      state.started = true;
+      state.history.push(snapshot());
+      state.topic = t.id;
+      state.node  = t.start;
+      state.trail.push({ q: KHAO_KB.intro.q, a: t.label });
+      render();
+      return;
+    }
+
+    if(el.hasAttribute('data-opt')){
+      var node = KHAO_KB.nodes[state.node];
+      if(!node || node.type !== 'choice') return;
+      var opt = node.options[parseInt(el.getAttribute('data-opt'), 10)];
+      if(!opt) return;
+      state.started = true;
+      state.history.push(snapshot());
+      state.trail.push({ q: node.q, a: opt.label });
+      state.node = opt.next;
+      render();
+      return;
+    }
+
+    if(el.hasAttribute('data-continue')){
+      var n = KHAO_KB.nodes[state.node];
+      if(!n || n.type !== 'input') return;
+      var input = stage.querySelector('.tb-field input, .tb-field textarea');
+      var val = input ? input.value.trim() : '';
+      state.started = true;
+      state.history.push(snapshot());
+      state.trail.push({ q: n.q, a: val ? 'Answered in writing' : 'Left blank' });
+      state.fields.push({ key: n.field, label: n.label, value: val });
+      state.node = n.next;
+      render();
+      return;
+    }
+  });
+
+  /* Enter submits a single-line input question */
+  stage.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter') return;
+    if(e.target.tagName !== 'INPUT' || e.target.type !== 'text') return;
+    var go = stage.querySelector('[data-continue]');
+    if(go){ e.preventDefault(); go.click(); }
+  });
+
+  backBtn.addEventListener('click', function(){
+    var prev = state.history.pop();
+    if(!prev) return;
+    state.topic  = prev.topic;
+    state.node   = prev.node;
+    state.trail  = prev.trail;
+    state.fields = prev.fields;
+    render();
+  });
+
+  resetBtn.addEventListener('click', function(){
+    state.topic = null; state.node = null;
+    state.trail = []; state.fields = []; state.history = [];
+    render();
+  });
+
+  render();
+})();
+
+/* ---- site behaviour: nav + reveal (as on every other page) ----
+   Same effect as the other pages, wrapped so that it cannot fail closed.
+   Every .rv element starts at opacity:0, so if this script were ever to
+   throw the page would render blank — which on a support page, reached by
+   someone whose app is misbehaving or by a store reviewer, is the one
+   outcome worth engineering against. The reveal is therefore a progressive
+   enhancement here: the unconditional fallback runs no matter what. */
+(function(){
+  var rvs = [].slice.call(document.querySelectorAll('.rv'));
+  var showAll = function(){ for(var i=0;i<rvs.length;i++) rvs[i].classList.add('in'); };
+
+  try{
+    var nav = document.getElementById('nav');
+    if(nav){
+      var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 40); };
+      window.addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
+    }
+  }catch(e){ /* the nav is decorative; never let it take the page down */ }
+
+  try{
+    if(!('IntersectionObserver' in window)) throw new Error('no IntersectionObserver');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin:'0px 0px -6% 0px', threshold:0.04 });
+    rvs.forEach(function(el){ io.observe(el); });
+
+    var revealVisible = function(){
+      rvs.forEach(function(el){
+        if(el.getBoundingClientRect().top < window.innerHeight*0.96){
+          el.classList.add('in'); io.unobserve(el);
+        }
+      });
+    };
+    requestAnimationFrame(revealVisible);
+    window.addEventListener('load', revealVisible);
+    setTimeout(showAll, 2000);
+  }catch(e){
+    showAll();
+  }
+})();
+</script>
+</body>
+</html>
