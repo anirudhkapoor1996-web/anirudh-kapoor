@@ -32,8 +32,7 @@
   try { renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true }); }
   catch (e) { canvas.style.display = 'none'; return; }
 
-  var hero = canvas.parentNode;
-  var W = hero.clientWidth, H = hero.clientHeight;
+  var W = canvas.clientWidth, H = canvas.clientHeight;
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
   renderer.setSize(W, H, false);
 
@@ -110,13 +109,13 @@
 
   /* --- framing --- */
   function frame() {
-    var wide = W / H > 1.05;
-    var s = wide ? Math.min(1, W / 1450) * 0.68 : 0.52;
+    var wide = window.innerWidth > 980;
+    var s = wide ? Math.min(1.0, W / 640) * 0.86 : 0.5;
     markGroup.scale.setScalar(s);
     glow.scale.setScalar(s * 0.92);
-    rig.position.x = wide ? 4.15 : 0;
-    rig.position.y = wide ? -0.15 : 2.0;
-    camera.position.z = wide ? 12 : 14.5;
+    rig.position.x = 0;
+    rig.position.y = wide ? 0 : 2.2;
+    camera.position.z = wide ? 11 : 15;
   }
 
   var tx = 0, ty = 0, cx = 0, cy = 0;
@@ -132,7 +131,7 @@
   });
 
   function resize() {
-    W = hero.clientWidth; H = hero.clientHeight;
+    W = canvas.clientWidth; H = canvas.clientHeight;
     camera.aspect = W / H; camera.updateProjectionMatrix();
     renderer.setSize(W, H, false);
     frame();
