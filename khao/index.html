@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Khao — decide what to eat tonight</title>
 <meta name="description" content="Khao is an iOS app that helps you decide what to eat. One dish at a time. Diet rules that never bend, a whole household held at once, English and Hindi, and nothing leaves your phone.">
-<meta name="theme-color" content="#FAF7F2">
+<meta name="theme-color" content="#0B0A09">
 <link rel="canonical" href="https://anirudh-kapoor.com/khao/">
 <link rel="stylesheet" href="khao.css">
 <link rel="icon" type="image/png" href="assets/khao-icon-256.png">
@@ -18,123 +18,104 @@
 </head>
 <body>
 
-<!-- ====================== NAV ====================== -->
 <nav class="nav" id="nav">
   <a class="brand" href="./" aria-label="Khao — home">
     <img src="assets/khao-icon-256.png" alt="Khao logo — a covered dish held on a raised hand">
-    <span class="wordmark">Khao</span>
+    <span class="wordmark">KHAO</span>
   </a>
   <div class="links">
-    <a href="#what">What it is</a>
-    <a href="#diet">Diet rules</a>
-    <a href="#screens">The app</a>
+    <a href="#what">The idea</a>
+    <a href="#rules">What it does</a>
+    <a href="#screens">Inside</a>
     <a href="support.html">Support</a>
   </div>
   <a class="cta" href="https://apps.apple.com/in/app/khao/id6789647593" target="_blank" rel="noopener">Get Khao</a>
 </nav>
 
 <!-- ====================== HERO ====================== -->
-<header class="hero wrap">
-  <p class="tag rv">iPhone &amp; iPad · English &amp; हिन्दी</p>
-  <div class="lockup rv">
-    <img src="assets/khao-mark.png" alt="Khao logo — a covered dish held on a raised hand">
-    <h1>Khao</h1>
+<header class="hero">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="hero-inner wrap">
+    <p class="eyebrow">iPhone &amp; iPad · English &amp; <span class="deva">हिन्दी</span></p>
+    <h1>KHAO</h1>
+    <p class="sub">Tonight's dish, <em>served</em> — one at a time.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://apps.apple.com/in/app/khao/id6789647593" target="_blank" rel="noopener">Download on the App Store</a>
+      <a class="btn btn-ghost" href="#what">How it works</a>
+    </div>
   </div>
-  <p class="dek rv">Decide what to eat tonight. <em>One dish at a time.</em></p>
-  <div class="cta-row rv">
-    <a class="btn btn-primary" href="https://apps.apple.com/in/app/khao/id6789647593" target="_blank" rel="noopener">Download on the App Store</a>
-    <a class="btn btn-ghost" href="#what">See how it works</a>
-  </div>
+  <div class="scrollcue">Scroll</div>
 </header>
 
-<div class="wrap rv">
-  <div class="plate hero-plate"><img src="assets/hero.jpg" alt="An aloo paratha on a plate, photographed for Khao"></div>
-</div>
-
-<!-- ====================== WHAT IT IS ====================== -->
+<!-- ====================== IDEA ====================== -->
 <section class="sec wrap" id="what">
-  <div class="eyebrow rv"><span class="num">01</span><span>What it is</span></div>
+  <div class="sec-head rv"><span class="n">01</span><span class="t">The idea</span></div>
   <div class="two">
-    <h2 class="big rv">The problem was never too few recipes. It was <em>too many.</em></h2>
+    <h2 class="big rv">Never too few recipes. <em>Too many.</em></h2>
     <div class="body rv">
-      <p>Every evening, the same negotiation: what should we eat? The internet answers with ten thousand recipes, endlessly scrollable, none of them actually chosen.</p>
-      <p>Khao does the opposite. It shows you one dish. If it's wrong, swipe it away. If it's right, cook it. It doesn't decide for you — it clears away enough of the field that deciding becomes possible again.</p>
+      <p>Every evening, the same negotiation. The internet answers it with ten thousand options, endlessly scrollable, none of them actually chosen.</p>
+      <p>Khao does the opposite. <strong>One dish.</strong> Wrong? Swipe. Right? Cook it. It doesn't decide for you — it clears the field until deciding is possible again.</p>
     </div>
   </div>
 </section>
 
-<!-- ====================== FEATURES ====================== -->
-<section class="sec wrap" id="diet">
-  <div class="eyebrow rv"><span class="num">02</span><span>What it does</span></div>
+<!-- ====================== WHAT IT DOES ====================== -->
+<section class="sec wrap" id="rules">
+  <div class="sec-head rv"><span class="n">02</span><span class="t">What it does</span></div>
   <div class="cards rv">
     <div class="card">
       <div class="k">Never bends</div>
       <h3>Diet rules are absolutes</h3>
-      <p>Jain, vegan, vegetarian, egg, allergies, a fasting day. Khao treats these as hard rules checked before anything is suggested — not as preferences to be traded off.</p>
+      <p>Jain, vegan, vegetarian, egg, allergies, a fasting day. Checked before anything is suggested — not weighed against other preferences.</p>
     </div>
     <div class="card">
       <div class="k">Everyone at once</div>
       <h3>Built for a household</h3>
-      <p>One person eats meat, another never has. Khao holds every person's rules together and only offers what works for all of them.</p>
+      <p>One person eats meat, another never has. Khao holds every person's rules together and offers only what works for all of them.</p>
     </div>
     <div class="card">
       <div class="k">Stays on your phone</div>
       <h3>No account, no sign-up</h3>
-      <p>Khao works on the device. There is no account to create, and your dietary and religious choices are not sent to a server.</p>
+      <p>It runs on the device. Nothing to create, and your dietary and religious choices are not sent to a server.</p>
     </div>
     <div class="card">
-      <div class="k">दोनों भाषाएँ</div>
+      <div class="k"><span class="deva">दोनों भाषाएँ</span></div>
       <h3>English and Hindi</h3>
-      <p>Fully bilingual, switchable whenever you like — including the dish names, not just the buttons.</p>
+      <p>Fully bilingual, switchable whenever — the dish names too, not just the buttons.</p>
     </div>
     <div class="card">
       <div class="k">Knows the calendar</div>
       <h3>Festivals and vrat days</h3>
-      <p>Restricted days are understood rather than ignored, so what Khao offers on those days is something you can actually eat.</p>
+      <p>Restricted days are understood rather than ignored, so what you're offered is something you can actually eat.</p>
     </div>
     <div class="card">
       <div class="k">Khao+</div>
       <h3>Leftover Remix</h3>
-      <p>Tell Khao what's already in the fridge and it builds dishes out of that, instead of sending you back to the shop. Part of Khao+, ₹99 a month or ₹799 a year.</p>
+      <p>Tell Khao what's already in the fridge and it builds dishes from that. Part of Khao+, ₹99 a month or ₹799 a year.</p>
     </div>
   </div>
 </section>
 
 <!-- ====================== SCREENS ====================== -->
 <section class="sec wrap" id="screens">
-  <div class="eyebrow rv"><span class="num">03</span><span>The app</span></div>
+  <div class="sec-head rv"><span class="n">03</span><span class="t">Inside</span></div>
   <div class="screens rv">
-    <div>
-      <div class="shot"><img src="assets/01-deck.jpg" alt="Khao's main screen — one dish card at a time, swipe to move on"></div>
-      <div class="shot-cap">One dish at a time</div>
-    </div>
-    <div>
-      <div class="shot"><img src="assets/02-dish-detail.jpg" alt="A dish detail screen in Khao — cook it, or hand it off to be ordered"></div>
-      <div class="shot-cap">Cook it, or order it</div>
-    </div>
-    <div>
-      <div class="shot"><img src="assets/03-dials.jpg" alt="Khao's dials — mood, time, spice and budget"></div>
-      <div class="shot-cap">Mood, time, spice, budget</div>
-    </div>
-    <div>
-      <div class="shot"><img src="assets/05-household.jpg" alt="Khao's household screen — everyone's dietary rules held at once"></div>
-      <div class="shot-cap">The whole household</div>
-    </div>
-    <div>
-      <div class="shot"><img src="assets/04-leftover-remix.jpg" alt="Khao's Leftover Remix — dishes built from what is already in the fridge"></div>
-      <div class="shot-cap">Leftover Remix</div>
-    </div>
+    <div><div class="shot"><img src="assets/01-deck.jpg" alt="Khao's main screen — one dish card at a time, swipe to move on" loading="lazy"></div><div class="shot-cap">One at a time</div></div>
+    <div><div class="shot"><img src="assets/02-dish-detail.jpg" alt="A dish detail screen in Khao — cook it, or hand it off to be ordered" loading="lazy"></div><div class="shot-cap">Cook or order</div></div>
+    <div><div class="shot"><img src="assets/03-dials.jpg" alt="Khao's dials — mood, time, spice and budget" loading="lazy"></div><div class="shot-cap">The dials</div></div>
+    <div><div class="shot"><img src="assets/05-household.jpg" alt="Khao's household screen — everyone's dietary rules held at once" loading="lazy"></div><div class="shot-cap">Household</div></div>
+    <div><div class="shot"><img src="assets/04-leftover-remix.jpg" alt="Khao's Leftover Remix — dishes built from what is already in the fridge" loading="lazy"></div><div class="shot-cap">Leftover Remix</div></div>
   </div>
 </section>
 
-<!-- ====================== GET THE APP ====================== -->
+<!-- ====================== GET ====================== -->
 <section class="getband" id="get">
   <div class="wrap">
     <h2 class="rv">Ye <em>khao.</em></h2>
     <p class="rv">One dish at a time, and you decide. On the App Store for iPhone and iPad, in English and Hindi.</p>
-    <div class="cta-row rv" style="margin-top:0;">
+    <div class="cta-row rv">
       <a class="btn btn-primary" href="https://apps.apple.com/in/app/khao/id6789647593" target="_blank" rel="noopener">Download on the App Store</a>
-      <a class="btn btn-ghost" href="https://www.instagram.com/khao_app/" target="_blank" rel="noopener">Follow @khao_app</a>
+      <a class="btn btn-ghost" href="https://www.instagram.com/khao_app/" target="_blank" rel="noopener">@khao_app</a>
     </div>
   </div>
 </section>
@@ -144,7 +125,7 @@
   <div class="foot-top">
     <a class="brand" href="./" aria-label="Khao — home">
       <img src="assets/khao-icon-256.png" alt="Khao logo">
-      <span class="wordmark">Khao</span>
+      <span class="wordmark">KHAO</span>
     </a>
     <div class="foot-links">
       <a href="support.html">Support</a>
@@ -154,27 +135,14 @@
       <a href="mailto:anirudhkapoor1996@gmail.com">Contact</a>
     </div>
   </div>
-  <div class="foot-legal mono">
+  <div class="foot-legal">
     <span>Khao · Gurgaon, India</span>
-    <span>Designed and built by <a href="https://anirudh-kapoor.com/Homepage.html" target="_blank" rel="noopener">Anirudh Kapoor</a></span>
+    <span>Built by <a href="https://anirudh-kapoor.com/Homepage.html" target="_blank" rel="noopener">Anirudh Kapoor</a></span>
     <span>© 2026</span>
   </div>
 </footer>
 
-<script>
-const nav = document.getElementById('nav');
-const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
-window.addEventListener('scroll', onScroll, { passive:true }); onScroll();
-
-const rvs = [...document.querySelectorAll('.rv')];
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-}, { rootMargin:'0px 0px -6% 0px', threshold:0.04 });
-rvs.forEach(el => io.observe(el));
-function revealVisible(){ rvs.forEach(el => { if (el.getBoundingClientRect().top < innerHeight*0.96) { el.classList.add('in'); io.unobserve(el); } }); }
-requestAnimationFrame(revealVisible);
-addEventListener('load', revealVisible);
-setTimeout(() => rvs.forEach(el => el.classList.add('in')), 2000);
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="khao.js"></script>
 </body>
 </html>
