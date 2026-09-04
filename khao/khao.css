@@ -73,10 +73,10 @@ body::after{
 .hero::after{ /* vignette so type always wins */
   content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
   background:radial-gradient(120% 90% at 68% 45%, transparent 30%, rgba(11,10,9,.55) 72%, var(--bg) 100%); }
-.hero-inner{ position:relative; z-index:2; padding:120px 0 70px; }
+.hero-inner{ position:relative; z-index:2; padding:120px 0 70px; max-width:60ch; }
 .hero .eyebrow{ margin:0 0 22px; }
 .hero h1{ font-family:var(--display); font-weight:900; letter-spacing:-.055em;
-  font-size:clamp(84px,20vw,260px); line-height:.82; margin:0;
+  font-size:clamp(78px,16vw,208px); line-height:.84; margin:0;
   background:linear-gradient(178deg, var(--ivory) 32%, var(--accent) 128%);
   -webkit-background-clip:text; background-clip:text; color:transparent; }
 .hero .sub{ font-family:var(--serif); font-style:italic; font-weight:400;
