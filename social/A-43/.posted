@@ -1,0 +1,7 @@
+{
+  "ig_media_id": null,
+  "posted_at": null,
+  "ref": "A-43",
+  "type": "carousel",
+  "note": "Backfilled 2026-09-11 - already live on @anirudh_kapoor_designs (confirmed by Anirudh; the Social Publish live-account caption check skips it). The original marker was never written and no IG media id is recorded in the repo, so ig_media_id and posted_at are null. Written so it is never re-posted and Drive archiving can run."
+}
