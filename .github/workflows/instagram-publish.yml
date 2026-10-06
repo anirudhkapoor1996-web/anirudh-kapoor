@@ -39,6 +39,42 @@ jobs:
         run: |
           pip install requests google-api-python-client google-auth
 
+      # -- Wait for GitHub Pages
+      # A push under social/ fires this workflow seconds after the commit, before
+      # Pages has deployed the new slides, so Meta/LinkedIn cannot fetch them
+      # (seen 6 Oct 2026 on A-78: IG 400 "media could not be fetched").
+      # Poll every un-posted, ready project's media URLs until they serve 200
+      # (max 10 min). A no-op on the daily cron, when everything is already live.
+      - name: Wait for Pages to serve new media
+        env:
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://anirudh-kapoor.com' }}
+        run: |
+          python - <<'PY'
+          import glob, json, os, pathlib, time, urllib.request
+          site = os.environ.get("SITE_BASE_URL", "https://anirudh-kapoor.com").rstrip("/")
+          urls = []
+          for p in sorted(glob.glob("social/A-*/post.json")):
+              d = pathlib.Path(p).parent
+              if all((d / m).exists() for m in (".posted", ".posted-fb", ".posted-li")):
+                  continue
+              m = json.loads(pathlib.Path(p).read_text(encoding="utf-8"))
+              if m.get("ready"):
+                  urls += ["%s/social/%s/%s" % (site, d.name, f) for f in m.get("media", [])]
+          def ok(u):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(u, method="HEAD"), timeout=20) as r:
+                      return r.status == 200
+              except Exception:
+                  return False
+          deadline = time.time() + 600
+          pending = list(urls)
+          while pending and time.time() < deadline:
+              pending = [u for u in pending if not ok(u)]
+              if pending:
+                  print("waiting for %d media URL(s), e.g. %s" % (len(pending), pending[0])); time.sleep(20)
+          print("all %d media URL(s) live" % len(urls) if not pending else "TIMEOUT: %d still not live" % len(pending))
+          PY
+
       # -- Instagram
       - name: Publish to Instagram
         env:
