@@ -1,6 +1,7 @@
 /* KHAO — hero scene + reveals.
-   The subject is the ACTUAL logo asset (hand, tray, domed cover, question
-   mark), not a reconstruction of it: assets/khao-mark-alpha.png on a plane in
+   The subject is the ACTUAL logo asset (a fan of three cards; the top card
+   carries a compass plate between a fork and a knife), not a reconstruction
+   of it: assets/khao-mark-alpha.png on a plane in
    3D, with a gold light behind it, drifting dust, and pointer parallax.
    Degrades to a plain dark hero without WebGL or under reduced-motion. */
 (function () {
@@ -72,7 +73,7 @@
     }
     tex.minFilter = THREE.LinearFilter;
     var aspect = (tex.image && tex.image.width && tex.image.height)
-      ? tex.image.width / tex.image.height : 1379 / 1703;
+      ? tex.image.width / tex.image.height : 1636 / 1774;
     var h = 6.6, w = h * aspect;
 
     // soft dark drop behind, for depth
