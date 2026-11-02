@@ -75,19 +75,36 @@ def wait_ready(cid, tries=30, delay=10):
         time.sleep(delay)
     raise TransientError("container %s not ready" % cid)
 
+def with_collab(d, m):
+    """Add Instagram collaborators (max 3 usernames, no @) from post.json "collaborators"."""
+    c = [x.lstrip("@").strip() for x in (m.get("collaborators") or []) if x.strip()][:3]
+    if c: d = dict(d, collaborators=json.dumps(c))
+    return d
+
+def create_container(d, m):
+    """Create the container with collaborators; if Instagram rejects them, retry once without."""
+    try:
+        return api_post("%s/media" % UID, with_collab(d, m))["id"]
+    except (RateLimited, TransientError):
+        raise
+    except Exception as e:
+        if not m.get("collaborators"): raise
+        print("collaborators rejected (%s) - posting without them" % str(e)[:160], file=sys.stderr)
+        return api_post("%s/media" % UID, d)["id"]
+
 def publish_image(ref, m):
-    c = api_post("%s/media" % UID, {"image_url": media_url(ref, m["media"][0]), "caption": m.get("caption", "")})["id"]
+    c = create_container({"image_url": media_url(ref, m["media"][0]), "caption": m.get("caption", "")}, m)
     wait_ready(c)
     return api_post("%s/media_publish" % UID, {"creation_id": c})["id"]
 def publish_carousel(ref, m):
     kids = [api_post("%s/media" % UID, {"image_url": media_url(ref, fn), "is_carousel_item": "true"})["id"] for fn in m["media"]]
-    p = api_post("%s/media" % UID, {"media_type": "CAROUSEL", "children": ",".join(kids), "caption": m.get("caption", "")})["id"]
+    p = create_container({"media_type": "CAROUSEL", "children": ",".join(kids), "caption": m.get("caption", "")}, m)
     wait_ready(p)
     return api_post("%s/media_publish" % UID, {"creation_id": p})["id"]
 def publish_reel(ref, m):
     d = {"media_type": "REELS", "video_url": media_url(ref, m["media"][0]), "caption": m.get("caption", "")}
     if m.get("cover"): d["cover_url"] = media_url(ref, m["cover"])
-    c = api_post("%s/media" % UID, d)["id"]; wait_ready(c)
+    c = create_container(d, m); wait_ready(c)
     return api_post("%s/media_publish" % UID, {"creation_id": c})["id"]
 PUB = {"image": publish_image, "carousel": publish_carousel, "reel": publish_reel}
 
