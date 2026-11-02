@@ -1,9 +1,10 @@
 {
   "ref": "A-79",
   "type": "carousel",
-  "ready": false,
+  "ready": true,
   "collaborators": [
-    "akrealestatesolutions"
+    "akrealestatesolutions",
+    "anirudh.kapoor1996"
   ],
   "caption": "AKRES — a real-estate CRM app (2026).\n\nA broker's day is split across WhatsApp, a notebook, three spreadsheets and memory. AKRES puts it on one screen: who to call today, which buyer fits which listing, which site visit is tomorrow, what is still unpaid.\n\nDesigned, written and built single-handed — product, interface and code — and live on the App Store.\n\nProduct design & engineering — Anirudh Kapoor. A·79.\n\nMore → akrealestatesolutions.co.in\n\n#productdesign #appdesign #uxdesign #uidesign #realestate #crm #proptech #iosapp #designer #madeinindia",
   "media": [
