@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquiries — Anirudh Kapoor Designs</title>
+<meta name="description" content="Start a project with Anirudh Kapoor Designs. Tell the studio what you're making, where it is, what stage it's at and the budget range. Every enquiry is read and answered by Anirudh himself within 24–48 hours.">
+<meta property="og:title" content="Enquiries — Anirudh Kapoor Designs">
+<meta property="og:description" content="Tell the studio what you're making. Every enquiry answered within 24–48 hours, by a person.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/assets/logo-ink.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ————————————————————————————————————————————————
+   Enquiries — Anirudh Kapoor Designs
+   Tokens lifted verbatim from the hub (index.html) and the Studio page,
+   so this page is of the site, not stuck onto it. Paper ground painted
+   explicitly; nothing borrowed from the host theme.
+   ———————————————————————————————————————————————— */
+:root{
+  --paper:#ece9e3; --paper-deep:#e3e0d8; --panel:#f3f1ec;
+  --ink:#20231e; --ink-2:#3b3f38; --ink-soft:#5d615a;
+  --sage:#3f4f3f; --sage-2:#566656;
+  --line:color-mix(in oklch, #20231e 13%, transparent);
+  --line-strong:color-mix(in oklch, #20231e 24%, transparent);
+  --serif:'Spectral',Georgia,'Times New Roman',serif;
+  --display:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --gut:clamp(24px,5vw,72px);
+  --rule:1px solid var(--line);
+}
+*{box-sizing:border-box;}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;} *{animation:none!important;transition:none!important;}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-weight:300;
+  font-size:17px;line-height:1.62;}
+::selection{background:var(--sage);color:var(--paper);}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance;}
+p{margin:0;}
+em,i{font-style:italic;}
+:focus-visible{outline:2px solid var(--sage);outline-offset:3px;}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding-inline:var(--gut);}
+[hidden]{display:none!important;}
+
+/* ——— nav ——— */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in oklch,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(140%) blur(8px);border-bottom:var(--rule);}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:14px;}
+.wm{display:flex;align-items:center;gap:11px;font-family:var(--sans);font-weight:600;
+  font-size:12.5px;letter-spacing:.2em;}
+.wm img{height:24px;width:auto;display:block;}
+.nav .links{display:flex;gap:22px;font-family:var(--sans);font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);flex-wrap:wrap;}
+.nav .links a{transition:color .25s;}
+.nav .links a:hover,.nav .links a[aria-current="page"]{color:var(--sage);}
+@media(max-width:760px){.nav .links{gap:14px;font-size:10.5px;}}
+
+/* ——— shared furniture ——— */
+.sec{padding-block:clamp(54px,7vw,104px);border-top:var(--rule);}
+.opener{display:flex;align-items:baseline;gap:14px;font-family:var(--sans);font-weight:600;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);
+  margin-bottom:clamp(26px,3.4vw,46px);}
+.opener .num{font-family:var(--mono);font-weight:400;color:var(--ink-soft);letter-spacing:.04em;}
+.eyebrow{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--sage);}
+
+/* ——— hero ——— */
+.hero{padding-block:clamp(52px,8vw,108px) clamp(40px,5vw,68px);}
+.hero h1{font-family:var(--display);font-weight:300;font-size:clamp(42px,7.6vw,104px);
+  line-height:.94;letter-spacing:-.015em;margin-top:18px;max-width:15ch;}
+.hero h1 em{color:var(--sage);}
+.hero .sub{font-size:clamp(17px,1.45vw,20.5px);line-height:1.56;color:var(--ink-2);
+  max-width:60ch;margin-top:clamp(22px,2.4vw,32px);}
+.rail{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:clamp(26px,3vw,40px);
+  padding-top:20px;border-top:var(--rule);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--ink-soft);}
+.rail b{font-weight:500;color:var(--ink-2);}
+
+/* ——— the form ——— */
+.enqgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);
+  gap:clamp(26px,4vw,72px);align-items:start;}
+@media(max-width:940px){.enqgrid{grid-template-columns:1fr;}}
+.aside .lede{font-family:var(--display);font-weight:300;font-size:clamp(28px,3.4vw,44px);
+  line-height:1.06;letter-spacing:-.01em;max-width:18ch;}
+.aside .lede em{color:var(--sage);}
+.aside .note{margin-top:20px;color:var(--ink-2);font-size:16px;max-width:42ch;}
+.aside .note + .note{margin-top:14px;}
+.aside .direct{margin-top:26px;padding-top:18px;border-top:1px solid var(--line-strong);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--ink-soft);}
+.aside .direct a{color:var(--sage);}
+
+form{display:flex;flex-direction:column;gap:0;}
+.field{display:flex;flex-direction:column;gap:7px;padding-block:16px;border-top:var(--rule);}
+.field:first-of-type{border-top:1px solid var(--line-strong);}
+.field > label{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink);display:flex;gap:10px;align-items:baseline;}
+.field > label .opt{font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.04em;
+  text-transform:none;color:var(--ink-soft);}
+.hint{font-size:14.5px;color:var(--ink-soft);line-height:1.5;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(16px,2.4vw,34px);}
+@media(max-width:620px){.row2{grid-template-columns:1fr;}}
+.row2 .field{border-top:var(--rule);}
+input[type=text],input[type=email],select,textarea{
+  font-family:var(--serif);font-weight:300;font-size:16.5px;color:var(--ink);
+  background:var(--panel);border:1px solid var(--line-strong);border-radius:0;
+  padding:12px 14px;width:100%;transition:border-color .2s,background .2s;}
+textarea{min-height:132px;resize:vertical;line-height:1.55;}
+select{font-family:var(--serif);appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink-soft) 50%),linear-gradient(135deg,var(--ink-soft) 50%,transparent 50%);
+  background-position:calc(100% - 20px) calc(50% + 2px),calc(100% - 14px) calc(50% + 2px);
+  background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:42px;}
+input:focus,select:focus,textarea:focus{border-color:var(--sage);background:#f7f6f2;outline:none;}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--sage);outline-offset:2px;}
+.err{font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:#8a3a2c;}
+.field.bad input,.field.bad select,.field.bad textarea{border-color:#8a3a2c;}
+
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;
+  padding-top:26px;border-top:1px solid var(--line-strong);margin-top:4px;}
+.btn{display:inline-flex;align-items:center;gap:10px;
+  padding:15px 26px;background:var(--sage);color:var(--paper);
+  font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;border:1px solid var(--sage);border-radius:0;cursor:pointer;
+  transition:background .25s,color .25s;}
+.btn:hover{background:transparent;color:var(--sage);}
+.btn.ghost{background:transparent;color:var(--sage);}
+.btn.ghost:hover{background:var(--sage);color:var(--paper);}
+.btn.small{padding:11px 18px;font-size:11px;}
+.actions .aside-note{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;max-width:40ch;}
+
+/* ——— composed panel ——— */
+.composed{margin-top:clamp(28px,3.2vw,44px);padding:clamp(20px,2.4vw,30px);
+  background:var(--panel);border:1px solid var(--line-strong);}
+.composed h2{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--sage);}
+.composed p.lead{margin-top:12px;color:var(--ink-2);font-size:16px;max-width:64ch;}
+.composed pre{margin:18px 0 0;padding:18px;background:var(--paper);border:var(--rule);
+  font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--ink-2);
+  white-space:pre-wrap;word-break:break-word;max-height:340px;overflow:auto;}
+.composed .row{display:flex;flex-wrap:wrap;gap:12px 16px;margin-top:18px;align-items:center;}
+.composed .said{font-family:var(--mono);font-size:11.5px;color:var(--sage);letter-spacing:.03em;}
+
+/* ——— promise ——— */
+.promise{padding:clamp(20px,2.4vw,30px);background:var(--panel);border:var(--rule);
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 26px;}
+.promise .t{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--sage);}
+.promise p{color:var(--ink-2);max-width:66ch;font-size:16px;}
+
+/* ——— footer ——— */
+.foot{border-top:var(--rule);padding-block:clamp(30px,3.6vw,48px) clamp(36px,4vw,56px);}
+.foot .in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;}
+.foot img{height:26px;width:auto;display:block;opacity:.7;}
+.foot .grp{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;
+  font-family:var(--sans);font-size:12px;letter-spacing:.08em;color:var(--ink-2);}
+.foot .grp a{transition:color .25s;}
+.foot .grp a:hover{color:var(--sage);}
+.foot .loc{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;}
+
+/* the honeypot — off-screen, never focusable */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="in wrap">
+    <a class="wm" href="/"><span aria-hidden="true" style="font-family:var(--display);font-size:20px;line-height:1;color:var(--sage);letter-spacing:.02em;">AK</span><span>ANIRUDH&nbsp;KAPOOR</span></a>
+    <div class="links">
+      <a href="/design/studio.html">Studio</a>
+      <a href="/design/">Work</a>
+      <a href="/Archive.html">Archive</a>
+      <a href="/About.html">About</a>
+      <a href="/CV.html">CV</a>
+      <a href="/design/enquire.html" aria-current="page">Enquiries</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="eyebrow">Anirudh Kapoor Designs · Enquiries</span>
+  <h1>Tell me what you're <em>making</em>.</h1>
+  <p class="sub">Five questions, because the answers are what let me reply with something useful rather than a rate card. Every enquiry is read and answered by Anirudh himself — within 24 to 48 hours.</p>
+  <div class="rail">
+    <span><b>Replies in 24–48 hours</b></span>
+    <span>Read by a person, not a form</span>
+    <span>No obligation, no automated follow-ups</span>
+  </div>
+</header>
+
+<section class="sec wrap">
+  <div class="opener"><span class="num">01</span><span>Your enquiry</span></div>
+
+  <div class="enqgrid">
+    <div class="aside">
+      <p class="lede">A good brief is mostly <em>constraints</em>.</p>
+      <p class="note">The budget question is not a filter — it is the fastest way to tell you honestly whether the studio is the right answer for your project, and to propose a shape that fits. An approximate range is enough.</p>
+      <p class="note">Nothing here is stored or sent anywhere else. Filling this in composes an email from your own address, which you send yourself — so you keep the thread, and the reply comes back to you directly.</p>
+      <p class="direct">Prefer to just write? <a href="mailto:support@anirudh-kapoor.com">support@anirudh-kapoor.com</a><br>Anirudh Kapoor Designs · Gurgaon / Worldwide</p>
+    </div>
+
+    <div>
+      <form id="enq" novalidate>
+        <div class="row2">
+          <div class="field" data-for="name">
+            <label for="f-name">Your name</label>
+            <input type="text" id="f-name" name="name" autocomplete="name" required>
+            <span class="err" hidden>Please add your name.</span>
+          </div>
+          <div class="field" data-for="email">
+            <label for="f-email">Your email</label>
+            <input type="email" id="f-email" name="email" autocomplete="email" required>
+            <span class="err" hidden>Please add an email I can reply to.</span>
+          </div>
+        </div>
+
+        <div class="field" data-for="what">
+          <label for="f-what">What it is, and where it is</label>
+          <span class="hint">A restaurant in Bengaluru. A jewellery house needing an identity. Forty flats in Gurugram that need a brochure.</span>
+          <input type="text" id="f-what" name="what" required>
+          <span class="err" hidden>A line is enough — what, and where.</span>
+        </div>
+
+        <div class="row2">
+          <div class="field" data-for="stage">
+            <label for="f-stage">What stage it's at</label>
+            <select id="f-stage" name="stage" required>
+              <option value="">Select one</option>
+              <option>An idea, nothing drawn yet</option>
+              <option>A site, a plan or a space exists</option>
+              <option>A brand already in use, needing work</option>
+              <option>Mid-project, needs someone to take it on</option>
+              <option>Something else — explained below</option>
+            </select>
+            <span class="err" hidden>Pick the closest one.</span>
+          </div>
+          <div class="field" data-for="when">
+            <label for="f-when">When you need it by</label>
+            <select id="f-when" name="when" required>
+              <option value="">Select one</option>
+              <option>No fixed date yet</option>
+              <option>Within a month</option>
+              <option>One to three months</option>
+              <option>Three to six months</option>
+              <option>Later than six months</option>
+            </select>
+            <span class="err" hidden>An approximate window is fine.</span>
+          </div>
+        </div>
+
+        <div class="field" data-for="budget">
+          <label for="f-budget">Budget range you have in mind</label>
+          <span class="hint">Approximate is fine. It decides the shape of the proposal, not whether you get a reply.</span>
+          <select id="f-budget" name="budget" required>
+            <option value="">Select one</option>
+            <option>Under ₹50,000 / under $600</option>
+            <option>₹50,000 – ₹1.5 lakh / $600 – $1,800</option>
+            <option>₹1.5 – 5 lakh / $1,800 – $6,000</option>
+            <option>₹5 – 15 lakh / $6,000 – $18,000</option>
+            <option>Above ₹15 lakh / above $18,000</option>
+            <option>Genuinely not sure yet — advise me</option>
+          </select>
+          <span class="err" hidden>Pick a range, or the last option.</span>
+        </div>
+
+        <div class="field" data-for="brief">
+          <label for="f-brief">The brief, in your own words <span class="opt">optional, but it helps</span></label>
+          <span class="hint">What you're trying to achieve, what is getting in the way, and anything already decided.</span>
+          <textarea id="f-brief" name="brief"></textarea>
+        </div>
+
+        <div class="row2">
+          <div class="field" data-for="org">
+            <label for="f-org">Organisation <span class="opt">optional</span></label>
+            <input type="text" id="f-org" name="org" autocomplete="organization">
+          </div>
+          <div class="field" data-for="found">
+            <label for="f-found">How you found the studio <span class="opt">optional</span></label>
+            <input type="text" id="f-found" name="found">
+          </div>
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label for="f-company">Leave this field empty</label>
+          <input type="text" id="f-company" name="company" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn">Compose the enquiry <span aria-hidden="true">→</span></button>
+          <span class="aside-note">Opens your mail app with everything filled in. You press send.</span>
+        </div>
+      </form>
+
+      <div class="composed" id="out" hidden>
+        <h2>Ready to send</h2>
+        <p class="lead" id="out-lead">Your mail app should have opened with this enquiry already written. If it didn't — many browsers and webmail setups block that — copy the text below into a new email to <a href="mailto:support@anirudh-kapoor.com">support@anirudh-kapoor.com</a>. It is identical either way.</p>
+        <pre id="out-body"></pre>
+        <div class="row">
+          <button type="button" class="btn ghost small" id="copy">Copy the text</button>
+          <a class="btn ghost small" id="openmail" href="#">Open my mail app again</a>
+          <span class="said" id="said" hidden>Copied.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap">
+  <div class="opener"><span class="num">02</span><span>What happens next</span></div>
+  <div class="promise">
+    <span class="t">The reply</span>
+    <p>Enquiries are answered within 24–48 hours, by a person, with something useful in the reply — an honest read of the problem, and what it would take. If the studio is not the right fit for the work, that is said plainly rather than quoted around. Nothing is added to a mailing list, and there are no automated follow-ups.</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="in wrap">
+    <span aria-hidden="true" style="font-family:var(--display);font-size:20px;line-height:1;color:var(--sage);letter-spacing:.02em;">AK</span>
+    <div class="grp">
+      <a href="/design/studio.html">The studio</a>
+      <a href="/design/">Selected work</a>
+      <a href="/Archive.html">Archive</a>
+      <a href="/CV.html">Curriculum Vit&aelig;</a>
+      <a href="https://www.instagram.com/anirudh_kapoor_designs" target="_blank" rel="noopener">Instagram &#8599;</a>
+      <a href="mailto:support@anirudh-kapoor.com">support@anirudh-kapoor.com</a>
+    </div>
+    <span class="loc">Anirudh Kapoor Designs &middot; Gurgaon / Worldwide &middot; Est. 2013</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var TO = "support@anirudh-kapoor.com";
+  var form = document.getElementById("enq");
+  var out = document.getElementById("out");
+  var outBody = document.getElementById("out-body");
+  var openmail = document.getElementById("openmail");
+  var copyBtn = document.getElementById("copy");
+  var said = document.getElementById("said");
+
+  function el(id){ return document.getElementById(id); }
+  function val(id){ return (el(id).value || "").trim(); }
+  function fieldOf(input){ return input.closest(".field"); }
+
+  var required = ["f-name","f-email","f-what","f-stage","f-when","f-budget"];
+
+  function isEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s); }
+
+  function validate(){
+    var firstBad = null;
+    required.forEach(function(id){
+      var input = el(id);
+      var wrap = fieldOf(input);
+      var err = wrap.querySelector(".err");
+      var bad = !val(id) || (id === "f-email" && !isEmail(val(id)));
+      wrap.classList.toggle("bad", bad);
+      if(err) err.hidden = !bad;
+      if(bad && !firstBad) firstBad = input;
+    });
+    if(firstBad){ firstBad.focus(); }
+    return !firstBad;
+  }
+
+  function build(){
+    var lines = [];
+    lines.push("What it is, and where: " + val("f-what"));
+    lines.push("Stage: " + val("f-stage"));
+    lines.push("Needed by: " + val("f-when"));
+    lines.push("Budget range: " + val("f-budget"));
+    if(val("f-org")) lines.push("Organisation: " + val("f-org"));
+    lines.push("");
+    if(val("f-brief")){
+      lines.push("The brief, in my words:");
+      lines.push(val("f-brief"));
+      lines.push("");
+    }
+    if(val("f-found")) lines.push("Found the studio via: " + val("f-found"));
+    lines.push("— " + val("f-name"));
+    lines.push(val("f-email"));
+    return lines.join("\n");
+  }
+
+  function subject(){
+    var who = val("f-org") || val("f-name");
+    return "Studio enquiry — " + who;
+  }
+
+  function mailtoHref(subj, body){
+    return "mailto:" + TO + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(val("f-company")) return;           // honeypot filled — a bot; do nothing.
+    if(!validate()) return;
+
+    var subj = subject();
+    var body = build();
+    var href = mailtoHref(subj, body);
+
+    outBody.textContent = "To: " + TO + "\nSubject: " + subj + "\n\n" + body;
+    openmail.setAttribute("href", href);
+    out.hidden = false;
+    said.hidden = true;
+
+    window.location.href = href;
+    out.scrollIntoView({block:"start"});
+  });
+
+  copyBtn.addEventListener("click", function(){
+    var text = outBody.textContent;
+    function done(){ said.hidden = false; setTimeout(function(){ said.hidden = true; }, 2600); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly","");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); done(); } catch(err){ /* the text is on screen regardless */ }
+      document.body.removeChild(ta);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

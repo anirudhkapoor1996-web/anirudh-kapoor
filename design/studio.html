@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Studio — Anirudh Kapoor Designs</title>
+<meta name="description" content="Anirudh Kapoor Designs — spaces, identities, and the systems that carry them. Work for Taj, Hyatt, ITC, Marriott, DLF and Diageo. Every enquiry answered within 24–48 hours.">
+<meta property="og:title" content="The Studio — Anirudh Kapoor Designs">
+<meta property="og:description" content="Spaces, identities, and the systems that carry them.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/assets/logo-ink.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ————————————————————————————————————————————————
+   The Studio — Anirudh Kapoor Designs
+   Tokens lifted verbatim from the hub (index.html) so this page is
+   of the site, not stuck onto it. Single visual world by intent:
+   the site commits to paper, not to a theme switch — so every colour
+   is painted explicitly and nothing is borrowed from the host ground.
+   ———————————————————————————————————————————————— */
+:root{
+  --paper:#ece9e3; --paper-deep:#e3e0d8; --panel:#f3f1ec;
+  --ink:#20231e; --ink-2:#3b3f38; --ink-soft:#5d615a;
+  --sage:#3f4f3f; --sage-2:#566656;
+  --line:color-mix(in oklch, #20231e 13%, transparent);
+  --line-strong:color-mix(in oklch, #20231e 24%, transparent);
+  --serif:'Spectral',Georgia,'Times New Roman',serif;
+  --display:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --gut:clamp(24px,5vw,72px);
+  --rule:1px solid var(--line);
+}
+*{box-sizing:border-box;}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;} *{animation:none!important;transition:none!important;}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-weight:300;
+  font-size:17px;line-height:1.62;}
+::selection{background:var(--sage);color:var(--paper);}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance;}
+p{margin:0;}
+em,i{font-style:italic;}
+:focus-visible{outline:2px solid var(--sage);outline-offset:3px;}
+
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding-inline:var(--gut);}
+
+/* ——— nav ——— */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in oklch,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(140%) blur(8px);border-bottom:var(--rule);}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding-block:14px;}
+.wm{display:flex;align-items:center;gap:11px;font-family:var(--sans);font-weight:600;
+  font-size:12.5px;letter-spacing:.2em;}
+.wm img{height:24px;width:auto;display:block;}
+.nav .links{display:flex;gap:22px;font-family:var(--sans);font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);flex-wrap:wrap;}
+.nav .links a{transition:color .25s;}
+.nav .links a:hover{color:var(--sage);}
+@media(max-width:760px){.nav .links{gap:14px;font-size:10.5px;}}
+
+/* ——— shared section furniture ——— */
+.sec{padding-block:clamp(54px,7vw,104px);border-top:var(--rule);}
+.opener{display:flex;align-items:baseline;gap:14px;font-family:var(--sans);font-weight:600;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);
+  margin-bottom:clamp(26px,3.4vw,46px);}
+.opener .num{font-family:var(--mono);font-weight:400;color:var(--ink-soft);letter-spacing:.04em;}
+.lede{font-family:var(--display);font-weight:300;font-size:clamp(28px,3.6vw,46px);
+  line-height:1.08;letter-spacing:-.01em;max-width:19ch;}
+.lede em{color:var(--sage);}
+
+/* ——— hero ——— */
+.hero{padding-block:clamp(56px,9vw,124px) clamp(44px,6vw,80px);}
+.eyebrow{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--sage);}
+.hero h1{font-family:var(--display);font-weight:300;font-size:clamp(44px,8.2vw,116px);
+  line-height:.92;letter-spacing:-.015em;margin-top:18px;max-width:14ch;}
+.hero h1 em{color:var(--sage);}
+.hero .sub{font-size:clamp(17px,1.45vw,20.5px);line-height:1.56;color:var(--ink-2);
+  max-width:58ch;margin-top:clamp(22px,2.4vw,32px);}
+.rail{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:clamp(28px,3vw,44px);
+  padding-top:20px;border-top:var(--rule);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--ink-soft);}
+.rail b{font-weight:500;color:var(--ink-2);}
+
+/* ——— 01 disciplines ——— */
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,2.6vw,44px);}
+.col{display:flex;flex-direction:column;gap:10px;padding-top:18px;border-top:1px solid var(--line-strong);}
+.col h3{font-family:var(--display);font-weight:400;font-size:clamp(23px,2.1vw,30px);line-height:1.06;}
+.col h3 em{color:var(--sage);}
+.col p{color:var(--ink-2);font-size:16px;max-width:38ch;}
+@media(max-width:900px){.cols{grid-template-columns:1fr;}}
+
+/* ——— 02 who ——— */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+  gap:clamp(24px,4vw,68px);align-items:start;}
+.split p + p{margin-top:16px;}
+.split .body{color:var(--ink-2);max-width:62ch;}
+.clients{margin-top:26px;padding-top:18px;border-top:var(--rule);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--ink-soft);
+  display:flex;flex-wrap:wrap;gap:8px 18px;}
+@media(max-width:900px){.split{grid-template-columns:1fr;}}
+
+/* ——— 03 proof ——— */
+.proof{display:flex;flex-direction:column;}
+.work{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(18px,3vw,56px);
+  padding-block:clamp(26px,3vw,40px);border-top:var(--rule);
+  transition:background .3s;}
+.work:first-of-type{border-top:1px solid var(--line-strong);}
+.work:hover{background:color-mix(in oklch,var(--panel) 60%,transparent);}
+.work .code{font-family:var(--mono);font-size:12px;color:var(--sage);letter-spacing:.06em;
+  padding-top:8px;white-space:nowrap;}
+.work h3{font-family:var(--display);font-weight:400;font-size:clamp(30px,4vw,54px);
+  line-height:1.0;letter-spacing:-.01em;}
+.work h3 em{color:var(--sage);}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:12px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--ink-soft);}
+.work p{margin-top:14px;color:var(--ink-2);max-width:64ch;}
+.work .go{display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+  font-family:var(--mono);font-size:11.5px;color:var(--sage);letter-spacing:.04em;}
+.work .go .ar{transition:transform .25s;}
+.work:hover .go .ar{transform:translateX(5px);}
+.archive-link{margin-top:26px;font-family:var(--mono);font-size:11.5px;color:var(--sage);
+  letter-spacing:.04em;}
+@media(max-width:700px){.work{grid-template-columns:1fr;gap:6px;}.work .code{padding-top:0;}}
+
+/* ——— 04 process ——— */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,2.4vw,38px);
+  counter-reset:step;}
+.step{display:flex;flex-direction:column;gap:9px;padding-top:16px;border-top:1px solid var(--line-strong);}
+.step .n{font-family:var(--mono);font-size:11.5px;color:var(--sage);letter-spacing:.06em;}
+.step h3{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink);}
+.step p{color:var(--ink-2);font-size:15.5px;line-height:1.55;}
+.step p em{color:var(--ink);font-style:italic;}
+@media(max-width:1000px){.steps{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.steps{grid-template-columns:1fr;}}
+
+.promise{margin-top:clamp(30px,3.4vw,48px);padding:clamp(20px,2.4vw,30px);
+  background:var(--panel);border:var(--rule);
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 26px;}
+.promise .t{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--sage);}
+.promise p{color:var(--ink-2);max-width:66ch;font-size:16px;}
+
+/* ——— 05 enquiry ——— */
+.enq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(26px,4vw,64px);align-items:start;}
+.enq .big{font-family:var(--display);font-weight:300;font-size:clamp(38px,6vw,78px);
+  line-height:.96;letter-spacing:-.015em;}
+.enq .big em{color:var(--sage);}
+.checklist{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-strong);}
+.checklist li{padding-block:12px;border-bottom:var(--rule);display:grid;
+  grid-template-columns:26px minmax(0,1fr);gap:12px;color:var(--ink-2);font-size:16px;}
+.checklist li span{font-family:var(--mono);font-size:11.5px;color:var(--sage);padding-top:4px;}
+.btn{display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+  padding:15px 26px;background:var(--sage);color:var(--paper);
+  font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;border:1px solid var(--sage);transition:background .25s,color .25s;}
+.btn:hover{background:transparent;color:var(--sage);}
+.enq .after{margin-top:16px;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);
+  letter-spacing:.03em;}
+.enq .after a{color:var(--sage);}
+@media(max-width:860px){.enq{grid-template-columns:1fr;}}
+
+/* ——— footer ——— */
+.foot{border-top:var(--rule);padding-block:clamp(30px,3.6vw,48px) clamp(36px,4vw,56px);}
+.foot .in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;}
+.foot img{height:26px;width:auto;display:block;opacity:.7;}
+.foot .grp{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;
+  font-family:var(--sans);font-size:12px;letter-spacing:.08em;color:var(--ink-2);}
+.foot .grp a{transition:color .25s;}
+.foot .grp a:hover{color:var(--sage);}
+.foot .loc{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="in wrap">
+    <a class="wm" href="/"><img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
+    <div class="links">
+      <a href="/design/">Work</a>
+      <a href="/Archive.html">Archive</a>
+      <a href="/About.html">About</a>
+      <a href="/CV.html">CV</a>
+      <a href="#enquiry">Enquiries</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="eyebrow">Anirudh Kapoor Designs · The Studio</span>
+  <h1>Work you can <em>account</em> for.</h1>
+  <p class="sub">The studio takes on spaces, identities, and the systems that carry them. Every element in the work can be justified by the job it does — which is also the reason the work tends to outlast the brief that produced it.</p>
+  <div class="rail">
+    <span><b>Est. 2013</b></span>
+    <span><b>Gurgaon</b> / Worldwide</span>
+    <span>Taj · Hyatt · Marriott · ITC · DLF · Diageo</span>
+  </div>
+</header>
+
+<section class="sec wrap" id="work">
+  <div class="opener"><span class="num">01</span><span>What the studio takes on</span></div>
+  <div class="cols">
+    <div class="col">
+      <h3>Spaces &amp; <em>objects</em></h3>
+      <p>Interiors, exhibition, furniture, artwork and installation — concept through built outcome. Budget, material, production and maintenance are treated as inputs to the design, not obstacles to it.</p>
+    </div>
+    <div class="col">
+      <h3>Identity &amp; <em>systems</em></h3>
+      <p>Brand identity, art direction, signage and wayfinding, collateral. One governing mark or grammar, drawn once, then extended across every surface the brand actually touches.</p>
+    </div>
+    <div class="col">
+      <h3>Web &amp; what runs <em>behind it</em></h3>
+      <p>Sites held to the same standard as the identity — and wired to the enquiry, records and follow-up that decide whether a site earns anything after launch.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap">
+  <div class="opener"><span class="num">02</span><span>Who it is for</span></div>
+  <div class="split">
+    <p class="lede">Clients with something specific to <em>protect</em>.</p>
+    <div class="body">
+      <p>Hospitality groups and restaurants. Luxury residential and real-estate developers. Jewellery and craft houses. Founders who would rather commission one considered thing than five approximate ones.</p>
+      <p>The studio has worked inside that register for over a decade, and speaks it natively. It is not a requirement: the method needs a real problem and honest constraints, not a famous name above the door.</p>
+      <div class="clients">
+        <span>Taj</span><span>Hyatt</span><span>Marriott</span><span>ITC</span><span>DLF</span><span>Diageo</span><span>M Moser — Facebook &amp; Google offices</span><span>Express Towers</span><span>Delhi Golf Club</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec wrap">
+  <div class="opener"><span class="num">03</span><span>Three that show the method</span></div>
+  <div class="proof">
+
+    <a class="work" href="/Project — House of Ming.html">
+      <span class="code">A·01</span>
+      <div>
+        <h3>House of <em>Ming</em></h3>
+        <div class="meta"><span>Taj · Taj Mansingh, New Delhi</span><span>2018</span><span>Artwork &amp; installation design</span></div>
+        <p>A brief with no function to justify it: the pieces did not have to work, only to mean. Each installation earns its place through narrative alone — drawn from the restaurant's own door pattern and the architecture of the Taj Mansingh lobby — so that nothing reads as decoration applied from outside.</p>
+        <span class="go">Read the case study <span class="ar">→</span></span>
+      </div>
+    </a>
+
+    <a class="work" href="/Project — Aralias.html">
+      <span class="code">A·56</span>
+      <div>
+        <h3>Aralias Members' <em>Club</em></h3>
+        <div class="meta"><span>The Aralias · DLF · Gurugram</span><span>2018</span><span>Brand identity &amp; art direction</span></div>
+        <p>A club spanning dining rooms, a bar, a spa, a gym and salon, courts and a kids' club needed one identity supple enough to badge all of them without ever looking like a different place. The answer is a single drawn wordmark, tied by a continuous loop, carried through every sub-brand, sign, menu, package and uniform on the property.</p>
+        <span class="go">Read the case study <span class="ar">→</span></span>
+      </div>
+    </a>
+
+    <a class="work" href="/Project — Kashini.html">
+      <span class="code">A·40</span>
+      <div>
+        <h3><em>Kashini</em></h3>
+        <div class="meta"><span>Kashini · Fine Jewellery</span><span>Identity, collateral &amp; website</span><span>Navy &amp; gold</span></div>
+        <p>One lettermark — a lowercase “k” with a fine line-drawn lotus set into its counters — extended into a cusped Mughal arch, a jali ground, a gifting catalogue and a live online boutique. The identity, the collateral and the store are the design here; the jewellery is the house's own.</p>
+        <span class="go">Read the case study <span class="ar">→</span></span>
+      </div>
+    </a>
+
+  </div>
+  <p class="archive-link"><a href="/Archive.html">The full archive — seventy-odd projects →</a></p>
+</section>
+
+<section class="sec wrap">
+  <div class="opener"><span class="num">04</span><span>How a project runs</span></div>
+  <div class="steps">
+    <div class="step">
+      <span class="n">01</span>
+      <h3>Enquiry</h3>
+      <p>Write with what you are trying to do, in your own words. Every enquiry is read and answered by Anirudh himself — <em>within 24 to 48 hours</em>. Not instant, and not a form response.</p>
+    </div>
+    <div class="step">
+      <span class="n">02</span>
+      <h3>Definition</h3>
+      <p>A short conversation to establish the problem that actually exists, the constraints around it, who it is for, and what outcome would count as success. Most briefs change here, for the better.</p>
+    </div>
+    <div class="step">
+      <span class="n">03</span>
+      <h3>Proposal</h3>
+      <p>Scope, deliverables, stages, timeline and a fixed fee — in writing, before any work begins. Nothing starts on an assumption about what was meant.</p>
+    </div>
+    <div class="step">
+      <span class="n">04</span>
+      <h3>Build &amp; handover</h3>
+      <p>Work proceeds in reviewed stages, so nothing arrives as a surprise at the end. You receive the files and the reasoning behind them — a system you can keep running without the studio.</p>
+    </div>
+  </div>
+  <div class="promise">
+    <span class="t">The reply</span>
+    <p>Enquiries are answered within 24–48 hours, by a person, with something useful in the reply — an honest read of the problem, and what it would take. If the studio is not the right fit for the work, that is said plainly rather than quoted around.</p>
+  </div>
+</section>
+
+<section class="sec wrap" id="enquiry">
+  <div class="opener"><span class="num">05</span><span>Enquiries</span></div>
+  <div class="enq">
+    <p class="big">Tell me what you're <em>making</em>.</p>
+    <div>
+      <ul class="checklist">
+        <li><span>01</span><div>What it is, and where it is.</div></li>
+        <li><span>02</span><div>What stage it's at — an idea, a site, a brand already in use.</div></li>
+        <li><span>03</span><div>When you need it by.</div></li>
+        <li><span>04</span><div>The budget range you have in mind, even approximately.</div></li>
+      </ul>
+      <a class="btn" href="/design/enquire.html">Write to the studio <span aria-hidden="true">→</span></a>
+      <p class="after">Or simply email <a href="mailto:support@anirudh-kapoor.com">support@anirudh-kapoor.com</a> · replies within 24–48 hours</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="in wrap">
+    <img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram">
+    <div class="grp">
+      <a href="/design/">Selected work</a>
+      <a href="/Archive.html">Archive</a>
+      <a href="/CV.html">Curriculum Vitæ</a>
+      <a href="https://www.instagram.com/anirudh_kapoor_designs" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="mailto:support@anirudh-kapoor.com">support@anirudh-kapoor.com</a>
+    </div>
+    <span class="loc">Anirudh Kapoor Designs · Gurgaon / Worldwide · Est. 2013</span>
+  </div>
+</footer>
+
+</body>
+</html>
