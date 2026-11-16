@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Export OS — The CRM for Indian Exporters</title>
+<meta name="description" content="Export OS is a CRM built for Indian exporters: buyers, samples, quotations, shipments, follow-ups and GST paperwork in one place. Free trial, then monthly.">
+<meta name="theme-color" content="#ece9e3">
+<meta property="og:title" content="Export OS — The CRM for Indian Exporters">
+<meta property="og:description" content="Buyers, samples, quotes, shipments and GST in one place. Free trial, then monthly.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/assets/logo-ink.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ece9e3; --panel:#f5f3ee; --deep:#e2ded5;
+    --ink:#20231e; --ink-2:#3b3f38; --ink-soft:#62665e;
+    --sage:#3f4f3f; --sage-2:#566656; --brass:#a8834f;
+    --line:color-mix(in oklch, var(--ink) 13%, transparent);
+    --serif:'Spectral',Georgia,serif; --display:'Cormorant Garamond',Georgia,serif;
+    --sans:'Archivo','Helvetica Neue',Helvetica,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3{margin:0;font-weight:400;}
+  .wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));}
+  .eyebrow{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:500;font-size:14px;letter-spacing:.02em;padding:14px 24px;border:1px solid var(--ink);border-radius:2px;transition:background .25s,color .25s;}
+  .btn.solid{background:var(--ink);color:var(--paper);}
+  .btn.solid:hover{background:var(--sage);border-color:var(--sage);}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper);}
+
+  /* header */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:66px;}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:.04em;}
+  .brand img{height:24px;width:auto;}
+  .brand small{font-family:var(--mono);font-weight:400;font-size:11px;color:var(--ink-soft);letter-spacing:0;}
+  nav.links{display:flex;gap:22px;font-family:var(--sans);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+  nav.links a:hover{color:var(--sage);}
+  @media(max-width:760px){nav.links a:not(.cta){display:none;}}
+  nav.links .cta{color:var(--sage);font-weight:600;}
+
+  /* hero */
+  .hero{padding:clamp(48px,8vw,100px) 0 clamp(40px,6vw,70px);display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,4vw,60px);align-items:center;}
+  .hero > *{min-width:0;}
+  .hero h1{font-family:var(--display);font-weight:300;font-size:clamp(44px,6.4vw,86px);line-height:.95;letter-spacing:-.015em;margin:16px 0 0;text-wrap:balance;}
+  .hero h1 em{font-style:italic;color:var(--sage);}
+  .hero p.lead{font-size:clamp(17px,1.6vw,20px);font-weight:300;color:var(--ink-2);max-width:44ch;margin:20px 0 28px;}
+  .hero .acts{display:flex;gap:12px;flex-wrap:wrap;}
+  .hero .note{font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin-top:16px;}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;}}
+
+  /* product mock: drawn in CSS so it stays crisp */
+  .mock{background:var(--panel);border:1px solid var(--line);border-radius:6px;box-shadow:0 30px 60px -30px rgba(32,35,30,.35);overflow:hidden;font-family:var(--sans);}
+  .mock .top{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--deep);}
+  .mock .top i{width:9px;height:9px;border-radius:50%;background:color-mix(in oklch,var(--ink) 22%,transparent);}
+  .mock .top b{margin-left:10px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
+  .board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:14px;}
+  .col h4{margin:0 0 8px;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:8px 9px;margin-bottom:8px;}
+  .card .n{font-size:11.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .card .m{font-family:var(--mono);font-size:10px;color:var(--ink-soft);margin-top:2px;}
+  .tag{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:9.5px;padding:2px 6px;border-radius:2px;background:color-mix(in oklch,var(--sage) 14%,transparent);color:var(--sage);}
+  .tag.warm{background:color-mix(in oklch,var(--brass) 18%,transparent);color:#7d5f33;}
+  .strip{display:flex;gap:0;border-top:1px solid var(--line);}
+  .strip div{flex:1;padding:10px 14px;border-right:1px solid var(--line);}
+  .strip div:last-child{border-right:0;}
+  .strip b{display:block;font-family:var(--display);font-size:24px;font-weight:400;line-height:1;}
+  .strip span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
+  @media(max-width:520px){.board{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+  /* sections */
+  section.blk{padding:clamp(56px,8vw,110px) 0;border-top:1px solid var(--line);}
+  .head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(26px,4vw,44px);}
+  .head h2{font-family:var(--display);font-weight:300;font-size:clamp(32px,4.2vw,54px);line-height:1;max-width:18ch;margin-top:10px;text-wrap:balance;}
+  .head h2 em{font-style:italic;color:var(--sage);}
+  .head p{max-width:42ch;color:var(--ink-2);margin:0;}
+
+  .feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.4vw,20px);}
+  .feat{background:color-mix(in oklch,var(--panel) 60%,transparent);border:1px solid var(--line);padding:22px;border-radius:2px;display:flex;flex-direction:column;gap:12px;}
+  .feat svg{width:34px;height:34px;stroke:var(--sage);fill:none;stroke-width:1.4;}
+  .feat h3{font-family:var(--display);font-size:26px;line-height:1.05;}
+  .feat p{margin:0;font-size:15px;color:var(--ink-2);}
+  @media(max-width:900px){.feats{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:560px){.feats{grid-template-columns:1fr;}}
+
+  .trades{display:flex;flex-wrap:wrap;gap:10px;}
+  .trades span{font-family:var(--sans);font-size:13px;letter-spacing:.06em;padding:10px 16px;border:1px solid var(--line);border-radius:40px;background:var(--panel);}
+
+  .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,28px);counter-reset:s;}
+  .step{border-top:2px solid var(--ink);padding-top:16px;}
+  .step::before{counter-increment:s;content:"0" counter(s);font-family:var(--mono);font-size:12px;color:var(--sage);}
+  .step h3{font-family:var(--display);font-size:28px;margin:8px 0;}
+  .step p{margin:0;color:var(--ink-2);font-size:15.5px;}
+  @media(max-width:760px){.steps{grid-template-columns:1fr;}}
+
+  .price{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);border-radius:2px;overflow:hidden;}
+  .price > div{padding:clamp(24px,3vw,40px);min-width:0;}
+  .price .a{background:var(--panel);}
+  .price .b{background:var(--ink);color:var(--paper);}
+  .price .k{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.8;}
+  .price h3{font-family:var(--display);font-weight:300;font-size:clamp(38px,4vw,56px);line-height:1;margin:10px 0 12px;}
+  .price p{margin:0;font-size:15.5px;opacity:.9;}
+  .price .b .btn{border-color:var(--paper);color:var(--paper);margin-top:22px;}
+  .price .b .btn:hover{background:var(--paper);color:var(--ink);}
+  @media(max-width:700px){.price{grid-template-columns:1fr;}}
+
+  .faq details{border-bottom:1px solid var(--line);padding:16px 0;}
+  .faq summary{cursor:pointer;font-family:var(--display);font-size:24px;list-style:none;}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{content:"+";float:right;font-family:var(--mono);color:var(--sage);}
+  .faq details[open] summary::after{content:"–";}
+  .faq p{margin:10px 0 0;color:var(--ink-2);max-width:62ch;}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;font-family:var(--sans);font-size:12.5px;letter-spacing:.06em;color:var(--ink-2);}
+  footer a:hover{color:var(--sage);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/exports/"><img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram">Export OS <small>by Anirudh Kapoor</small></a>
+    <nav class="links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a class="cta" href="#pricing">Free trial →</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">CRM · For Indian exporters</span>
+      <h1>Every buyer.<br>Every shipment.<br><em>One place.</em></h1>
+      <p class="lead">Export OS is the CRM built for how exporting really works — buyers abroad, samples in transit, quotes in dollars, invoices in GST. Nothing slips, because every follow-up has a date and an owner.</p>
+      <div class="acts">
+        <a class="btn solid" href="#pricing">Start the free trial →</a>
+        <a class="btn ghost" href="#features">See what's inside</a>
+      </div>
+      <div class="note">Free trial, then monthly. Cancel any time.</div>
+    </div>
+
+    <div class="mock" aria-label="Illustration of the Export OS pipeline board">
+      <div class="top"><i></i><i></i><i></i><b>Pipeline — this week</b></div>
+      <div class="board">
+        <div class="col"><h4>New buyer <span>4</span></h4>
+          <div class="card"><div class="n">Home-décor importer</div><div class="m">Rotterdam · NL</div><span class="tag">Enquiry</span></div>
+          <div class="card"><div class="n">Boutique retailer</div><div class="m">Austin · US</div><span class="tag">Catalogue sent</span></div>
+        </div>
+        <div class="col"><h4>Sample <span>3</span></h4>
+          <div class="card"><div class="n">Brass candle stands</div><div class="m">6 pcs · courier</div><span class="tag warm">In transit</span></div>
+          <div class="card"><div class="n">Hand-block linen</div><div class="m">2 swatches</div><span class="tag">Delivered</span></div>
+        </div>
+        <div class="col"><h4>Quote <span>2</span></h4>
+          <div class="card"><div class="n">Proforma · FOB Mundra</div><div class="m">USD · 40-ft</div><span class="tag warm">Follow up Thu</span></div>
+        </div>
+        <div class="col"><h4>Shipped <span>1</span></h4>
+          <div class="card"><div class="n">Order · 220 units</div><div class="m">BL issued</div><span class="tag">GST invoice ✓</span></div>
+        </div>
+      </div>
+      <div class="strip">
+        <div><b>10</b><span>Open deals</span></div>
+        <div><b>3</b><span>Due today</span></div>
+        <div><b>0</b><span>Missed</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="blk" id="features">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">What's inside</span><h2>Made for <em>export</em>, not bolted on to sales.</h2></div>
+        <p>A general CRM stops at the deal. Export OS carries on through samples, documents and shipping — the part where exporters actually lose time.</p>
+      </div>
+      <div class="feats">
+        <div class="feat"><svg viewBox="0 0 34 34"><circle cx="12" cy="12" r="5"/><circle cx="24" cy="15" r="4"/><path d="M3 29c1-6 5-9 9-9s8 3 9 9M20 29c.6-4 3-6 6-6s5 2 6 6"/></svg><h3>Buyers &amp; leads</h3><p>Every importer, distributor and retailer, with their country, what they buy and where the conversation stands.</p></div>
+        <div class="feat"><svg viewBox="0 0 34 34"><rect x="5" y="10" width="24" height="17" rx="1"/><path d="M5 15h24M13 10V6h8v4"/></svg><h3>Sample requests</h3><p>Log what went out, by which courier, and when to ask for feedback — so samples turn into orders.</p></div>
+        <div class="feat"><svg viewBox="0 0 34 34"><path d="M8 4h14l5 5v21H8z"/><path d="M22 4v5h5M12 16h11M12 21h11M12 26h7"/></svg><h3>Quotes &amp; proformas</h3><p>Quotations and proforma invoices in your buyer's currency and terms, kept with the deal they belong to.</p></div>
+        <div class="feat"><svg viewBox="0 0 34 34"><path d="M3 22h28l-3 6H6z"/><rect x="9" y="12" width="7" height="10"/><rect x="17" y="8" width="7" height="14"/></svg><h3>Shipment tracker</h3><p>From packing to bill of lading to delivery — one line per shipment, with the documents attached.</p></div>
+        <div class="feat"><svg viewBox="0 0 34 34"><circle cx="17" cy="18" r="12"/><path d="M17 11v7l5 3"/></svg><h3>Follow-ups that stick</h3><p>Every next step has a date and an owner. The day's list tells you who to call, and nothing is missed.</p></div>
+        <div class="feat"><svg viewBox="0 0 34 34"><rect x="6" y="5" width="22" height="25" rx="1"/><path d="M11 12h12M11 17h12M11 22h6"/><path d="M20 24l2 2 4-4"/></svg><h3>GST &amp; paperwork</h3><p>Invoices and export documents kept in order, so month-end with your CA is a send, not a hunt.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Built for</span><h2>The trades India <em>ships</em>.</h2></div>
+        <p>Designed around craft and design exports, where every order starts with a sample and a long conversation.</p>
+      </div>
+      <div class="trades">
+        <span>Gems &amp; jewellery</span><span>Handicrafts</span><span>Home décor</span><span>Art &amp; prints</span><span>Textiles &amp; linen</span><span>Brass &amp; metalware</span><span>Private-label sourcing</span><span>Buying agents</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="how">
+    <div class="wrap">
+      <div class="head"><div><span class="eyebrow">How it works</span><h2>Three <em>steps</em>.</h2></div></div>
+      <div class="steps">
+        <div class="step"><h3>Ask for a trial</h3><p>Tell us what you export and how many people sell. Your space is set up for your trade.</p></div>
+        <div class="step"><h3>Bring your buyers</h3><p>Add the buyers and open deals you are working on today. Start with the ten that matter.</p></div>
+        <div class="step"><h3>Work the list</h3><p>Each morning, Export OS shows who to follow up, which samples are due back and what ships next.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="pricing">
+    <div class="wrap">
+      <div class="head"><div><span class="eyebrow">Pricing</span><h2>Try it first. <em>Then decide.</em></h2></div></div>
+      <div class="price">
+        <div class="a"><span class="k">Step one</span><h3>Free trial</h3><p>The full product, with your own buyers and deals.</p></div>
+        <div class="b"><span class="k">Step two</span><h3>Monthly</h3><p>Keep going on a simple monthly plan, or stop. Your data stays yours either way.</p>
+          <a class="btn" href="mailto:support@anirudh-kapoor.com?subject=Export%20OS%20free%20trial">Ask for a free trial →</a></div>
+      </div>
+      <p style="font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin-top:14px;">Or write to support@anirudh-kapoor.com — every request is answered by Anirudh within 24–48 hours.</p>
+    </div>
+  </section>
+
+  <section class="blk faq">
+    <div class="wrap">
+      <div class="head"><div><span class="eyebrow">Questions</span><h2>Good to <em>know</em>.</h2></div></div>
+      <details><summary>Who is Export OS for?</summary><p>Small and growing Indian exporters, buying agents and sourcing houses — anyone juggling overseas buyers, samples and shipments in WhatsApp and spreadsheets today.</p></details>
+      <details><summary>What happens when the trial ends?</summary><p>You choose: continue on the monthly plan, or stop. Nothing renews without your say-so.</p></details>
+      <details><summary>Is this the old AK Exports?</summary><p>Yes. Anirudh Kapoor Exports began as a curated export house; the tools built to run it became Export OS. The original export-house page is <a href="/exports/trade/" style="color:var(--sage);border-bottom:1px solid currentColor;">kept here</a>.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="/">← Anirudh Kapoor — all ventures</a>
+    <span>support@anirudh-kapoor.com</span>
+    <span style="font-family:var(--mono);">Gurgaon / Worldwide</span>
+  </div>
+</footer>
+</body>
+</html>

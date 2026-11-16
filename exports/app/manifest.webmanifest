@@ -1,0 +1,4 @@
+{"name":"Export OS","short_name":"Export OS","description":"Buyers, samples, quotes, shipments, follow-ups and export paperwork for Indian exporters. Your data stays on your device.",
+"start_url":"./index.html#today","scope":"./","display":"standalone","background_color":"#ece9e3","theme_color":"#20231e","orientation":"any",
+"icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],
+"categories":["business","productivity"]}

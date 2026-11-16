@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Export OS</title>
+<meta name="description" content="Export OS: buyers, samples, quotes, shipments, follow-ups and export paperwork for Indian exporters. Your data stays on your device.">
+<meta name="theme-color" content="#20231e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Export OS">
+<style>
+:root{--paper:#ece9e3;--panel:#f7f5f0;--deep:#e2ded5;--ink:#20231e;--ink2:#3b3f38;--soft:#62665e;--sage:#55705a;--warn:#9a5a1e;--bad:#9b2f2f;--line:rgba(32,35,30,.14);
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--paper:#171916;--panel:#20231f;--deep:#2a2e29;--ink:#ecebe6;--ink2:#cfcfc8;--soft:#9da197;--sage:#8fb196;--warn:#e0a15e;--bad:#e07b7b;--line:rgba(236,235,230,.14)}}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%}
+a{color:inherit}button,input,select,textarea{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:5;background:var(--ink);color:var(--paper);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:12px}
+header b{font-family:var(--serif);font-weight:400;font-size:20px;letter-spacing:.01em}header small{font-family:var(--mono);font-size:11px;opacity:.7}
+header .sp{flex:1}#installBtn{display:none;background:transparent;border:1px solid var(--paper);color:var(--paper);border-radius:3px;padding:6px 10px;font-size:13px;cursor:pointer}
+nav{display:flex;gap:2px;overflow-x:auto;background:var(--deep);border-bottom:1px solid var(--line);padding:0 8px;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;text-decoration:none;padding:11px 12px;font-size:13px;font-weight:600;letter-spacing:.03em;color:var(--soft);border-bottom:2px solid transparent}nav a.on{color:var(--ink);border-color:var(--ink)}
+main{max-width:980px;margin:0 auto;padding:16px 16px calc(40px + env(safe-area-inset-bottom))}
+h1{font-family:var(--serif);font-weight:400;font-size:28px;margin:6px 0 12px}h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin:22px 0 8px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:9px 14px;border-radius:3px;cursor:pointer;text-decoration:none;font-size:14px;font-weight:500}
+.btn.g{background:transparent;color:var(--ink)}.btn.s{padding:5px 10px;font-size:13px}.btn.d{border-color:var(--bad);background:transparent;color:var(--bad)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:8px 0}
+.item{display:flex;gap:10px;align-items:flex-start;text-decoration:none}.item .t{font-weight:600}.item .m{font-size:13px;color:var(--soft)}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:3px;background:rgba(85,112,90,.15);color:var(--sage);white-space:nowrap}
+.tag.w{background:rgba(154,90,30,.14);color:var(--warn)}.tag.b{background:rgba(155,47,47,.13);color:var(--bad)}
+.empty{color:var(--soft);padding:18px 4px}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],input[type=search],select,textarea{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:9px 10px}
+textarea{min-height:80px;resize:vertical}label{display:block;font-size:12px;font-weight:600;color:var(--soft);margin:12px 0 4px;letter-spacing:.02em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}.stats .card b{display:block;font-family:var(--serif);font-weight:400;font-size:26px}.stats .card span{font-size:12px;color:var(--soft)}
+table.lines{width:100%;border-collapse:collapse;font-size:14px}table.lines th{text-align:left;font-size:11px;color:var(--soft);font-weight:600;padding:4px}table.lines td{padding:3px 4px;vertical-align:top}table.lines input{padding:6px}
+.note{font-size:13px;color:var(--soft)}.fl{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}.fl a{font-size:13px;text-decoration:none;padding:4px 10px;border:1px solid var(--line);border-radius:20px}.fl a.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:4px;font-size:14px;z-index:9;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
+#print{display:none}
+@media print{header,nav,main,.toast{display:none!important}#print{display:block;color:#000;font-family:var(--serif);font-size:12pt}body{background:#fff}}
+#print h1{font-size:22pt;margin:0}#print table{width:100%;border-collapse:collapse;margin-top:12pt}#print td,#print th{border:1px solid #999;padding:5pt;text-align:left;font-size:10.5pt}#print .r{text-align:right}#print .hd{display:flex;justify-content:space-between;gap:20pt}#print .sm{font-size:9.5pt;color:#333}
+</style>
+</head>
+<body>
+<header><b>Export OS</b><small id="ver"></small><span class="sp"></span><button id="installBtn">Install app</button></header>
+<nav id="nav"></nav>
+<main id="app"><p class="empty">Loading…</p></main>
+<div id="print"></div>
+<div class="toast" id="toast"></div>
+<script>
+'use strict';
+const VERSION='0.1.0';
+document.getElementById('ver').textContent='v'+VERSION;
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const today=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+const addDays=(iso,n)=>{const d=new Date(iso+'T00:00:00');d.setDate(d.getDate()+n);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)}
+function money(v,c){const n=Number(v)||0;try{return new Intl.NumberFormat('en-IN',{style:'currency',currency:c||'USD',maximumFractionDigits:2}).format(n)}catch(e){return (c||'')+' '+n.toFixed(2)}}
+function fdate(d){if(!d)return '';const x=new Date(d+'T00:00:00');return isNaN(x)?d:x.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}
+
+/* ---------- storage: IndexedDB, everything stays on this device ---------- */
+let DB;const R=new Map();
+function idb(){return new Promise((ok,no)=>{const q=indexedDB.open('exportos',1);q.onupgradeneeded=()=>{const d=q.result;d.createObjectStore('rec',{keyPath:'id'});d.createObjectStore('files',{keyPath:'id'})};q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)})}
+function tx(store,mode,fn){return new Promise((ok,no)=>{const t=DB.transaction(store,mode);const s=t.objectStore(store);const r=fn(s);t.oncomplete=()=>ok(r&&r.result);t.onerror=()=>no(t.error)})}
+async function loadAll(){const all=await new Promise((ok,no)=>{const q=DB.transaction('rec').objectStore('rec').getAll();q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)});R.clear();all.forEach(r=>R.set(r.id,r))}
+async function put(r){r.updated=new Date().toISOString();if(!r.created)r.created=r.updated;R.set(r.id,r);await tx('rec','readwrite',s=>s.put(r));return r}
+async function del(id){R.delete(id);await tx('rec','readwrite',s=>s.delete(id));for(const f of await filesFor(id))await tx('files','readwrite',s=>s.delete(f.id))}
+const all=t=>[...R.values()].filter(r=>r.t===t);
+const get=id=>R.get(id);
+function filesFor(ref){return new Promise((ok,no)=>{const q=DB.transaction('files').objectStore('files').getAll();q.onsuccess=()=>ok(q.result.filter(f=>f.ref===ref));q.onerror=()=>no(q.error)})}
+function allFiles(){return new Promise((ok,no)=>{const q=DB.transaction('files').objectStore('files').getAll();q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)})}
+const S=()=>get('settings')||{id:'settings',t:'settings',me:'',company:'',address:'',iec:'',gstin:'',ad:'',lut:'',bank:'',email:'',phone:'',cur:'USD',seq:{}};
+
+/* ---------- what each record holds ---------- */
+const CUR=['USD','EUR','GBP','AED','AUD','CAD','SGD','JPY','CHF','SAR','INR'];
+const STAGES=['New','Contacted','Interested','Sample sent','Negotiating','Ordered','Repeat buyer','Lost'];
+const SCHEMA={
+ buyer:{name:'Buyer',plural:'Buyers',title:r=>r.company||r.contact||'Unnamed buyer',fields:[
+  ['company','Company','text'],['contact','Contact person','text'],['email','Email','email'],['phone','WhatsApp / phone (with country code)','tel'],
+  ['country','Country','text'],['kind','Type','select',['Importer','Distributor','Wholesaler','Retailer','Buying agent','Private label','Marketplace','Individual']],
+  ['stage','Stage','select',STAGES],['interest','What they buy','text'],['value','Expected order value','number'],['cur','Currency','select',CUR],
+  ['source','Where they came from','select',['Referral','Trade show','Website','Instagram','LinkedIn','Marketplace enquiry','Cold outreach','Buying house','Other']],
+  ['owner','Owner','text'],['tz','Their time zone / best time','text'],['notes','Notes','textarea']]},
+ sample:{name:'Sample',plural:'Samples',title:r=>(get(r.buyer)?SCHEMA.buyer.title(get(r.buyer)):'No buyer')+' · '+(r.items||'sample'),fields:[
+  ['buyer','Buyer','buyer'],['items','What was sent','text'],['sent','Sent on','date'],['courier','Courier','text'],['awb','Tracking / AWB no.','text'],
+  ['cost','Sample + courier cost (INR)','number'],['charged','Charged to buyer','select',['No','Yes, adjusted in first order','Yes, paid']],
+  ['due','Ask for feedback on','date'],['status','Status','select',['Preparing','Sent','Delivered','Feedback received','Converted to order','No interest']],['feedback','Feedback','textarea']]},
+ quote:{name:'Quote',plural:'Quotes',title:r=>(r.no||'Quote')+' · '+(get(r.buyer)?SCHEMA.buyer.title(get(r.buyer)):''),fields:[
+  ['buyer','Buyer','buyer'],['no','Proforma no.','text'],['date','Date','date'],['valid','Valid until','date'],['cur','Currency','select',CUR],
+  ['inco','Incoterms','select',['EXW','FCA','FOB','CFR','CIF','CPT','CIP','DAP','DDP']],['port','Port / place','text'],
+  ['pay','Payment terms','select',['100% advance','50% advance, 50% before dispatch','30% advance, 70% against documents','Letter of credit','Cash against documents','Other']],
+  ['lead','Production / dispatch time','text'],['freight','Freight and insurance','number'],['status','Status','select',['Draft','Sent','Accepted','Rejected','Expired']],['terms','Other terms','textarea']]},
+ shipment:{name:'Shipment',plural:'Shipments',title:r=>(r.inv||'Shipment')+' · '+(get(r.buyer)?SCHEMA.buyer.title(get(r.buyer)):''),fields:[
+  ['buyer','Buyer','buyer'],['quote','From quote','quote'],['inv','Invoice no.','text'],['invdate','Invoice date','date'],['cur','Currency','select',CUR],['value','Invoice value','number'],
+  ['mode','Mode','select',['Air','Sea','Courier','Post (Dak Ghar Niryat)','Road']],['carrier','Carrier / forwarder','text'],['awb','AWB / bill of lading no.','text'],
+  ['sb','Shipping bill no.','text'],['sbdate','Shipping bill date','date'],['lut','Under LUT (no IGST paid)','select',['Yes','No - IGST paid','Not sure']],
+  ['shipped','Shipped on','date'],['eta','Expected delivery','date'],['status','Status','select',['Packing','Documents ready','Shipped','In transit','Delivered','Paid','Closed']],
+  ['paid','Payment received','select',['Not yet','Part','Full']],['paidon','Payment received on','date'],['brc','Payment realisation (e-BRC/FIRC) on file','select',['No','Yes']],['notes','Notes','textarea']]},
+ follow:{name:'Follow-up',plural:'Follow-ups',title:r=>r.action||'Follow-up',fields:[['buyer','Buyer','buyer'],['due','When','date'],['action','What to do','text'],['owner','Owner','text'],['notes','Notes','textarea']]},
+ item:{name:'Product',plural:'Catalogue',title:r=>(r.sku?r.sku+' · ':'')+(r.name||'Product'),fields:[
+  ['sku','SKU','text'],['name','Name','text'],['cat','Category','text'],['hs','HS code','text'],['material','Material','text'],['weight','Weight per piece (g)','number'],
+  ['cost','Cost (INR)','number'],['price','Price per piece','number'],['cur','Currency','select',CUR],['moq','MOQ (pieces)','number'],['supplier','Maker / supplier','supplier'],['lead','Lead time (days)','number'],['notes','Notes','textarea']]},
+ supplier:{name:'Maker',plural:'Makers',title:r=>r.name||'Maker',fields:[['name','Name / workshop','text'],['city','City / cluster','text'],['phone','Phone','tel'],['speciality','Speciality','text'],
+  ['moq','MOQ','text'],['lead','Usual lead time (days)','number'],['rating','Quality (1-5)','select',['','1','2','3','4','5']],['pay','How they are paid','text'],['gstin','GSTIN','text'],['notes','Notes','textarea']]},
+ comp:{name:'Paperwork item',plural:'Paperwork',title:r=>r.name||'Item',fields:[['name','What','text'],['due','Next due','date'],['repeat','Repeats','select',['Every year','Every 5 years','Once','Every month']],['status','Status','select',['To do','Done for this period']],['notes','Notes / reference no.','textarea']]}
+};
+const SEED_COMP=[
+ ['IEC annual update on the DGFT portal','Every year','Done between April and June each year, even when nothing changed, or the IEC can be deactivated. Check the current rule on dgft.gov.in.',6,30],
+ ['GST LUT (Form RFD-11) for the new financial year','Every year','Lets you export without paying IGST. File it in April, before the first export of the year. Confirm with your CA.',4,30],
+ ['Export promotion council membership / RCMC renewal','Every year','For example GJEPC for gems and jewellery, EPCH for handicrafts. Check your council\'s renewal date.',4,30],
+ ['AD code registered with the port or courier terminal (ICEGATE)','Once','Your bank gives the AD code letter; it is registered on ICEGATE for each port you ship from.',0,0],
+ ['Monthly papers to the CA (invoices, shipping bills, payment proofs)','Every month','Settings > Month-end pack makes the list.',0,0]];
+
+/* ---------- small helpers ---------- */
+function nextNo(prefix){const s=S();s.seq=s.seq||{};const y=new Date().getFullYear();const k=prefix+y;s.seq[k]=(s.seq[k]||0)+1;put(s);return `${prefix}-${y}-${String(s.seq[k]).padStart(3,'0')}`}
+function quoteTotal(q){const lines=q.lines||[];return lines.reduce((a,l)=>a+(Number(l.qty)||0)*(Number(l.price)||0),0)+(Number(q.freight)||0)}
+function buyerName(id){const b=get(id);return b?SCHEMA.buyer.title(b):''}
+function waLink(p){const n=String(p||'').replace(/[^0-9]/g,'');return n?'https://wa.me/'+n:''}
+function stageTag(s){const c=s==='Lost'?'b':(s==='Ordered'||s==='Repeat buyer')?'':'w';return `<span class="tag ${c}">${esc(s||'New')}</span>`}
+function dueTag(d){if(!d)return '';const t=today();const c=d<t?'b':d===t?'w':'';return `<span class="tag ${c}">${d<t?'overdue · ':d===t?'today · ':''}${esc(fdate(d))}</span>`}
+
+/* ---------- views ---------- */
+const TABS=[['today','Today'],['buyers','Buyers'],['samples','Samples'],['quotes','Quotes'],['shipments','Shipments'],['catalogue','Catalogue'],['makers','Makers'],['paperwork','Paperwork'],['settings','Settings']];
+const LISTMAP={buyers:'buyer',samples:'sample',quotes:'quote',shipments:'shipment',catalogue:'item',makers:'supplier',paperwork:'comp'};
+function navRender(cur){$('#nav').innerHTML=TABS.map(([k,l])=>`<a href="#${k}" class="${cur===k?'on':''}">${l}</a>`).join('')}
+function route(){const h=decodeURIComponent(location.hash.slice(1))||'today';const [v,...a]=h.split('/');const q=new URLSearchParams(h.split('?')[1]||'');
+ const tab=LISTMAP[v]||v==='today'||v==='settings'?v:(v==='buyer'?'buyers':v==='edit'?Object.keys(LISTMAP).find(k=>LISTMAP[k]===a[0].split('?')[0])||'today':'today');navRender(tab);window.scrollTo(0,0);
+ try{if(v==='today')return vToday();if(LISTMAP[v])return vList(LISTMAP[v],q);if(v==='buyer')return vBuyer(a[0]);if(v==='edit')return vEdit(a[0].split('?')[0],(a[1]||'new').split('?')[0],q);if(v==='settings')return vSettings();vToday()}catch(e){console.error(e);$('#app').innerHTML=`<p class="empty">Something went wrong: ${esc(e.message)}</p>`}}
+window.addEventListener('hashchange',route);
+
+function vToday(){const t=today();
+ const fu=all('follow').filter(f=>!f.done&&f.due&&f.due<=t).sort((a,b)=>a.due.localeCompare(b.due));
+ const sm=all('sample').filter(s=>['Sent','Delivered'].includes(s.status)&&s.due&&s.due<=t);
+ const sh=all('shipment').filter(s=>!['Paid','Closed'].includes(s.status));
+ const cp=all('comp').filter(c=>c.due&&c.status!=='Done for this period'&&c.due<=addDays(t,45));
+ const qs=all('quote').filter(q=>q.status==='Sent'&&q.valid&&q.valid<=addDays(t,3));
+ const open=all('buyer').filter(b=>!['Lost','Ordered','Repeat buyer'].includes(b.stage));
+ const pipe={};open.forEach(b=>{const c=b.cur||S().cur||'USD';pipe[c]=(pipe[c]||0)+(Number(b.value)||0)});
+ const noNext=open.filter(b=>!all('follow').some(f=>f.buyer===b.id&&!f.done));
+ let h=`<h1>${esc(S().me?'Good day, '+S().me.split(' ')[0]:'Today')}</h1>
+ <div class="stats"><div class="card"><b>${fu.length}</b><span>follow-ups due</span></div><div class="card"><b>${sm.length}</b><span>samples waiting for feedback</span></div>
+ <div class="card"><b>${sh.length}</b><span>shipments open</span></div><div class="card"><b>${Object.entries(pipe).map(([c,v])=>money(v,c)).join(' + ')||'—'}</b><span>open deals (${open.length} buyers)</span></div></div>`;
+ h+=`<h2>Follow up today</h2>`+(fu.length?fu.map(f=>`<div class="card item"><div class="sp"><a class="t" href="#buyer/${f.buyer}">${esc(buyerName(f.buyer)||'No buyer')}</a><div>${esc(f.action)}</div><div class="m">${dueTag(f.due)} ${f.owner?esc(f.owner):''}</div></div><button class="btn s" data-done="${f.id}">Done</button></div>`).join(''):`<p class="empty">Nothing due. Every open buyer should have a next step with a date.</p>`);
+ if(noNext.length)h+=`<h2>Open buyers with no next step</h2>`+noNext.slice(0,10).map(b=>`<a class="card item" href="#buyer/${b.id}"><div class="sp"><div class="t">${esc(SCHEMA.buyer.title(b))}</div><div class="m">${esc(b.country||'')} ${stageTag(b.stage)}</div></div><span class="tag w">add a follow-up</span></a>`).join('');
+ if(sm.length)h+=`<h2>Ask for sample feedback</h2>`+sm.map(s=>`<a class="card item" href="#edit/sample/${s.id}"><div class="sp"><div class="t">${esc(buyerName(s.buyer))}</div><div class="m">${esc(s.items||'')} · sent ${esc(fdate(s.sent))} ${dueTag(s.due)}</div></div></a>`).join('');
+ if(qs.length)h+=`<h2>Quotes about to expire</h2>`+qs.map(q=>`<a class="card item" href="#edit/quote/${q.id}"><div class="sp"><div class="t">${esc(SCHEMA.quote.title(q))}</div><div class="m">${money(quoteTotal(q),q.cur)} · valid until ${esc(fdate(q.valid))}</div></div></a>`).join('');
+ if(sh.length)h+=`<h2>Shipments open</h2>`+sh.map(s=>`<a class="card item" href="#edit/shipment/${s.id}"><div class="sp"><div class="t">${esc(SCHEMA.shipment.title(s))}</div><div class="m">${esc(s.mode||'')} ${esc(s.awb||'')} · <span class="tag">${esc(s.status||'Packing')}</span> ${s.eta?'· due '+esc(fdate(s.eta)):''}</div></div></a>`).join('');
+ if(cp.length)h+=`<h2>Paperwork due soon</h2>`+cp.map(c=>`<a class="card item" href="#edit/comp/${c.id}"><div class="sp"><div class="t">${esc(c.name)}</div><div class="m">${dueTag(c.due)}</div></div></a>`).join('');
+ if(!all('buyer').length)h+=`<div class="card"><b>Start with the ten buyers that matter.</b><p class="note">Add them one by one, or bring a list from a spreadsheet (Settings &gt; Import buyers from CSV).</p><div class="row"><a class="btn" href="#edit/buyer/new">Add a buyer</a><a class="btn g" href="#settings">Import a list</a></div></div>`;
+ $('#app').innerHTML=h;
+ document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>doneFollow(b.dataset.done));}
+
+async function doneFollow(id){const f=get(id);if(!f)return;f.done=today();await put(f);
+ const next=prompt('Done. What is the next step with '+(buyerName(f.buyer)||'this buyer')+'? (leave empty for none)','');
+ if(next){const days=Number(prompt('In how many days?','3'))||3;await put({id:uid(),t:'follow',buyer:f.buyer,action:next,due:addDays(today(),days),owner:f.owner||S().me})}
+ toast('Marked done');route()}
+
+function vList(type,q){const sc=SCHEMA[type];let rows=all(type);const term=(q.get('q')||'').toLowerCase();const st=q.get('stage')||'';
+ if(type==='buyer'&&st)rows=rows.filter(r=>(r.stage||'New')===st);
+ if(term)rows=rows.filter(r=>JSON.stringify(r).toLowerCase().includes(term));
+ rows.sort((a,b)=>(b.updated||'').localeCompare(a.updated||''));
+ if(type==='comp')rows.sort((a,b)=>(a.due||'9').localeCompare(b.due||'9'));
+ const tab=Object.keys(LISTMAP).find(k=>LISTMAP[k]===type);
+ let h=`<div class="row"><h1 class="sp">${sc.plural}</h1><a class="btn" href="#edit/${type}/new">Add ${sc.name.toLowerCase()}</a></div>
+ <input type="search" id="srch" placeholder="Search ${sc.plural.toLowerCase()}" value="${esc(term)}">`;
+ if(type==='buyer')h+=`<div class="fl">${['',...STAGES].map(s=>`<a href="#buyers?stage=${encodeURIComponent(s)}" class="${s===st?'on':''}">${s||'All'} ${s?'('+all('buyer').filter(b=>(b.stage||'New')===s).length+')':''}</a>`).join('')}</div>`;
+ h+=rows.length?rows.map(r=>row(type,r)).join(''):`<p class="empty">No ${sc.plural.toLowerCase()} yet.</p>`;
+ if(type==='comp')h+=`<p class="note">Rules change: check each item with your CA or the official portal. Export OS keeps the dates; it does not give legal or tax advice.</p>`;
+ $('#app').innerHTML=h;const s=$('#srch');s.oninput=()=>{clearTimeout(s.h);s.h=setTimeout(()=>{location.hash=tab+'?'+new URLSearchParams({q:s.value,stage:st})},350)};if(term){s.focus();s.setSelectionRange(term.length,term.length)}}
+function row(type,r){const sc=SCHEMA[type];let m='',href=`#edit/${type}/${r.id}`;
+ if(type==='buyer'){href=`#buyer/${r.id}`;m=`${esc(r.contact||'')} ${r.country?'· '+esc(r.country):''} ${stageTag(r.stage)} ${r.value?'· '+money(r.value,r.cur):''}`}
+ if(type==='sample')m=`<span class="tag">${esc(r.status||'Preparing')}</span> ${r.sent?'sent '+esc(fdate(r.sent)):''} ${r.due&&['Sent','Delivered'].includes(r.status)?dueTag(r.due):''}`;
+ if(type==='quote')m=`${money(quoteTotal(r),r.cur)} · ${esc(r.inco||'')} · <span class="tag">${esc(r.status||'Draft')}</span>`;
+ if(type==='shipment')m=`${r.value?money(r.value,r.cur)+' · ':''}${esc(r.mode||'')} ${esc(r.awb||'')} <span class="tag">${esc(r.status||'Packing')}</span> ${r.paid&&r.paid!=='Not yet'?'<span class="tag">'+esc(r.paid)+' payment</span>':''}`;
+ if(type==='item')m=`${esc(r.cat||'')} ${r.hs?'· HS '+esc(r.hs):''} ${r.price?'· '+money(r.price,r.cur):''} ${r.moq?'· MOQ '+esc(r.moq):''}`;
+ if(type==='supplier')m=`${esc(r.city||'')} ${r.speciality?'· '+esc(r.speciality):''} ${r.rating?'· quality '+esc(r.rating)+'/5':''}`;
+ if(type==='comp')m=`${dueTag(r.due)} <span class="tag ${r.status==='Done for this period'?'':'w'}">${esc(r.status||'To do')}</span> ${esc(r.repeat||'')}`;
+ return `<a class="card item" href="${href}"><div class="sp"><div class="t">${esc(sc.title(r))}</div><div class="m">${m}</div></div></a>`}
+
+function vBuyer(id){const b=get(id);if(!b){location.hash='buyers';return}
+ const fu=all('follow').filter(f=>f.buyer===id).sort((a,c)=>(c.due||'').localeCompare(a.due||''));const sm=all('sample').filter(s=>s.buyer===id);const qs=all('quote').filter(q=>q.buyer===id);const sh=all('shipment').filter(s=>s.buyer===id);
+ const wa=waLink(b.phone);
+ let h=`<div class="row"><h1 class="sp">${esc(SCHEMA.buyer.title(b))}</h1><a class="btn g" href="#edit/buyer/${id}">Edit</a></div>
+ <div class="card"><div>${esc(b.contact||'')} ${b.kind?'· '+esc(b.kind):''} ${b.country?'· '+esc(b.country):''} ${stageTag(b.stage)}</div>
+ <div class="m note">${b.interest?'Buys: '+esc(b.interest)+' · ':''}${b.value?'Expected: '+money(b.value,b.cur)+' · ':''}${b.source?'From: '+esc(b.source):''}${b.tz?' · '+esc(b.tz):''}</div>
+ <div class="row" style="margin-top:8px">${wa?`<a class="btn s g" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>`:''}${b.email?`<a class="btn s g" href="mailto:${esc(b.email)}">Email</a>`:''}${b.phone?`<a class="btn s g" href="tel:${esc(String(b.phone).replace(/[^0-9+]/g,''))}">Call</a>`:''}</div>
+ ${b.notes?`<p class="note" style="white-space:pre-wrap">${esc(b.notes)}</p>`:''}</div>
+ <h2>Next steps</h2><a class="btn s" href="#edit/follow/new?buyer=${id}">Add a follow-up</a>`+(fu.length?fu.map(f=>`<div class="card item"><div class="sp"><div>${esc(f.action)}</div><div class="m">${f.done?'<span class="tag">done '+esc(fdate(f.done))+'</span>':dueTag(f.due)} ${esc(f.owner||'')}</div></div>${f.done?'':`<button class="btn s" data-done="${f.id}">Done</button>`}<a class="btn s g" href="#edit/follow/${f.id}">Edit</a></div>`).join(''):'<p class="empty">No next step yet.</p>')+
+ `<h2>Samples</h2><a class="btn s" href="#edit/sample/new?buyer=${id}">Log a sample</a>`+sm.map(s=>row('sample',s)).join('')+
+ `<h2>Quotes</h2><a class="btn s" href="#edit/quote/new?buyer=${id}">New quote</a>`+qs.map(q=>row('quote',q)).join('')+
+ `<h2>Shipments</h2><a class="btn s" href="#edit/shipment/new?buyer=${id}">New shipment</a>`+sh.map(s=>row('shipment',s)).join('');
+ $('#app').innerHTML=h;document.querySelectorAll('[data-done]').forEach(x=>x.onclick=()=>doneFollow(x.dataset.done))}
+
+function field(f,v){const [k,l,ty,opts]=f;const id='f_'+k;let inp;
+ if(ty==='select')inp=`<select id="${id}" name="${k}">${opts.map(o=>`<option ${o===v?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
+ else if(ty==='textarea')inp=`<textarea id="${id}" name="${k}">${esc(v)}</textarea>`;
+ else if(ty==='buyer'||ty==='quote'||ty==='supplier'){const t=ty==='buyer'?'buyer':ty;const list=all(t).sort((a,b)=>SCHEMA[t].title(a).localeCompare(SCHEMA[t].title(b)));inp=`<select id="${id}" name="${k}"><option value="">—</option>${list.map(r=>`<option value="${r.id}" ${r.id===v?'selected':''}>${esc(SCHEMA[t].title(r))}</option>`).join('')}</select>`}
+ else inp=`<input id="${id}" name="${k}" type="${ty==='number'?'number':ty}" ${ty==='number'?'step="any" inputmode="decimal"':''} value="${esc(v)}">`;
+ return `<div class="${ty==='textarea'?'full':''}" style="${ty==='textarea'?'grid-column:1/-1':''}"><label for="${id}">${esc(l)}</label>${inp}</div>`}
+
+async function vEdit(type,id,q){const sc=SCHEMA[type];if(!sc){location.hash='today';return}
+ const isNew=id==='new';let r=isNew?{id:uid(),t:type}:{...get(id)};if(!isNew&&!get(id)){location.hash='today';return}
+ if(isNew){const s=S();if(q.get('buyer'))r.buyer=q.get('buyer');if(['buyer','quote','shipment','item'].includes(type))r.cur=(r.buyer&&get(r.buyer)?.cur)||s.cur||'USD';
+  if(type==='buyer'){r.stage='New';r.owner=s.me}if(type==='follow'){r.due=addDays(today(),2);r.owner=s.me}
+  if(type==='quote'){r.date=today();r.valid=addDays(today(),30);r.status='Draft';r.lines=[{desc:'',hs:'',qty:'',price:''}];r.inco='FOB';r.pay='50% advance, 50% before dispatch'}
+  if(type==='sample'){r.sent=today();r.due=addDays(today(),10);r.status='Sent'}
+  if(type==='shipment'){r.invdate=today();r.status='Packing';r.paid='Not yet';r.lut='Yes';r.brc='No'}}
+ let h=`<div class="row"><h1 class="sp">${isNew?'New '+sc.name.toLowerCase():esc(sc.title(r))}</h1>${r.buyer&&get(r.buyer)?`<a class="btn g s" href="#buyer/${r.buyer}">Open buyer</a>`:''}</div><form id="frm"><div class="grid">${sc.fields.map(f=>field(f,r[f[0]]??'')).join('')}</div>`;
+ if(type==='quote')h+=`<h2>Lines</h2><table class="lines"><thead><tr><th>Description</th><th>HS code</th><th>Qty</th><th>Unit price</th><th></th></tr></thead><tbody id="lines"></tbody></table>
+  <div class="row" style="margin-top:6px"><button type="button" class="btn s g" id="addLine">Add a line</button><select id="fromCat" style="max-width:260px"><option value="">Add from catalogue…</option>${all('item').map(i=>`<option value="${i.id}">${esc(SCHEMA.item.title(i))}</option>`).join('')}</select><span class="sp"></span><b id="qtot"></b></div>`;
+ if(['shipment','sample','quote','item','comp','buyer'].includes(type))h+=`<h2>Documents and photos</h2><div id="files"></div><input type="file" id="up" multiple accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.txt">`;
+ h+=`<div class="row" style="margin-top:22px"><button class="btn" type="submit">Save</button>${type==='quote'?'<button type="button" class="btn g" id="prQ">Print proforma</button>':''}${type==='shipment'?'<button type="button" class="btn g" id="prI">Print invoice / packing list</button>':''}<span class="sp"></span>${isNew?'':'<button type="button" class="btn d" id="delB">Delete</button>'}</div></form>`;
+ $('#app').innerHTML=h;
+ if(type==='quote'){const lines=r.lines||[];const tb=$('#lines');const draw=()=>{tb.innerHTML=lines.map((l,i)=>`<tr><td><input data-i="${i}" data-k="desc" value="${esc(l.desc)}"></td><td style="width:110px"><input data-i="${i}" data-k="hs" value="${esc(l.hs)}"></td><td style="width:80px"><input data-i="${i}" data-k="qty" type="number" step="any" value="${esc(l.qty)}"></td><td style="width:110px"><input data-i="${i}" data-k="price" type="number" step="any" value="${esc(l.price)}"></td><td><button type="button" class="btn s g" data-x="${i}" aria-label="Remove line">×</button></td></tr>`).join('');tot()};
+  const tot=()=>{r.lines=lines;r.freight=$('#f_freight').value;r.cur=$('#f_cur').value;$('#qtot').textContent='Total '+money(quoteTotal(r),r.cur)};
+  tb.oninput=e=>{const t=e.target;if(t.dataset.k){lines[t.dataset.i][t.dataset.k]=t.value;tot()}};tb.onclick=e=>{if(e.target.dataset.x){lines.splice(+e.target.dataset.x,1);draw()}};
+  $('#addLine').onclick=()=>{lines.push({desc:'',hs:'',qty:'',price:''});draw()};$('#fromCat').onchange=e=>{const it=get(e.target.value);if(it){lines.push({desc:SCHEMA.item.title(it),hs:it.hs||'',qty:it.moq||'',price:it.price||''});draw()}e.target.value=''};
+  $('#f_freight').oninput=tot;$('#f_cur').onchange=tot;if(isNew)$('#f_no').placeholder='Given when you save';draw();r._lines=lines}
+ if($('#files'))drawFiles(r.id);
+ if($('#up'))$('#up').onchange=async e=>{for(const f of e.target.files){if(f.size>25e6){toast(f.name+' is over 25 MB');continue}await tx('files','readwrite',s=>s.put({id:uid(),ref:r.id,name:f.name,type:f.type,size:f.size,blob:f,at:new Date().toISOString()}))}e.target.value='';drawFiles(r.id);if(isNew)toast('Attached. Save to keep it with this record.')};
+ const collect=()=>{const fd=new FormData($('#frm'));for(const f of sc.fields){r[f[0]]=fd.get(f[0])??''}if(type==='quote')r.lines=(r._lines||[]).filter(l=>l.desc||l.qty||l.price);delete r._lines;return r};
+ $('#frm').onsubmit=async e=>{e.preventDefault();collect();if(type==='shipment'&&r.quote&&!r.value){const qq=get(r.quote);if(qq){r.value=quoteTotal(qq);r.cur=qq.cur}}
+  if(type==='shipment'&&isNew&&!r.inv)r.inv=nextNo('EXP');
+  if(type==='quote'&&!r.no)r.no=nextNo('PI');
+  if(type==='comp'&&r.status==='Done for this period'&&r.due&&['Every year','Every month','Every 5 years'].includes(r.repeat)){const d=new Date(r.due+'T00:00:00');if(r.repeat==='Every month')d.setMonth(d.getMonth()+1);else d.setFullYear(d.getFullYear()+(r.repeat==='Every year'?1:5));r.lastDone=today();r.due=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');r.status='To do';toast('Done. Next due '+fdate(r.due))}
+  if(type==='sample'&&r.buyer&&isNew){const b=get(r.buyer);if(b&&['New','Contacted','Interested'].includes(b.stage)){b.stage='Sample sent';await put(b)}}
+  if(type==='shipment'&&r.buyer&&isNew){const b=get(r.buyer);if(b&&!['Ordered','Repeat buyer'].includes(b.stage)){b.stage=all('shipment').some(s=>s.buyer===b.id)?'Repeat buyer':'Ordered';await put(b)}}
+  await put(r);toast('Saved');
+  if(type==='buyer'&&isNew&&!all('follow').some(f=>f.buyer===r.id)){await put({id:uid(),t:'follow',buyer:r.id,action:'First contact',due:today(),owner:r.owner||S().me})}
+  location.hash=type==='buyer'?'buyer/'+r.id:(r.buyer&&type!=='item'?'buyer/'+r.buyer:Object.keys(LISTMAP).find(k=>LISTMAP[k]===type)||'today')};
+ if($('#delB'))$('#delB').onclick=async()=>{if(!confirm('Delete this '+sc.name.toLowerCase()+'? This cannot be undone.'))return;if(type==='buyer'){for(const x of [...R.values()].filter(x=>x.buyer===r.id))await del(x.id)}await del(r.id);toast('Deleted');location.hash=Object.keys(LISTMAP).find(k=>LISTMAP[k]===type)||'today'};
+ if($('#prQ'))$('#prQ').onclick=()=>{collect();printDoc('PROFORMA INVOICE',r,r.lines,r.no,r.date)};
+ if($('#prI'))$('#prI').onclick=()=>{collect();const qq=get(r.quote);const lines=qq?qq.lines:[{desc:'Goods as per order',hs:'',qty:'',price:r.value}];printDoc('COMMERCIAL INVOICE',{...r,inco:qq?.inco,port:qq?.port,pay:qq?.pay,freight:qq?.freight,cur:r.cur||qq?.cur},lines,r.inv,r.invdate)}}
+
+async function drawFiles(ref){const fs=await filesFor(ref);const el=$('#files');if(!el)return;
+ el.innerHTML=fs.length?fs.map(f=>`<div class="card item"><div class="sp"><div class="t">${esc(f.name)}</div><div class="m">${Math.round(f.size/1024)} KB · ${esc(fdate(f.at.slice(0,10)))}</div></div><button type="button" class="btn s g" data-open="${f.id}">Open</button><button type="button" class="btn s d" data-rm="${f.id}">Remove</button></div>`).join(''):'<p class="note">Nothing attached yet.</p>';
+ el.onclick=async e=>{const o=e.target.dataset.open,x=e.target.dataset.rm;const f=fs.find(f=>f.id===(o||x));if(!f)return;
+  if(o){const u=URL.createObjectURL(f.blob);const a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';if(!/^image\/|pdf$/.test(f.type))a.download=f.name;a.click();setTimeout(()=>URL.revokeObjectURL(u),60000)}
+  if(x&&confirm('Remove '+f.name+'?')){await tx('files','readwrite',s=>s.delete(f.id));drawFiles(ref)}}}
+
+function printDoc(title,r,lines,no,date){const s=S();const b=get(r.buyer)||{};lines=(lines||[]).filter(l=>l.desc||l.qty||l.price);
+ const sub=lines.reduce((a,l)=>a+(Number(l.qty)||0)*(Number(l.price)||0),0);const fr=Number(r.freight)||0;const cur=r.cur||'USD';
+ $('#print').innerHTML=`<div class="hd"><div><h1>${esc(title)}</h1><div class="sm">No. ${esc(no||'')} · Date ${esc(fdate(date))}${r.valid&&title.startsWith('PRO')?' · Valid until '+esc(fdate(r.valid)):''}</div></div>
+ <div class="sm" style="text-align:right"><b>${esc(s.company||'Your company name (Settings)')}</b><br>${esc(s.address||'').replace(/\n/g,'<br>')}<br>${s.iec?'IEC '+esc(s.iec)+'<br>':''}${s.gstin?'GSTIN '+esc(s.gstin)+'<br>':''}${s.email?esc(s.email)+'<br>':''}${s.phone?esc(s.phone):''}</div></div>
+ <p><b>To:</b> ${esc(b.company||'')}${b.contact?', '+esc(b.contact):''}${b.country?', '+esc(b.country):''}</p>
+ <table><tr><th>#</th><th>Description</th><th>HS code</th><th class="r">Qty</th><th class="r">Unit price (${esc(cur)})</th><th class="r">Amount</th></tr>
+ ${lines.map((l,i)=>`<tr><td>${i+1}</td><td>${esc(l.desc)}</td><td>${esc(l.hs)}</td><td class="r">${esc(l.qty)}</td><td class="r">${esc(l.price)}</td><td class="r">${money((Number(l.qty)||0)*(Number(l.price)||0),cur)}</td></tr>`).join('')}
+ ${fr?`<tr><td colspan="5" class="r">Freight and insurance</td><td class="r">${money(fr,cur)}</td></tr>`:''}<tr><td colspan="5" class="r"><b>Total ${esc(r.inco||'')} ${esc(r.port||'')}</b></td><td class="r"><b>${money(sub+fr,cur)}</b></td></tr></table>
+ <p class="sm">${r.pay?'<b>Payment:</b> '+esc(r.pay)+'<br>':''}${r.lead?'<b>Dispatch:</b> '+esc(r.lead)+'<br>':''}${r.mode?'<b>Mode:</b> '+esc(r.mode)+(r.awb?' · '+esc(r.awb):'')+'<br>':''}${title.startsWith('COM')&&r.lut==='Yes'?'Supply meant for export under LUT without payment of IGST.'+(s.lut?' LUT ref. '+esc(s.lut):'')+'<br>':''}Country of origin: India</p>
+ ${s.bank?`<p class="sm"><b>Bank details:</b><br>${esc(s.bank).replace(/\n/g,'<br>')}</p>`:''}${r.terms?`<p class="sm" style="white-space:pre-wrap">${esc(r.terms)}</p>`:''}<p class="sm" style="margin-top:30pt">For ${esc(s.company||'')}<br><br>Authorised signatory</p>`;
+ window.print()}
+
+function vSettings(){const s=S();const F=[['me','Your name','text'],['company','Business name (on documents)','text'],['address','Address','textarea'],['iec','IEC','text'],['gstin','GSTIN','text'],['ad','AD code','text'],['lut','LUT reference (this year)','text'],['email','Email','email'],['phone','Phone','tel'],['cur','Usual currency','select',CUR],['bank','Bank details for buyers (shown on invoices)','textarea']];
+ const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+ $('#app').innerHTML=`<h1>Settings</h1><form id="sf"><div class="grid">${F.map(f=>field(f,s[f[0]]??'')).join('')}</div><div class="row" style="margin-top:14px"><button class="btn">Save</button></div></form>
+ <h2>Your data</h2><div class="card"><p class="note">Everything you enter stays on this device, in this browser or app. Nothing is sent to us. Make a backup file now and then, and keep it somewhere safe (it holds your buyers' details).</p>
+ <div class="row"><button class="btn g" id="bk">Download a backup</button><label class="btn g" style="margin:0;color:var(--ink)">Restore a backup<input type="file" id="rs" accept=".json,application/json" hidden></label></div></div>
+ <h2>Bring your buyers</h2><div class="card"><p class="note">A CSV from Excel or Google Sheets with a header row. Columns it understands: company, contact (or name), email, phone (or whatsapp), country, interest, value, currency, stage, notes.</p><label class="btn g" style="margin:0;color:var(--ink);display:inline-flex">Import buyers from CSV<input type="file" id="csv" accept=".csv,text/csv" hidden></label></div>
+ <h2>Month-end pack for your CA</h2><div class="card"><div class="row"><input type="month" id="mon" value="${today().slice(0,7)}" style="max-width:200px;width:auto;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--paper)"><button class="btn g" id="mp">Download the month's shipments (CSV)</button></div><p class="note">One line per export invoice: number, date, buyer, country, currency, value, shipping bill, LUT, payment status. Attach the documents from each shipment.</p></div>
+ <h2>Export everything</h2><div class="card"><div class="row">${Object.keys(SCHEMA).map(t=>`<button class="btn s g" data-csv="${t}">${SCHEMA[t].plural} (CSV)</button>`).join('')}</div></div>
+ <h2>Install</h2><div class="card"><p class="note">${ios?'On iPhone or iPad: tap the Share button in Safari, then "Add to Home Screen".':'On Windows, Mac or Android: use "Install app" at the top, or the install icon in the address bar (Chrome, Edge). On iPhone: Safari > Share > Add to Home Screen.'} It then opens like any app and works offline.</p></div>
+ <p class="note">Export OS v${VERSION} · by Anirudh Kapoor · <a href="https://anirudh-kapoor.com/exports/">anirudh-kapoor.com/exports</a> · support@anirudh-kapoor.com</p>`;
+ $('#sf').onsubmit=async e=>{e.preventDefault();const fd=new FormData(e.target);const n={...S()};F.forEach(f=>n[f[0]]=fd.get(f[0])??'');await put(n);toast('Saved')};
+ $('#bk').onclick=backup;$('#rs').onchange=e=>restore(e.target.files[0]);$('#csv').onchange=e=>importCSV(e.target.files[0]);
+ $('#mp').onclick=()=>{const m=$('#mon').value;const rows=all('shipment').filter(s=>(s.invdate||'').startsWith(m)).sort((a,b)=>(a.invdate||'').localeCompare(b.invdate||''));
+  dl(`export-invoices-${m}.csv`,toCSV(['Invoice no','Invoice date','Buyer','Country','Currency','Value','Shipping bill','Shipping bill date','Under LUT','Mode','AWB / BL','Payment','Payment date','e-BRC/FIRC on file'],rows.map(s=>{const b=get(s.buyer)||{};return [s.inv,s.invdate,b.company||b.contact,b.country,s.cur,s.value,s.sb,s.sbdate,s.lut,s.mode,s.awb,s.paid,s.paidon,s.brc]})),'text/csv');toast(rows.length+' invoices in the pack')};
+ document.querySelectorAll('[data-csv]').forEach(b=>b.onclick=()=>{const t=b.dataset.csv;const sc=SCHEMA[t];const rows=all(t);dl(`exportos-${sc.plural.toLowerCase()}.csv`,toCSV(sc.fields.map(f=>f[1]),rows.map(r=>sc.fields.map(f=>['buyer','quote','supplier'].includes(f[2])?(get(r[f[0]])?SCHEMA[f[2]].title(get(r[f[0]])):''):r[f[0]]))),'text/csv')})}
+
+function toCSV(head,rows){const c=v=>{v=String(v??'');if(/^[=+\-@]/.test(v))v="'"+v;return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};return [head,...rows].map(r=>r.map(c).join(',')).join('\r\n')}
+function dl(name,data,type){const b=data instanceof Blob?data:new Blob(['﻿'+data],{type});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
+function parseCSV(t){const out=[];let row=[],f='',q=false;t=t.replace(/^﻿/,'');for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);f='';if(row.some(x=>x.trim()))out.push(row);row=[]}else f+=c}row.push(f);if(row.some(x=>x.trim()))out.push(row);return out}
+async function importCSV(file){if(!file)return;const rows=parseCSV(await file.text());if(rows.length<2){toast('No rows found');return}
+ const h=rows[0].map(x=>x.trim().toLowerCase());const col=(...ns)=>h.findIndex(x=>ns.some(n=>x===n||x.includes(n)));
+ const ix={company:col('company','business','firm'),contact:col('contact','name'),email:col('email'),phone:col('phone','whatsapp','mobile'),country:col('country'),interest:col('interest','product'),value:col('value','amount'),cur:col('currency'),stage:col('stage','status'),notes:col('notes','remarks')};
+ let n=0;for(const r of rows.slice(1)){const g=k=>ix[k]>=0?(r[ix[k]]||'').trim():'';if(!g('company')&&!g('contact')&&!g('email'))continue;const st=STAGES.find(s=>s.toLowerCase()===g('stage').toLowerCase())||'New';
+  await put({id:uid(),t:'buyer',company:g('company'),contact:g('contact'),email:g('email'),phone:g('phone'),country:g('country'),interest:g('interest'),value:g('value').replace(/[^0-9.]/g,''),cur:CUR.includes(g('cur').toUpperCase())?g('cur').toUpperCase():(S().cur||'USD'),stage:st,notes:g('notes'),owner:S().me,source:'Other'});n++}
+ toast(n+' buyers imported');location.hash='buyers'}
+const b64=blob=>new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(blob)});
+async function backup(){const files=await allFiles();const fs=[];for(const f of files)fs.push({...f,blob:await b64(f.blob)});
+ dl(`exportos-backup-${today()}.json`,new Blob([JSON.stringify({app:'Export OS',version:VERSION,at:new Date().toISOString(),records:[...R.values()],files:fs})],{type:'application/json'}));toast('Backup downloaded')}
+async function restore(file){if(!file)return;let j;try{j=JSON.parse(await file.text())}catch(e){toast('That is not an Export OS backup');return}
+ if(j.app!=='Export OS'||!Array.isArray(j.records)){toast('That is not an Export OS backup');return}
+ if(!confirm(`Replace everything on this device with the backup from ${fdate((j.at||'').slice(0,10))}? (${j.records.length} records)`))return;
+ await tx('rec','readwrite',s=>s.clear());await tx('files','readwrite',s=>s.clear());for(const r of j.records)await tx('rec','readwrite',s=>s.put(r));
+ for(const f of j.files||[]){const blob=await (await fetch(f.blob)).blob();await tx('files','readwrite',s=>s.put({...f,blob}))}await loadAll();toast('Restored');location.hash='today';route()}
+
+/* ---------- install + offline ---------- */
+let deferred;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;$('#installBtn').style.display='inline-block'});
+$('#installBtn').onclick=async()=>{if(!deferred)return;deferred.prompt();await deferred.userChoice;deferred=null;$('#installBtn').style.display='none'};
+if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+(async()=>{try{DB=await idb();await loadAll();
+ if(!get('settings'))await put(S());
+ if(!all('comp').length){const y=new Date().getFullYear();for(const [name,repeat,notes,mo,d] of SEED_COMP){let due='';if(mo){due=`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;if(due<today())due=`${y+1}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`}await put({id:uid(),t:'comp',name,repeat,notes,due,status:'To do'})}}
+ if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+ route()}catch(e){$('#app').innerHTML=`<p class="empty">Export OS could not open its storage on this device (${esc(e.message)}). Private browsing windows block it; open it in a normal window.</p>`}})();
+</script>
+</body>
+</html>
