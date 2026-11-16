@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anomalogy — Anirudh Kapoor</title>
+<meta name="description" content="A deep dive into the human condition, and what shapes it — from art and philosophy to design, history and popular culture.">
+<meta name="theme-color" content="#ece9e3">
+<link rel="icon" type="image/png" href="/assets/logo-ink.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#ece9e3;--panel:#f5f3ee;--ink:#20231e;--ink-2:#3b3f38;--ink-soft:#62665e;--accent:#6b4a5e;
+    --line:color-mix(in oklch,var(--ink) 13%,transparent);
+    --serif:'Spectral',Georgia,serif;--display:'Cormorant Garamond',Georgia,serif;--sans:'Archivo',Helvetica,sans-serif;--mono:'IBM Plex Mono',monospace;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));}
+  header .wrap{display:flex;justify-content:space-between;align-items:center;height:64px;border-bottom:1px solid var(--line);font-family:var(--sans);}
+  .wm{display:flex;gap:12px;align-items:center;font-weight:600;font-size:13px;letter-spacing:.2em;} .wm img{height:24px;width:auto;}
+  header nav{display:flex;gap:20px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
+  header nav a:hover{color:var(--accent);}
+  .hero{padding:clamp(48px,8vw,100px) 0 clamp(30px,5vw,56px);display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:end;}
+  .hero>*{min-width:0;}
+  .kick{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+  h1{font-family:var(--display);font-weight:300;font-size:clamp(54px,9vw,128px);line-height:.9;letter-spacing:-.02em;margin:14px 0 0;}
+  h1 em{font-style:italic;color:var(--accent);}
+  .lead{font-size:clamp(17px,1.7vw,21px);font-weight:300;line-height:1.5;color:var(--ink-2);margin:0;}
+  .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+  .btn{font-family:var(--sans);font-size:13.5px;font-weight:500;padding:12px 20px;border:1px solid var(--ink);border-radius:2px;transition:.25s;}
+  .btn.solid{background:var(--ink);color:var(--paper);} .btn:hover{background:var(--accent);border-color:var(--accent);color:var(--paper);}
+  @media(max-width:820px){.hero{grid-template-columns:1fr;}}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px);padding-bottom:clamp(40px,6vw,80px);}
+  .ep{display:flex;flex-direction:column;gap:8px;}
+  .ep.big{grid-column:span 2;grid-row:span 2;}
+  .th{position:relative;aspect-ratio:16/9;max-width:100%;overflow:hidden;background:#d9d5cc;border-radius:2px;}
+  .th img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1);}
+  .ep:hover .th img{transform:scale(1.04);}
+  .play{position:absolute;left:14px;bottom:14px;width:42px;height:42px;border-radius:50%;background:var(--paper);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:14px;padding-left:3px;}
+  .tt{font-family:var(--display);font-size:clamp(21px,1.9vw,26px);line-height:1.08;}
+  .ep.big .tt{font-size:clamp(28px,3vw,40px);}
+  .dt{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);}
+  @media(max-width:820px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:520px){.grid{grid-template-columns:1fr;}.ep.big{grid-column:auto;grid-row:auto;}}
+  .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding:22px 0 20px;font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+  .sechead a{color:var(--ink-soft);letter-spacing:.1em;} .sechead a:hover{color:var(--accent);}
+  .about{border-top:1px solid var(--line);padding:clamp(40px,6vw,70px) 0;display:grid;grid-template-columns:.6fr 1.4fr;gap:30px;}
+  .about>*{min-width:0;}
+  .about h2{font-family:var(--display);font-weight:300;font-size:clamp(30px,3.4vw,44px);margin:0;}
+  .about p{margin:0 0 14px;font-size:17px;line-height:1.65;color:var(--ink-2);max-width:62ch;}
+  @media(max-width:760px){.about{grid-template-columns:1fr;}}
+  footer .wrap{border-top:1px solid var(--line);padding-top:22px;padding-bottom:36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--sans);font-size:12.5px;color:var(--ink-2);}
+  footer a:hover{color:var(--accent);}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="wm" href="/"><img src="/assets/logo-ink.png" alt="Anirudh Kapoor monogram"><span>ANIRUDH&nbsp;KAPOOR</span></a>
+  <nav><a href="https://www.youtube.com/@anomalogy1" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/anomalogy_/" target="_blank" rel="noopener">Instagram</a></nav>
+</div></header>
+<main>
+  <div class="wrap hero">
+    <div><span class="kick">Podcast · by Anirudh Kapoor</span><h1><em>Anomalogy</em></h1></div>
+    <div><p class="lead">A deep dive into the human condition, and what shapes it — from art and philosophy to design, history and popular culture.</p>
+      <div class="acts"><a class="btn solid" href="https://www.youtube.com/@anomalogy1" target="_blank" rel="noopener">Watch on YouTube ↗</a><a class="btn" href="https://www.instagram.com/anomalogy_/" target="_blank" rel="noopener">@anomalogy_ ↗</a></div></div>
+  </div>
+  <div class="wrap">
+    <div class="sechead"><span>Latest</span><a href="https://www.youtube.com/@anomalogy1/videos" target="_blank" rel="noopener">All videos ↗</a></div>
+    <div class="grid">
+      <a class="ep big" href="https://www.youtube.com/watch?v=dGTrR-uWOsc" target="_blank" rel="noopener">
+        <div class="th"><img src="https://i.ytimg.com/vi/dGTrR-uWOsc/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span></div>
+        <div class="tt">Fundamentals behind “Right” and “Wrong”</div><div class="dt">1 May 2026</div>
+      </a>
+      <a class="ep" href="https://www.youtube.com/watch?v=k9qTirsTxZQ" target="_blank" rel="noopener">
+        <div class="th"><img src="https://i.ytimg.com/vi/k9qTirsTxZQ/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span></div>
+        <div class="tt">Morality vs. Ethics</div><div class="dt">30 Apr 2026</div>
+      </a>
+      <a class="ep" href="https://www.youtube.com/watch?v=Ihh6i8gkcvQ" target="_blank" rel="noopener">
+        <div class="th"><img src="https://i.ytimg.com/vi/Ihh6i8gkcvQ/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span></div>
+        <div class="tt">Politeness, Part 2 — the History</div><div class="dt">4 Oct 2025</div>
+      </a>
+      <a class="ep" href="https://www.youtube.com/watch?v=8a8UqgNHrEg" target="_blank" rel="noopener">
+        <div class="th"><img src="https://i.ytimg.com/vi/8a8UqgNHrEg/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span></div>
+        <div class="tt">Politeness, Part 1 — A Rant</div><div class="dt">6 Sep 2025</div>
+      </a>
+      <a class="ep" href="https://www.youtube.com/watch?v=VKIvV7IFSAs" target="_blank" rel="noopener">
+        <div class="th"><img src="https://i.ytimg.com/vi/VKIvV7IFSAs/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span></div>
+        <div class="tt">Minimalism — a very clean robbery</div><div class="dt">7 May 2025</div>
+      </a>
+      <a class="ep" href="https://www.youtube.com/watch?v=zr3Pk9CHhyA" target="_blank" rel="noopener">
+        <div class="th"><img src="https://i.ytimg.com/vi/zr3Pk9CHhyA/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span></div>
+        <div class="tt">Minimalism — why owning less costs you more</div><div class="dt">27 Apr 2025</div>
+      </a>
+      <a class="ep" href="https://www.youtube.com/watch?v=kN7tww5uWbQ" target="_blank" rel="noopener">
+        <div class="th"><img src="https://i.ytimg.com/vi/kN7tww5uWbQ/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span></div>
+        <div class="tt">Judging people is bad. Or is it?</div><div class="dt">15 Apr 2025</div>
+      </a>
+    </div>
+  </div>
+  <div class="wrap about">
+    <h2>About</h2>
+    <div><p>Anomalogy takes one everyday idea — politeness, minimalism, judging people, right and wrong — and follows it back to where it came from: the history, the psychology and the culture underneath.</p><p>Long-form essays and conversations, made by Anirudh Kapoor alongside his design and product work. Live sessions run on the YouTube channel.</p></div>
+  </div>
+</main>
+<footer><div class="wrap"><a href="/">← Anirudh Kapoor — all ventures</a><span>support@anirudh-kapoor.com</span></div></footer>
+</body>
+</html>
