@@ -1,0 +1,28 @@
+name: LinkedIn Token Check
+# Weekly safety check for the LinkedIn publishing credential.
+# Weekly, not monthly, because the static LinkedIn access token lives ~60 days:
+# a monthly check can leave the leg dead for up to 30 days. It already went
+# 60 days unnoticed (10 Aug - 9 Oct 2026, runs 246-250 all failed at the
+# LinkedIn step alone while Instagram and Facebook succeeded).
+# When this job fails, GitHub emails the repo owner.
+on:
+  schedule:
+    - cron: '15 6 * * 1'      # 06:15 UTC every Monday
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Check LinkedIn credential
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_REFRESH_TOKEN: ${{ secrets.LINKEDIN_REFRESH_TOKEN }}
+          LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
+          LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+        run: python scripts/li_token_check.py
